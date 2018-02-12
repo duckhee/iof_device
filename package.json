@@ -1,0 +1,22 @@
+{
+    "name": "server",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./raspberry/app"
+    },
+    "dependencies": {
+        "cookie-parser": "~1.4.3",
+        "delivery": "0.0.6",
+        "http": "0.0.0",
+        "mime": "^2.2.0",
+        "moment": "^2.20.1",
+        "mqtt": "^2.15.1",
+        "mysql": "^2.14.1",
+        "mysql2": "^1.4.2",
+        "raspicam": "^0.2.14",
+        "serialport": "^6.0.5",
+        "socket.io-client": "2.0.3",
+        "socketio": "^1.0.0"
+    }
+}
