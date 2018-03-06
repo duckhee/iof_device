@@ -13,10 +13,19 @@ void setup()
 void loop()
 {
   Serial.println(get_mainvalue());
-  
   delay(1000);
 
   
+}
+
+char get_command()
+{
+  
+}
+
+String get_value()
+{
+
 }
 
 int get_mainvalue()
