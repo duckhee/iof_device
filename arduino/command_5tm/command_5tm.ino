@@ -53,16 +53,6 @@
 
 SDI12 mySDI12(DATAPIN);
 
-byte charToDec(char i);
-char decToChar(byte i);
-void printInfo(char i);
-void printBufferToScreen();
-void takeMeasurement(char i);
-boolean checkActive(char i);
-boolean isTaken(byte i);
-boolean setTaken(byte i);
-boolean setVacant(byte i);
-
 // keeps track of active addresses
 // each bit represents an address:
 // 1 is active (taken), 0 is inactive (available)
@@ -77,75 +67,6 @@ byte addressRegister[8] = {
   0B00000000,
   0B00000000
 };
-
-boolean first_flag = false;
-
-
-void setup(){
-  Serial.begin(9600);
-
-  pinMode(DATAPIN, INPUT);
-  pinMode(POWERPIN, OUTPUT);
-  digitalWrite(POWERPIN, HIGH);
-  
-  // Enable diag
-  // mySDI12.setDiagStream(Serial);
-  mySDI12.begin();
-  
-  delay(500); // allow things to settle
-  Serial.println("start");
-  Serial.println("Scanning all addresses, please wait...");
-  /*
-      Quickly Scan the Address Space
-   */
-
-  for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) setTaken(i);   // scan address space 0-9
-
-  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) setTaken(i);   // scan address space a-z
-
-  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) setTaken(i);   // scan address space A-Z
-
-  /*
-      See if there are any active sensors.
-   */
-  boolean found = false;
-
-  for(byte i = 0; i < 62; i++){
-    if(isTaken(i)){
-      found = true;
-      break;
-    }
-  }
-
-  if(!found) {
-    Serial.println("No sensors found, please check connections and restart the Arduino.");
-    while(true);
-  } // stop here
-
-  Serial.println();
-  Serial.println("Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.");
-  Serial.println("-------------------------------------------------------------------------------");
-}
-
-void loop(){
-
-  // scan address space 0-9
-  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
-    Serial.print(millis()/1000);
-    Serial.print(",");
-    if(first_flag == false){
-      printInfo(i);
-    }
-    takeMeasurement(i);
-    
-  }
-  first_flag = true;
-
-  Serial.println();
-  delay(10000); // wait ten seconds between measurement attempts.
-
-}
-
 
 
 // converts allowable address characters '0'-'9', 'a'-'z', 'A'-'Z',
@@ -176,7 +97,7 @@ void printInfo(char i){
   command += "I!";
   for(j = 0; j < 1; j++){
     mySDI12.sendCommand(command);
-    delay(30);
+    delay(300);
     if(mySDI12.available()>1) break;
     if(mySDI12.available()) mySDI12.read();
   }
@@ -186,7 +107,7 @@ void printInfo(char i){
     if((c!='\n') && (c!='\r')) Serial.write(c);
     
   }
-  delay(1000);
+  delay(500);
 }
 
 void printBufferToScreen(){
@@ -203,7 +124,7 @@ void printBufferToScreen(){
     }
     delay(1000);
   }
- Serial.println(buffer);
+ Serial.print(buffer);
 }
 
 void takeMeasurement(char i){
@@ -213,14 +134,14 @@ void takeMeasurement(char i){
   mySDI12.sendCommand(command);
   // wait for acknowlegement with format [address][ttt (3 char, seconds)][number of measurments available, 0-9]
   String sdiResponse = "";
-  delay(30);
+  delay(500);
   while (mySDI12.available())  // build response string
   {
     char c = mySDI12.read();
     if ((c != '\n') && (c != '\r'))
     {
       sdiResponse += c;
-      delay(5);
+      delay(500);
     }
   }
   mySDI12.flush();
@@ -308,4 +229,128 @@ boolean setVacant(byte i){
   byte k = i % 8;   // bit #
   addressRegister[j] &= ~(1 << k);
   return initStatus; // return false if already vacant
+}
+
+boolean first_flag = false;
+
+void setup(){
+  Serial.begin(9600);
+
+  pinMode(DATAPIN, INPUT);
+  pinMode(POWERPIN, OUTPUT);
+  digitalWrite(POWERPIN, HIGH);
+  Serial.println("start");
+  // Enable diag
+  // mySDI12.setDiagStream(Serial);
+  mySDI12.begin();
+  Serial.println("start");
+  delay(500); // allow things to settle
+  Serial.println("start");
+  Serial.println("Scanning all addresses, please wait...");
+  /*
+      Quickly Scan the Address Space
+   */
+
+  for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) setTaken(i);   // scan address space 0-9
+
+  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) setTaken(i);   // scan address space a-z
+
+  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) setTaken(i);   // scan address space A-Z
+
+  /*
+      See if there are any active sensors.
+   */
+  boolean found = false;
+
+  for(byte i = 0; i < 62; i++){
+    if(isTaken(i)){
+      found = true;
+      break;
+    }
+  }
+
+  if(!found) {
+    Serial.println("No sensors found, please check connections and restart the Arduino.");
+    while(true);
+  } // stop here
+
+  Serial.println();
+  Serial.println("Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.");
+  Serial.println("-------------------------------------------------------------------------------");
+}
+
+void loop(){
+  if(Serial.available())
+  {
+    char key;
+    key = Serial.read();
+    switch(key)
+    {
+      case 'i':
+      for(char i = '0'; i <= '9'; i++)
+      {
+        if(isTaken(i))
+        {
+          printInfo(i);
+        }
+      }
+      break;
+      case 'd':
+      for(char i = '0'; i <= '9'; i++)
+      {
+        if(isTaken(i)){
+          takeMeasurement(i);
+        }
+      }
+      break;
+    case 'b':
+    for(char i = '0'; i <= '9'; i++)
+    {
+      if(isTaken(i)){
+        printInfo(i);
+        takeMeasurement(i);
+      }
+    }
+    break;
+    }
+
+  }
+  // scan address space 0-9
+  /*
+  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
+    //Serial.print(millis()/1000);
+    //Serial.print(",");
+    if(first_flag == false){
+      printInfo(i);
+      first_flag = true;
+    }
+    takeMeasurement(i);
+  }
+  */
+  
+  //Serial.println();
+  
+  // scan address space a-z
+  /*
+  for(char i = 'a'; i <= 'z'; i++) if(isTaken(i)){
+    Serial.print(millis()/1000);
+    Serial.print(",");
+    printInfo(i);
+    takeMeasurement(i);
+  
+  }
+  */
+  //Serial.println();
+  // scan address space A-Z
+  /*for(char i = 'A'; i <= 'Z'; i++) if(isTaken(i)){
+    Serial.print(millis()/1000);
+    Serial.print(",");
+    printInfo(i);
+    takeMeasurement(i);
+    
+  };
+  */
+  Serial.println();
+  delay(10000); // wait ten seconds between measurement attempts.
+
 }
