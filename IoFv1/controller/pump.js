@@ -11,4 +11,4 @@ exports.control_motor = function(control_value) {
     } else {
         console.log('motor turn error');
     }
-}
+};
