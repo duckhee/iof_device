@@ -12,3 +12,15 @@ exports.control_motor = function(control_value) {
         console.log('motor turn error');
     }
 }
+
+exports.auto_motor = function(data){
+    switch(data){
+        case data :
+
+        break;
+        case data :
+
+        break;
+    }
+}
+
