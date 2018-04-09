@@ -25,7 +25,7 @@ exports.sensor_info = function() {
     port.on('data', (data) => {
         console.log(data.toString());
         datavalue = data.toString();
-        callback(null, datavalue);
+        return datavalue;
     });
 }
 
@@ -35,7 +35,7 @@ exports.sensor_mesurement = function() {
     port.on('data', (data) => {
         console.log(data.toString());
         datavalue = data.toString();
-        callback(null, datavalue);
+        return datavalue;
     });
 };
 
@@ -43,5 +43,5 @@ exports.both_get = function() {
     var datavalue = '';
     datavalue += sensor_info();
     datavalue += sensor_mesurement();
-    callback(null, datavalue);
+    return datavalue;
 }
