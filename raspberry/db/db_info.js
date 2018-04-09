@@ -1,26 +1,25 @@
-module.exports = (function () {
+module.exports = (function() {
     return {
-      local: { // localhost
-        host: '13.124.28.87',
-        port: '3308',
-        user: 'candh',
-        password: 'candh123',
-        database: 'candh'
-      },
-      real: { // real server db info
-        host: '13.124.28.87',
-        port: '3308',
-        user: 'candh',
-        password: 'candh123',
-        database: 'candh'
-      },
-      dev: { // dev server db info
-        host: '13.124.28.87',
-        port: '3308',
-        user: 'candh',
-        password: 'candh123',
-        database: 'candh'
-      }
+        local: { // localhost
+            host: 'localhost',
+            port: '3306',
+            user: 'pi',
+            password: 'won1228',
+            database: 'iof'
+        },
+        real: { // real server db info
+            host: 'localhost',
+            port: '3306',
+            user: 'pi',
+            password: 'won1228',
+            database: 'iof'
+        },
+        dev: { // dev server db info
+            host: 'localhost',
+            port: '3306',
+            user: 'pi',
+            password: 'won1228',
+            database: 'iof'
+        }
     }
-  })();
-  
+})();
