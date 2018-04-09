@@ -41,12 +41,7 @@ exports.sensor_mesurement = function() {
 
 exports.both_get = function() {
     var datavalue = '';
-    port.write('b');
-    for (var i = 0; i < 2; i++) {
-        port.on('data', (data) => {
-            console.log('bost data ::::: ', data.toString());
-            datavalue += data.toString();
-        });
-    }
+    datavalue += sensor_info();
+    datavalue += sensor_mesurement();
     callback(null, datavalue);
 }
