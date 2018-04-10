@@ -6,7 +6,7 @@ var dl = require('delivery');
 
 var mysql_dbc = require('./db_con/db_con')();
 console.log('testing db connection !!!');
-mysql_dbc.test();
+//mysql_dbc.test();
 console.log(' db connection init !!!');
 var pool = mysql_dbc.init();
 
