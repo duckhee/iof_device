@@ -25,7 +25,7 @@ exports.sensor_info = function() {
     port.on('data', (data) => {
         console.log(data.toString());
         datavalue = data.toString();
-        callback(null, datavalue);
+        return datavalue;
     });
 }
 
@@ -35,18 +35,13 @@ exports.sensor_mesurement = function() {
     port.on('data', (data) => {
         console.log(data.toString());
         datavalue = data.toString();
-        callback(null, datavalue);
+        return datavalue;
     });
 };
 
 exports.both_get = function() {
     var datavalue = '';
-    port.write('b');
-    for (var i = 0; i < 2; i++) {
-        port.on('data', (data) => {
-            console.log('bost data ::::: ', data.toString());
-            datavalue += data.toString();
-        });
-    }
-    callback(null, datavalue);
+    datavalue += sensor_info();
+    datavalue += sensor_mesurement();
+    return datavalue;
 }
