@@ -17,10 +17,10 @@ console.log('testing db connection !!!');
 console.log(' db connection init !!!');
 //var pool = mysql_dbc.init();
 var pool = mysql.createPool({
-host:'localhost',
-user:'candh',
-password:'candh3869',
-database:'iof',
+    host: 'localhost',
+    user: 'candh',
+    password: 'candh3869',
+    database: 'iof',
 });
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
@@ -136,7 +136,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
-        error: {}
+        error: err
     });
 });
 

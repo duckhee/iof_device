@@ -26,6 +26,7 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
             var stmt = ' SELECT * from iof_data where sd_serial = ? order by createdAt desc limit 0,3 ';
             connection.query(stmt, [req.params.serial], function(err, rows) {
                 if (err) console.error("err : " + err);
+                console.log('data info     ::::::: ', rows);
                 var data_list = rows;
 
                 var stmt = ' SELECT * from iof_images where si_serial = ? order by createdAt desc limit 0,1 ';
@@ -33,6 +34,7 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
                     if (err) console.error("err : " + err);
 
                     connection.release();
+                    console.log('images :::::::: ', row);
                     res.render('view', { title: 'Dashboard', devices: data_list, img_path: row[0].si_path + "/" + row[0].si_filename });
                     // Don't use the connection here, it has been returned to the pool.
                 });
