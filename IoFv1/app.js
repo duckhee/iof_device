@@ -34,7 +34,7 @@ delivery.on('delivery.connect', function(delivery) {
         pool.getConnection(function(err, conn) {
             //use the connection
             //get last save image info 
-            conn.query('select * from iof_image order by createdAt desc limit 0, 1', function(err, row, fileds) {
+            conn.query('select * from iof_images order by createdAt desc limit 0, 1', function(err, row, fileds) {
                 if (err) {
                     if (conn) {
                         conn.release();
@@ -55,7 +55,7 @@ delivery.on('delivery.connect', function(delivery) {
                                 if (conn) {
                                     conn.release();
                                 }
-                                console.log('iof network insert error :::::::::::::: ', err);
+                                console.log('iof networks insert error :::::::::::::: ', err);
                             }
                             if (!err) {
 
@@ -63,7 +63,7 @@ delivery.on('delivery.connect', function(delivery) {
                         });
                     }
                     if (result.length > 0) {
-                        conn.query('update iof_network set createdAt = NOW() where in_serial = ?', [row[0].in_serial], function(err, result) {
+                        conn.query('update iof_networks set createdAt = NOW() where in_serial = ?', [row[0].in_serial], function(err, result) {
                             if (err) {
                                 if (conn) {
                                     conn.release();
