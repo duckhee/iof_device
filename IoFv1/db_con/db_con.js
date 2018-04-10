@@ -6,11 +6,11 @@ module.exports = function() {
         init: function() {
             return mysql.createPool({
                 cconnectionLimit: 5,
-                host: config.host,
-                port: config.port,
-                user: config.user,
-                password: config.password,
-                database: config.databaseonfig
+                host: config.local.host,
+                port: config.local.port,
+                user: config.local.user,
+                password: config.local.password,
+                database: config.local.databaseonfig
             });
         },
 
