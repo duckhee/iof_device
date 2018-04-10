@@ -3,13 +3,25 @@
 var debug = require('debug');
 var path = require('path');
 var dl = require('delivery');
+var mysql = require('mysql');
+var db_config = require('./db_info/db_info').local;
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 var mysql_dbc = require('./db_con/db_con')();
 console.log('testing db connection !!!');
 //mysql_dbc.test();
 console.log(' db connection init !!!');
-var pool = mysql_dbc.init();
-
+//var pool = mysql_dbc.init();
+var pool = mysql.createPool({
+host:'localhost',
+user:'candh',
+password:'candh3869',
+database:'iof',
+});
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
@@ -81,7 +93,7 @@ var routes = require('./routes/index')(pool);
 
 var camera = require('./controller/camera')(pool, socket, delivery).init();
 
-
+var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

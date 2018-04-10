@@ -4,14 +4,7 @@ const config = require('../db_info/db_info').local;
 module.exports = function() {
     return {
         init: function() {
-            return mysql.createPool({
-                cconnectionLimit: 5,
-                host: config.local.host,
-                port: config.local.port,
-                user: config.local.user,
-                password: config.local.password,
-                database: config.local.databaseonfig
-            });
+            return mysql.createPool(config);
         },
 
         test: function(con) {
