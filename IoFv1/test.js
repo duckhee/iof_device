@@ -1,15 +1,22 @@
 var arudinoController = require('./controller/arudino');
 
-arudinoController.sensor_info(function(result) {
+var count = 0;
+
+while (count === 10) {
+    arudinoController.sensor_info(function(result) {
 
 
-    console.log('sensor info :::::: ', result);
-});
+        console.log('sensor info :::::: ', result);
+    });
 
-arudinoController.sensor_mesurement(function(result) {
+    arudinoController.sensor_mesurement(function(result) {
 
-    console.log('get value ::::::::: ', result);
+        console.log('get value ::::::::: ', result);
+        count++;
+    });
 
-});
+}
 
-process.exit();
+if (count === 10) {
+    process.exit();
+}
