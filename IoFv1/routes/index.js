@@ -20,7 +20,7 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
     router.get('/dashboard/:serial', function(req, res) {
         pool.getConnection(function(err, connection) {
             // Use the connection
-            var stmt = ' SELECT * from seosan_data where sd_serial = ? order by createdAt desc limit 0,3 ';
+            var stmt = ' SELECT * from iof_data where sd_serial = ? order by createdAt desc limit 0,3 ';
             connection.query(stmt, [req.params.serial], function(err, rows) {
                 if (err) console.error("err : " + err);
                 var data_list = rows;
@@ -41,7 +41,7 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
     router.get('/table/:serial/:page', function(req, res) {
         pool.getConnection(function(err, connection) {
             // Use the connection
-            var stmt = ' SELECT * from seosan_data where sd_serial = ? order by createdAt desc limit ?,10 ';
+            var stmt = ' SELECT * from iof_data where sd_serial = ? order by createdAt desc limit ?,10 ';
             connection.query(stmt, [req.params.serial, (req.params.page - 1) * 10], function(err, rows) {
                 if (err) console.error("err : " + err);
                 console.log("rows : " + JSON.stringify(rows));
