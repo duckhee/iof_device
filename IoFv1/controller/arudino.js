@@ -4,7 +4,7 @@ var parser = new parsers.Readline({
     delimiters: '\r\n'
 });
 
-var port = new serialPort.parser('/dev/ttyACM0', {
+var port = new serialPort('/dev/ttyACM0', {
     baudRate: 9600
 });
 
