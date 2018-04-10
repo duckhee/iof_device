@@ -23,7 +23,7 @@ exports.sensor_info = function() {
     var datavalue = '';
     port.write('i');
     port.on('data', (data) => {
-        console.log(data.toString());
+        //  console.log(data.toString());
         datavalue = data.toString();
         return datavalue;
     });
@@ -33,7 +33,7 @@ exports.sensor_mesurement = function() {
     var datavalue = '';
     port.write('d');
     port.on('data', (data) => {
-        console.log(data.toString());
+        // console.log(data.toString());
         datavalue = data.toString();
         return datavalue;
     });
