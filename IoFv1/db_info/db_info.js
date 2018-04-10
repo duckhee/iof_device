@@ -3,21 +3,21 @@ module.exports = (function() {
         local: {
             host: 'localhost',
             port: '3306',
-            user: 'iof',
+            user: 'candh',
             password: 'candh3869',
             database: 'iof'
         },
         real: {
             host: 'localhost',
             port: '3306',
-            user: 'iof',
+            user: 'candh',
             password: 'candh3869',
             database: 'iof'
         },
         dev: {
             host: 'localhost',
             port: '3306',
-            user: 'iof',
+            user: 'candh',
             password: 'candh3869',
             database: 'iof_dev'
         }
