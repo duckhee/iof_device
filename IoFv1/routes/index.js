@@ -3,7 +3,7 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
     var express = require('express');
     var router = express.Router();
     router.get('/*', function(req, res, next) {
-        console.log('url ::::::::: ', req.url());
+        console.log('url ::::::::: ', req.originalUrl);
         next();
     })
     router.get('/', function(req, res) {
