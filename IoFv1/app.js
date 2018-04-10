@@ -11,7 +11,7 @@ console.log(' db connection init !!!');
 var pool = mysql_dbc.init();
 
 //get socket io
-const socket = require('socket.io-client')('http://');
+const socket = require('socket.io-client')('http://http://13.209.19.28:5001');
 //delivery package 
 var delivery = dl.listen(socket);
 console.log('delivery conneciton start');
@@ -30,30 +30,30 @@ delivery.on('delivery.connect', function(delivery) {
                     console.log('get image conn error :::::::: ', err);
                 }
                 console.log('last image info :::::::::::: ', row);
-                conn.query('select * from iof_network where si_serial = ?',[row[0].si_serial], function(err, result, fields){
-                    if(err){
-                        if(conn){
+                conn.query('select * from iof_network where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
+                    if (err) {
+                        if (conn) {
                             conn.release();
                         }
                         console.log('select iof network error :::::::::::::: ', err);
                     }
-                    if(result.length == 0){
-                        conn.query('insert into iof_networks (in_serial, in_type, createdAt) values (?,?,NOW())', [row[0].in_serial, 'car'], function(err, result){
-                            if(err){
-                                if(conn){
+                    if (result.length == 0) {
+                        conn.query('insert into iof_networks (in_serial, in_type, createdAt) values (?,?,NOW())', [row[0].in_serial, 'car'], function(err, result) {
+                            if (err) {
+                                if (conn) {
                                     conn.release();
-                                } 
+                                }
                                 console.log('iof network insert error :::::::::::::: ', err);
                             }
-                            if(!err){
+                            if (!err) {
 
                             }
                         });
                     }
-                    if(result.length > 0){
-                        conn.query('update iof_network set createdAt = NOW() where in_serial = ?', [row[0].in_serial], function(err, result){
-                            if(err){
-                                if(conn){
+                    if (result.length > 0) {
+                        conn.query('update iof_network set createdAt = NOW() where in_serial = ?', [row[0].in_serial], function(err, result) {
+                            if (err) {
+                                if (conn) {
                                     conn.release();
                                 }
                                 console.log('update network error :::::::::::::::::: ', err);
@@ -67,7 +67,7 @@ delivery.on('delivery.connect', function(delivery) {
     });
 });
 
-socket.on('connect', function(){
+socket.on('connect', function() {
     console.log('connection success');
 })
 
@@ -80,9 +80,9 @@ socket.on('connect', function(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/arduino')(pool,socket);
+var arduino = require('./routes/arduino')(pool, socket);
 
-var camera = require('./controller/camera')(pool,socket,delivery).init();
+var camera = require('./controller/camera')(pool, socket, delivery).init();
 
 
 
@@ -101,7 +101,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -112,7 +112,7 @@ app.use(function (req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function (err, req, res, next) {
+    app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -123,7 +123,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -133,6 +133,6 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function () {
+var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
 });
