@@ -11,3 +11,5 @@ arudinoController.sensor_mesurement(function(result) {
     console.log('get value ::::::::: ', result);
 
 });
+
+process.exit();
