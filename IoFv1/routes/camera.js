@@ -53,6 +53,8 @@ module.exports = function(pool, socket, delivery) { //함수로 만들어 객체
 
                 if (err) {
                     console.log('child process exited with shooting_photo error code', err.code);
+                    console.log('child process exited with shooting_photo error code :::::::::::::::: ', err);
+                    console.log('child process exited with shooting_photo error stack ::::::::: ', err.stack);
                     return;
                 }
 
