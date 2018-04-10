@@ -1,6 +1,6 @@
 var serialPort = require('serialport');
 var parsers = serialPort.parsers;
-var parser = new parsers.serialPort({
+var parser = new parsers.Readline({
     delimiters: '\r\n'
 });
 
