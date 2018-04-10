@@ -30,7 +30,7 @@ module.exports = function(pool, socket, delivery) {
         camera_shooting: function() {
             var timeInMs = moment().format('YYYYMMDDHHmmss');
             var dir_name = moment().format('YYYYMM');
-            var photo_path = process.cwd() + '/images' + dir_name + '/' + timeInMs + '.jpg';
+            var photo_path = process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg';
             var cmd_photo = 'raspistill -vf -hf -ex auto -ev 0 -awb auto -w 1649 -h 922 -o' + photo_path;
 
             //make folder
