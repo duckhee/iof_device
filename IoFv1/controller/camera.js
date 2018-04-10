@@ -42,8 +42,11 @@ module.exports = function(pool, socket, delivery) {
             }
             exec_photo(cmd_photo, function(err, stdout, stderr) {
                 if (err) {
-                    console.log('child process exited with shooting photo error code', err);
-                    console.log('child process exited with shooting photo error code', err.stack);
+                    console.log('child process exited with shooting photo error ::::::::::: ', err);
+                    console.log();
+                    console.log('child process exited with shooting photo error stack :::::::::::::::: ', err.stack);
+                    console.log();
+                    console.log('child process exited with shooting photo error code ::::::::::::::: ', err.code);
                     return;
                 }
                 console.log('photo captured with filename ::::::::::::::' + timeInMs);

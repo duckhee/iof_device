@@ -38,7 +38,7 @@ module.exports = function(pool, socket, delivery) { //함수로 만들어 객체
             var timeInMs = moment().format('YYYYMMDDHHmmss');
             var dir_name = moment().format('YYYYMM');
             var photo_path = process.cwd() + "/images/" + dir_name + "/" + timeInMs + ".jpg";
-            var cmd_photo = 'raspistill -vf -t 1 -w 600 -h 420 -o  ' + photo_path;
+            var cmd_photo = 'raspistill -vf -hf -ex auto -ev 0 -awb auto -w 1640 -h 922 -o ' + photo_path;
 
             //폴더 생성
             if (!fs.existsSync(process.cwd() + '/images')) {
