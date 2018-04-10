@@ -11,7 +11,7 @@ console.log(' db connection init !!!');
 var pool = mysql_dbc.init();
 
 //get socket io
-const socket = require('socket.io-client')('http://http://13.209.19.28:5001');
+const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
 var delivery = dl.listen(socket);
 console.log('delivery conneciton start');
@@ -30,7 +30,7 @@ delivery.on('delivery.connect', function(delivery) {
                     console.log('get image conn error :::::::: ', err);
                 }
                 console.log('last image info :::::::::::: ', row);
-                conn.query('select * from iof_network where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
+                conn.query('select * from iof_networks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
                     if (err) {
                         if (conn) {
                             conn.release();
@@ -38,7 +38,7 @@ delivery.on('delivery.connect', function(delivery) {
                         console.log('select iof network error :::::::::::::: ', err);
                     }
                     if (result.length == 0) {
-                        conn.query('insert into iof_networks (in_serial, in_type, createdAt) values (?,?,NOW())', [row[0].in_serial, 'car'], function(err, result) {
+                        conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].in_serial, 'active'], function(err, result) {
                             if (err) {
                                 if (conn) {
                                     conn.release();
@@ -74,13 +74,10 @@ socket.on('connect', function() {
 
 
 
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/arduino')(pool, socket);
+//var arduino = require('./routes/arduino')(pool, socket);
 
 var camera = require('./controller/camera')(pool, socket, delivery).init();
 
