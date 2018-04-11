@@ -32,7 +32,7 @@ module.exports = function(pool, socket) {
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
         var datafilter = data.toString().replace(re, '');
         var sensorValue = datafilter.split(',');
-        if (!util.isEmpty(sensorValue[1].toString())) {
+        if (!util.isEmpty(sensorValue[1])) {
             console.log(datafilter);
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
