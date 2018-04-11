@@ -16,7 +16,6 @@ arudinoController.sensor_info(function(err, result) {
             } else {
                 console.log('clear data :::::::: ', result2);
 
-
                 arudinoController.sensor_mesurement(function(err, result3) {
                     if (err) {
                         console.log('get data error :::::::: ', err);
