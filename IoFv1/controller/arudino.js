@@ -17,7 +17,7 @@ port.on('open', () => {
 
 
 exports.sensor_info = function(callback) {
-    port.flush();
+
     var datavalue = '';
     port.write('i');
     port.on('data', (data) => {
@@ -35,7 +35,7 @@ exports.sensor_info = function(callback) {
 }
 
 exports.sensor_mesurement = function(callback) {
-    port.flush();
+
     var datavalue = '';
     port.write('d');
     port.on('data', (data) => {
