@@ -56,9 +56,7 @@ exports.sensor_mesurement = function(callback) {
 
 
 exports.clear_sensor = function(callback) {
-    port.on('open', () => {
 
-    });
     var datavalue = '';
     port.write('c');
     port.on('data', (data) => {
@@ -71,14 +69,7 @@ exports.clear_sensor = function(callback) {
         console.log('port error :::::: ', err.stack);
         callback(err, null);
     });
-    port.close(function(err) {
-        if (err) {
-            console.log('port error :::::: ', err);
-            console.log('port error :::::: ', err.stack);
-        } else {
-            callback(null, datavalue);
-        }
-    });
+
 }
 exports.both_get = function(callback) {
     var datavalue = '';

@@ -1,5 +1,5 @@
-//var arudinoController = require('./controller/arudino');
-var arudinoController = require('./controller/arduinov1');
+var arudinoController = require('./controller/arudino');
+//var arudinoController = require('./controller/arduinov1');
 
 var flag = false;
 
