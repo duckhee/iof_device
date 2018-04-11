@@ -5,7 +5,6 @@ var count = 0;
 while (count === 10) {
     arudinoController.sensor_info(function(result) {
 
-
         console.log('sensor info :::::: ', result);
     });
 
