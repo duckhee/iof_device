@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var arudinoController = require('./controller/arudino');
 
 var count = 0;
@@ -20,6 +19,3 @@ while (count === 10) {
 if (count === 10) {
     process.exit();
 }
-=======
-var arudinoController = require('./controller/arudino');
->>>>>>> 3649ebd52d9e28269e378af574aa9c4cc64dc6f9
