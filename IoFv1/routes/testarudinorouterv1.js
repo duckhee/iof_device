@@ -16,28 +16,7 @@ module.exports = function(pool, socket) {
 
     port.pipe(parser);
 
-
-    port.on('open', () => {
-        console.log('port open success');
-        port.write('i');
-
-    });
-    port.on('data', (data) => {
-        var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
-        var datafilter = data.toString().replace(re, '');
-        var sensorValue = datafilter.split(',');
-        if (!util.isEmpty(sensorValue[1])) {
-            console.log('sensor value temp :::: ', sensorValue[2]);
-            console.log('sensor value soil ::::: ', sensorValue[1]);
-        } else {
-            if (!util.isEmpty(data.toString()) && (data.toString().length >= 5)) {
-                console.log('sensor info :::: ', data.toString());
-            }
-        }
-        port.write('d');
-    });
-    port.on('error', (err) => {
-        console.log('serialport error :::: ', err);
+    port.open(function(err) {
         if (err) {
             setInterval(function() {
                 port.get(function(err, status) {
@@ -65,7 +44,59 @@ module.exports = function(pool, socket) {
                 });
 
             }, 1000);
-        }
+        } else {
+            port.on('open', () => {
+                console.log('port open success');
+                port.write('i');
 
-    });
+            });
+            port.on('data', (data) => {
+                var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
+                var datafilter = data.toString().replace(re, '');
+                var sensorValue = datafilter.split(',');
+                if (!util.isEmpty(sensorValue[1])) {
+                    console.log('sensor value temp :::: ', sensorValue[2]);
+                    console.log('sensor value soil ::::: ', sensorValue[1]);
+                } else {
+                    if (!util.isEmpty(data.toString()) && (data.toString().length >= 5)) {
+                        console.log('sensor info :::: ', data.toString());
+                    }
+                }
+                port.write('d');
+            });
+            port.on('error', (err) => {
+                console.log('serialport error :::: ', err);
+                if (err) {
+                    setInterval(function() {
+                        port.get(function(err, status) {
+                            if (err) {
+                                console.log('get status error :::: ', err);
+                            } else if (!status) {
+                                console.log('get port status :::: ', status);
+                                port.close((err) => {
+                                    if (err) {
+                                        console.log('close error ::: ', err);
+                                    } else {
+                                        console.log('close success');
+                                    }
+                                })
+                            } else if (status) {
+                                port.open(function(err) {
+                                    if (err) {
+                                        console.log('open error ::: ', err);
+                                    } else {
+                                        port.write('i');
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }, 1000);
+                }
+
+            });
+        }
+    })
+
 }
