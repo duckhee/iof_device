@@ -1,6 +1,7 @@
 'use strict';
 var flag = false;
 var util = require('../util/util');
+var testingArudino = require('../controller/arduinov1');
 module.exports = function(pool, socket) {
     var moment = require('moment'); // moment 시간 모듈
     var fs = require('fs');
@@ -29,6 +30,7 @@ module.exports = function(pool, socket) {
         if (!util.isEmpty(sensorValue[1])) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
+
         } else {
             if (!util.isEmpty(data.toString()) && (data.toString().length >= 5)) {
                 console.log('sensor info :::: ', data.toString());
@@ -38,29 +40,7 @@ module.exports = function(pool, socket) {
     });
     port.on('error', (err) => {
         console.log('serialport error :::: ', err);
-        if (err) {
-            console.log('testing serialport error :::: ', err);
-            var errorflag = false;
-            var open = function() {
-                setInterval(function() {
-                    port.on('open', () => {
-                        console.log('testing serialport error :::: ', err);
-                        port.write('i');
-                        errorflag = true;
-                    });
 
-                }, 1000 * 5);
-            }
-            var clean = function() {
-                clearInterval(open);
-            }
-            if (errorflag === false) {
-                open();
-            } else {
-                clean();
-            }
-
-        }
 
     });
 }
