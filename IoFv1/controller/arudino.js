@@ -50,10 +50,46 @@ exports.sensor_mesurement = function(callback) {
 
 exports.both_get = function(callback) {
     var datavalue = '';
-    datavalue += sensor_info();
-    datavalue += sensor_mesurement();
+    sensor_info(function(err, result) {
+        if (err) {
+            console.log('sensor info error ::::::: ', err);
+            callback(err, null);
+        } else if (result) {
+            console.log('sensor info :::::::::: ', result);
+            datavalue += result;
+            clear_data(function(err, result1) {
+                if (err) {
+                    console.log('clear arduino error ::::::: ', err);
+                    callback(err, null);
+                } else if (result1) {
+                    console.log('clear arudino ::::: ', result1);
+                    sensor_mesurement(function(err, result2) {
+                        if (err) {
+                            console.log('sensor mesurement error ::::: ', err);
+                            callback(err, null);
+                        } else if (result2) {
+                            console.log('get mesurement :::::: ', result2);
+                            datavalue += result2;
+                            callback(null, datavalue);
+                        } else {
+                            console.log('null');
+                            callback(null, null);
+                        }
+                    });
+                } else {
+                    console.log('null');
+                    callback(null, null);
+                }
+            });
+
+        } else {
+            console.log('null');
+            callback(null, null);
+        }
+    })
+
     //return datavalue;
-    callback(null, datavalue);
+
 }
 
 exports.clear_data = function(callback) {
