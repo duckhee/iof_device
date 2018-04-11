@@ -9,6 +9,7 @@ arudinoController.sensor_mesurement(function(err, result) {
         process.exit();
     } else if (result) {
         console.log('sensor info :::::::::: ', result);
+
         arudinoController.sensor_info(function(err, result3) {
             if (err) {
                 console.log('get data error :::::::: ', err);
