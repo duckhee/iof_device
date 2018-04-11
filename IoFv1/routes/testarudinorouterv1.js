@@ -40,14 +40,13 @@ module.exports = function(pool, socket) {
         console.log('serialport error :::: ', err);
         if (err) {
             setInterval(function() {
-                if (err) {
-                    console.log('open error ::: ', err);
-                } else {
-                    port.on('open', () => {
 
-                        port.write('i');
-                    });
-                }
+
+                port.on('open', () => {
+
+                    port.write('i');
+                });
+
             }, 1000);
         }
 
