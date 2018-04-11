@@ -89,9 +89,9 @@ socket.on('connect', function() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var routes = require('./routes/index')(pool);
 
-//var arduino = require('./routes/arduino')(pool, socket);
+var arduino = require('./routes/testarudinorouter.js')(pool, socket);
 
-var camera = require('./routes/camera')(pool, socket, delivery).init();
+//var camera = require('./routes/camera')(pool, socket, delivery).init();
 
 var app = express();
 
