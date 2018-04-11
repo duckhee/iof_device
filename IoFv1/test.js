@@ -1,8 +1,10 @@
 var arudinoController = require('./controller/arudino');
 
 
-process.nextTick(test);
 process.nextTick(test1);
+
+process.nextTick(test);
+
 
 function test() {
     arudinoController.sensor_info(function(err, result) {

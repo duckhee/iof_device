@@ -129,42 +129,54 @@ void setup(){
 void loop(){
   if(Serial.available())
   {
-    char key;
+    char key = ' ';
     key = Serial.read();
     switch(key)
     {
-      case 'i':
+      case 'a':
       for(char i = '0'; i <= '9'; i++)
       {
-        if(isTaken(i))
-        {
+        
           printInfo(i);
-          Serial.println(i);
-        }
+          Serial.println();
+        
       }
+      break;
+      case 's':
+      for(char i = '0'; i <= '9'; i++)
+      {
+          Serial.println(i);
+          takeMeasurement(i);
+          
+        
+      }
+      break;
+      case 'i':
+      printInfo('0');    
       break;
       case 'd':
-      for(char i = '0'; i <= '9'; i++)
-      {
-        if(isTaken(i)){
-          takeMeasurement(i);
-          Serial.println(i);
+        takeMeasurement('0');
+        if(isTaken('0')){
+          takeMeasurement('0');
         }
-      }
+      
       break;
     case 'b':
-  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
+  
     //Serial.print(millis()/1000);
     //Serial.print(",");
-      printInfo(i);
-    takeMeasurement(i);
-  }
+      printInfo('0');
+      Serial.println();
+    takeMeasurement('0');
+  
+  
+    break;
+    default:
+    Serial.println();
     break;
     }
 
   }
- 
-  Serial.println();
   delay(1000); // wait ten seconds between measurement attempts.
 
 }
@@ -274,7 +286,7 @@ void takeMeasurement(char i){
   command += "D0!"; // SDI-12 command to get data [address][D][dataOption][!]
   mySDI12.sendCommand(command);
   while(!mySDI12.available()>1); // wait for acknowlegement
-  delay(300); // let the data transfer
+  delay(500); // let the data transfer
   printBufferToScreen();
   mySDI12.flush();
 }
