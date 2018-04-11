@@ -9,7 +9,7 @@ arudinoController.sensor_info(function(err, result) {
         process.exit();
     } else {
         console.log('sensor info :::::::::: ', result);
-        arudinoController.clear_data(function(err, result2) {
+        arudinoController.clear_sensor(function(err, result2) {
             if (err) {
                 console.log('clear data error ::::::: ', err);
                 process.exit();
@@ -22,7 +22,7 @@ arudinoController.sensor_info(function(err, result) {
                         process.exit();
                     } else {
                         console.log('get data :::::::: ', result3);
-                        arudinoController.clear_data(function(err, result5) {
+                        arudinoController.clear_sensor(function(err, result5) {
                             if (err) {
                                 console.log('clear data error ::::::: ', err);
                                 process.exit();
