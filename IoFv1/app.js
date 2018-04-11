@@ -96,6 +96,7 @@ try {
 
     var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
 } catch (e) {
+    console.log('testing try catch ', e);
     setInterval(retryarudino(), 1000);
 }
 
