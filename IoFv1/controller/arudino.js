@@ -19,7 +19,7 @@ port.on('error', (err) => {
     console.log('port error :::::: ', err.stack);
 });
 
-exports.sensor_info = function() {
+exports.sensor_info = function(callback) {
     var datavalue = '';
     port.write('i');
     port.on('data', (data) => {
@@ -30,7 +30,7 @@ exports.sensor_info = function() {
     });
 }
 
-exports.sensor_mesurement = function() {
+exports.sensor_mesurement = function(callback) {
     var datavalue = '';
     port.write('d');
     port.on('data', (data) => {
@@ -41,7 +41,7 @@ exports.sensor_mesurement = function() {
     });
 };
 
-exports.both_get = function() {
+exports.both_get = function(callback) {
     var datavalue = '';
     datavalue += sensor_info();
     datavalue += sensor_mesurement();
