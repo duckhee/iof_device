@@ -35,7 +35,7 @@ module.exports = function(pool, socket) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
         } else {
-            if (!util.isEmpty(data.toString())) {
+            if (!util.isEmpty(data.toString()) && (data.toString() !== "\r\n")) {
                 console.log('sensor info :::: ', data.toString());
             }
         }
