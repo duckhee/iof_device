@@ -14,6 +14,7 @@ exports.control_motor = function(control_value) {
         console.log('motor turn error');
         switch_pump.writeSync(0);
     }
+<<<<<<< HEAD
 }
 
 exports.auto_motor = function(data){
@@ -27,3 +28,6 @@ exports.auto_motor = function(data){
     }
 }
 
+=======
+};
+>>>>>>> a13dae731c12e3cfb08703e30956d6135caa8756
