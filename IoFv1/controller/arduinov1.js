@@ -10,14 +10,15 @@ var port = new SerialPort('/dev/ttyACM0', {
 });
 
 port.pipe(parser);
+exports.sensor_info = function(callback) {
+    port.open(function(err) {
+        if (err) {
+            console.log('open error :::::::: ', err);
+            console.log('open error :::::::: ', err.stack);
+            console.log('open error :::::::: ', err.code);
+            callback(err, null);
+        } else {
 
-port.open(function(err) {
-    if (err) {
-        console.log('open error :::::::: ', err);
-        console.log('open error :::::::: ', err.stack);
-        console.log('open error :::::::: ', err.code);
-    } else {
-        exports.sensor_info = function(callback) {
             port.flush();
             var datavalue = '';
             port.write('i');
@@ -41,7 +42,18 @@ port.open(function(err) {
                 }
             });
         }
-        exports.sensor_mesurement = function(callback) {
+
+    });
+}
+
+exports.sensor_mesurement = function(callback) {
+    port.open(function(err) {
+        if (err) {
+            console.log('open error :::::::: ', err);
+            console.log('open error :::::::: ', err.stack);
+            console.log('open error :::::::: ', err.code);
+            callback(err, null);
+        } else {
             port.flush();
             var datavalue = '';
             port.write('d');
@@ -65,5 +77,5 @@ port.open(function(err) {
                 }
             });
         }
-    }
-});
+    });
+}
