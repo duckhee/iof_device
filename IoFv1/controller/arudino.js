@@ -53,7 +53,7 @@ exports.clear_sensor = function(callback) {
     var datavalue = '';
     port.write('c');
     port.on('data', (data) => {
-        datavalue = data.toString();
+        //datavalue = data.toString();
         callback(null, datavalue);
     });
     port.on('error', (err) => {
