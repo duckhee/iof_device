@@ -14,10 +14,7 @@ port.on('open', () => {
     console.log('port open success');
 });
 
-port.on('error', (err) => {
-    console.log('port error :::::: ', err);
-    console.log('port error :::::: ', err.stack);
-});
+
 
 exports.sensor_info = function(callback) {
     var datavalue = '';
@@ -27,6 +24,11 @@ exports.sensor_info = function(callback) {
         datavalue = data.toString();
         //return datavalue;
         callback(null, datavalue);
+    });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
     });
 }
 
@@ -39,6 +41,11 @@ exports.sensor_mesurement = function(callback) {
         //return datavalue;
         callback(null, datavalue);
     });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
 };
 
 exports.both_get = function(callback) {
@@ -47,4 +54,18 @@ exports.both_get = function(callback) {
     datavalue += sensor_mesurement();
     //return datavalue;
     callback(null, datavalue);
+}
+
+exports.clear_data = function(callback) {
+    var datavalue = '';
+    port.write('c');
+    port.on('data', (data) => {
+        datavalue = data.toString();
+        callback(null, datavalue);
+    });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
 }

@@ -134,42 +134,29 @@ void loop(){
     switch(key)
     {
       case 'a':
-      for(char i = '0'; i <= '9'; i++)
-      {
-        
+        for(char i = '0'; i <= '9'; i++)
+        {
           printInfo(i);
-          Serial.println();
-        
-      }
+          Serial.println();      
+        }
       break;
       case 's':
-      for(char i = '0'; i <= '9'; i++)
-      {
+        for(char i = '0'; i <= '9'; i++)
+        {
           Serial.println(i);
           takeMeasurement(i);
-          
-        
-      }
+        }
       break;
       case 'i':
       printInfo('0');    
       break;
       case 'd':
         takeMeasurement('0');
-        if(isTaken('0')){
-          takeMeasurement('0');
-        }
-      
       break;
     case 'b':
-  
-    //Serial.print(millis()/1000);
-    //Serial.print(",");
       printInfo('0');
       Serial.println();
-    takeMeasurement('0');
-  
-  
+      takeMeasurement('0');
     break;
     default:
     Serial.println();
