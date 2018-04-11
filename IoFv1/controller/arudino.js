@@ -49,7 +49,7 @@ exports.sensor_mesurement = function(callback) {
 };
 
 
-exports.clear_data = function(callback) {
+exports.clear_sensor = function(callback) {
     var datavalue = '';
     port.write('c');
     port.on('data', (data) => {
@@ -71,7 +71,7 @@ exports.both_get = function(callback) {
         } else if (result) {
             console.log('sensor info :::::::::: ', result);
             datavalue += result;
-            this.clear_data(function(err, result1) {
+            this.clear_sensor(function(err, result1) {
                 if (err) {
                     console.log('clear arduino error ::::::: ', err);
                     callback(err, null);
