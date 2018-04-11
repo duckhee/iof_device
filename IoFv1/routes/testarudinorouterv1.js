@@ -26,9 +26,7 @@ module.exports = function(pool, socket) {
 
     var dataValue = '';
     port.on('data', (data) => {
-        console.log('data ::::: ', data.toString());
         port.write('d');
-
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
         var datafilter = data.toString().replace(re, '');
         var sensorValue = datafilter.split(',');
@@ -37,10 +35,9 @@ module.exports = function(pool, socket) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
         } else {
-            console.log('sensor info ::::? ', data.toString());
+            if (!util.isEmpty(data.toString())) {
+                console.log('sensor info :::: ', data.toString());
+            }
         }
-
-    })
-
-
+    });
 }
