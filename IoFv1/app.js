@@ -88,7 +88,7 @@ socket.on('connect', function() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var routes = require('./routes/index')(pool);
-retryarudino = function() {
+var retryarudino = function() {
     var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
     return arduino;
 }
