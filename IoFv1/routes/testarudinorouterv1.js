@@ -19,27 +19,12 @@ module.exports = function(pool, socket) {
     port.open(function(err) {
         if (err) {
             setInterval(function() {
-                port.get(function(err, status) {
-                    if (err) {
-                        console.log('get status error :::: ', err);
-                    } else if (!status) {
-                        console.log('get port status :::: ', status);
-                        port.close((err) => {
-                            if (err) {
-                                console.log('close error ::: ', err);
-                            } else {
-                                console.log('close success');
-                            }
-                        })
-                    } else if (status) {
-                        port.open(function(err) {
-                            if (err) {
-                                console.log('open error ::: ', err);
-                            } else {
-                                port.write('i');
-                            }
-                        });
 
+                port.open(function(err) {
+                    if (err) {
+                        console.log('open error ::: ', err);
+                    } else {
+                        port.write('i');
                     }
                 });
 
