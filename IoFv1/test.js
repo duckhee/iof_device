@@ -22,7 +22,16 @@ arudinoController.sensor_info(function(err, result) {
                         process.exit();
                     } else {
                         console.log('get data :::::::: ', result3);
-                        process.exit();
+                        arudinoController.clear_data(function(err, result5) {
+                            if (err) {
+                                console.log('clear data error ::::::: ', err);
+                                process.exit();
+                            } else {
+                                console.log('clear data :::::::: ', result5);
+                                process.exit();
+                            }
+
+                        });
                     }
                 });
             }
