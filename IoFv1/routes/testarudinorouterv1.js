@@ -21,7 +21,7 @@ module.exports = function(pool, socket) {
         console.log('port open success');
         port.write('i');
         port.on('data', (data) => {
-            console.llg('i data :::: ', data.toString());
+            console.log('i data :::: ', data.toString());
             port.write('d');
         })
     });
