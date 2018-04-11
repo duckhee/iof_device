@@ -25,7 +25,7 @@ exports.sensor_info = function(callback) {
         datavalue = data.toString();
         port.flush();
         //return datavalue;
-
+        callback(null, datavalue);
     });
     port.on('error', (err) => {
         console.log('port error :::::: ', err);
@@ -44,6 +44,7 @@ exports.sensor_mesurement = function(callback) {
         datavalue = data.toString();
         //return datavalue;
         port.flush();
+        callback(null, datavalue);
 
     });
     port.on('error', (err) => {
@@ -62,7 +63,7 @@ exports.clear_sensor = function(callback) {
     port.on('data', (data) => {
         datavalue = data.toString();
         port.flush();
-
+        callback(null, datavalue);
     });
     port.on('error', (err) => {
         console.log('port error :::::: ', err);
