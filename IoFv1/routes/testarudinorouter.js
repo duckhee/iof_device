@@ -36,7 +36,7 @@ module.exports = function(pool, socket) {
             var datafilter = result.replace(re, '');
             console.log(datafilter);
             var sensorValue = datafilter.split(',');
-            console.log('sensor value temp :::: ', sensorValue[0]);
+            console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
 
         }
