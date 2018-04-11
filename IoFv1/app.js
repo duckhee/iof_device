@@ -88,17 +88,8 @@ socket.on('connect', function() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var routes = require('./routes/index')(pool);
-var retryarudino = function() {
-    var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
-    return arduino;
-}
-try {
 
-    var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
-} catch (e) {
-    console.log('testing try catch ', e);
-    setInterval(retryarudino(), 1000);
-}
+var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
 
 //var camera = require('./routes/camera')(pool, socket, delivery).init();
 

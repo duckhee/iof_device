@@ -36,4 +36,12 @@ module.exports = function(pool, socket) {
         }
         port.write('d');
     });
+    port.on('error', (err) => {
+        console.log('serialport error :::: ', err);
+        setInterval(function() {
+            port.on('open', () => {
+                port.write('i');
+            });
+        }, 1000);
+    });
 }
