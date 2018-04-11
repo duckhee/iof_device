@@ -31,7 +31,7 @@ module.exports = function(pool, socket) {
             console.log('sensor value soil ::::: ', sensorValue[1]);
         } else {
             console.log('data length ::: ', data.toString().length);
-            if (!util.isEmpty(data.toString()) && (data.toString().length !== 14)) {
+            if (!util.isEmpty(data.toString()) && (data.toString().length >= 5)) {
                 console.log('sensor info :::: ', data.toString());
             }
         }
