@@ -43,7 +43,7 @@ module.exports = function(pool, socket) {
                 port.get(function(err, status) {
                     if (err) {
                         console.log('get status error :::: ', err);
-                    } else if (status) {
+                    } else if (!status) {
                         console.log('get port status :::: ', status);
                         port.close((err) => {
                             if (err) {
@@ -52,7 +52,7 @@ module.exports = function(pool, socket) {
                                 console.log('close success');
                             }
                         })
-                    } else if (!status) {
+                    } else if (status) {
                         port.open(function(err) {
                             if (err) {
                                 console.log('open error ::: ', err);
