@@ -18,11 +18,11 @@ module.exports = function(pool, socket) {
 
     port.on('open', () => {
         console.log('port open success');
+        port.write('i');
     });
     var dataValue = '';
     if (flag === false) {
         dataValue = '';
-        port.write('i');
         port.on('data', (data) => {
             console.log('i data ? ::::: ', data.toString());
             port.write('d');
