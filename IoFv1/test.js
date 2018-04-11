@@ -30,19 +30,19 @@ arudinoController.sensor_info(function(err, result) {
                                 console.log('clear data :::::::: ', result5);
                                 process.exit();
                             } else {
-                                console.log('null');
+                                console.log('null clear data last');
                             }
 
                         });
                     } else {
-                        console.log('null');
+                        console.log('null sesnor meurement ');
                     }
                 });
             } else {
-                console.log('null');
+                console.log('null clear data first');
             }
         });
     } else {
-        console.log('null');
+        console.log('null sensor info ');
     }
 });
