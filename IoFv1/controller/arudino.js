@@ -11,33 +11,27 @@ var port = new serialPort('/dev/ttyACM0', {
 port.pipe(parser);
 
 
+port.on('open', () => {
+    console.log('port open success');
+});
+
 
 exports.sensor_info = function(callback) {
-    port.open(function(err) {
-        if (err) {
-            console.log('port error :::::: ', err);
-            console.log('port error :::::: ', err.stack);
-            callback(err, null);
-        } else {
 
-            var datavalue = '';
-            port.write('i');
-            port.on('data', (data) => {
-                //  console.log(data.toString());
-                datavalue = data.toString();
-                port.flush();
-                //return datavalue;
+    var datavalue = '';
+    port.write('i');
+    port.on('data', (data) => {
+        //  console.log(data.toString());
+        datavalue = data.toString();
+        port.flush();
+        //return datavalue;
 
-            });
-            port.on('error', (err) => {
-                console.log('port error :::::: ', err);
-                console.log('port error :::::: ', err.stack);
-                callback(err, null);
-            });
-
-        }
     });
-
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
     port.close(function(err) {
         if (err) {
             console.log('port error :::::: ', err);
@@ -46,32 +40,25 @@ exports.sensor_info = function(callback) {
             callback(null, datavalue);
         }
     });
+
 }
 
 exports.sensor_mesurement = function(callback) {
 
-    port.open(function(err) {
-        if (err) {
-            console.log('port error :::::: ', err);
-            console.log('port error :::::: ', err.stack);
-            callback(err, null);
-        } else {
 
-            var datavalue = '';
-            port.write('d');
-            port.on('data', (data) => {
-                // console.log(data.toString());
-                datavalue = data.toString();
-                //return datavalue;
-                port.flush();
+    var datavalue = '';
+    port.write('d');
+    port.on('data', (data) => {
+        // console.log(data.toString());
+        datavalue = data.toString();
+        //return datavalue;
+        port.flush();
 
-            });
-            port.on('error', (err) => {
-                console.log('port error :::::: ', err);
-                console.log('port error :::::: ', err.stack);
-                callback(err, null);
-            });
-        }
+    });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
     });
     port.close(function(err) {
         if (err) {
