@@ -2,13 +2,39 @@ var arudinoController = require('./controller/arudino');
 
 var flag = false;
 
-arudinoController.both_get(function(err, result) {
+
+arudinoController.sensor_info(function(err, result) {
     if (err) {
-        console.log('bot error :::::::: ', err);
-    } else if (result) {
-        console.log('both value :::::: ', result);
+        console.log('info error :::::: ', err);
         process.exit();
     } else {
-        console.log('null');
+        console.log('sensor info :::::::::: ', result);
+        arudinoController.clear_data(function(err, result2) {
+            if (err) {
+                console.log('clear data error ::::::: ', err);
+                process.exit();
+            } else {
+                console.log('clear data :::::::: ', result2);
+
+                arudinoController.sensor_mesurement(function(err, result3) {
+                    if (err) {
+                        console.log('get data error :::::::: ', err);
+                        process.exit();
+                    } else {
+                        console.log('get data :::::::: ', result3);
+                        arudinoController.clear_data(function(err, result5) {
+                            if (err) {
+                                console.log('clear data error ::::::: ', err);
+                                process.exit();
+                            } else {
+                                console.log('clear data :::::::: ', result5);
+                                process.exit();
+                            }
+
+                        });
+                    }
+                });
+            }
+        });
     }
-})
+});
