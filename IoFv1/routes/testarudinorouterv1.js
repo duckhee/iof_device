@@ -34,7 +34,7 @@ module.exports = function(pool, socket) {
         console.log('d data ? ::::: ', data.toString());
         port.write('d');
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
-        var datafilter = data.replace(re, '');
+        var datafilter = data.toString().replace(re, '');
         console.log(datafilter);
         var sensorValue = datafilter.split(',');
         console.log('sensor value temp :::: ', sensorValue[2]);
