@@ -41,16 +41,19 @@ module.exports = function(pool, socket) {
         if (err) {
             console.log('testing serialport error :::: ', err);
             var errorflag = false;
-            var open = setInterval(function() {
-                port.on('open', () => {
-                    console.log('testing serialport error :::: ', err);
-                    port.write('i');
-                    errorflag = true;
-                });
+            var open = function() {
+                setInterval(function() {
+                    port.on('open', () => {
+                        console.log('testing serialport error :::: ', err);
+                        port.write('i');
+                        errorflag = true;
+                    });
 
-            }, 1000 * 5);
-
-            var clean = clearInterval(open);
+                }, 1000 * 5);
+            }
+            var clean = function() {
+                clearInterval(open);
+            }
             if (errorflag === false) {
                 open();
             } else {
