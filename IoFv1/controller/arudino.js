@@ -48,6 +48,20 @@ exports.sensor_mesurement = function(callback) {
     });
 };
 
+
+exports.clear_data = function(callback) {
+    var datavalue = '';
+    port.write('c');
+    port.on('data', (data) => {
+        datavalue = data.toString();
+        callback(null, datavalue);
+    });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
+}
 exports.both_get = function(callback) {
     var datavalue = '';
     this.sensor_info(function(err, result) {
@@ -90,18 +104,4 @@ exports.both_get = function(callback) {
 
     //return datavalue;
 
-}
-
-exports.clear_data = function(callback) {
-    var datavalue = '';
-    port.write('c');
-    port.on('data', (data) => {
-        datavalue = data.toString();
-        callback(null, datavalue);
-    });
-    port.on('error', (err) => {
-        console.log('port error :::::: ', err);
-        console.log('port error :::::: ', err.stack);
-        callback(err, null);
-    });
 }
