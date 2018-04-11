@@ -1,7 +1,7 @@
 var serialPort = require('serialport');
 var parsers = serialPort.parsers;
 var parser = new parsers.Readline({
-    delimiters: '\r\n'
+    delimiter: '\r\n'
 });
 
 var port = new serialPort('/dev/ttyACM0', {
@@ -22,6 +22,7 @@ exports.sensor_info = function(callback) {
     port.on('data', (data) => {
         //  console.log(data.toString());
         datavalue = data.toString();
+        port.flush();
         //return datavalue;
         callback(null, datavalue);
     });
@@ -39,6 +40,7 @@ exports.sensor_mesurement = function(callback) {
         // console.log(data.toString());
         datavalue = data.toString();
         //return datavalue;
+        port.flush();
         callback(null, datavalue);
     });
     port.on('error', (err) => {
@@ -54,6 +56,7 @@ exports.clear_sensor = function(callback) {
     port.write('c');
     port.on('data', (data) => {
         datavalue = data.toString();
+        port.flush();
         callback(null, datavalue);
     });
     port.on('error', (err) => {
