@@ -10,13 +10,13 @@ var port = new serialPort('/dev/ttyACM0', {
 
 port.pipe(parser);
 
-port.on('open', () => {
-    console.log('port open success');
-});
-
 
 
 exports.sensor_info = function(callback) {
+
+    port.on('open', () => {
+        console.log('port open success');
+    });
 
     var datavalue = '';
     port.write('i');
@@ -25,16 +25,22 @@ exports.sensor_info = function(callback) {
         datavalue = data.toString();
         port.flush();
         //return datavalue;
-        callback(null, datavalue);
+
     });
     port.on('error', (err) => {
         console.log('port error :::::: ', err);
         console.log('port error :::::: ', err.stack);
         callback(err, null);
     });
+    port.on('close', () => {
+        callback(null, datavalue);
+    })
 }
 
 exports.sensor_mesurement = function(callback) {
+    port.on('open', () => {
+        console.log('port open success');
+    });
 
     var datavalue = '';
     port.write('d');
@@ -43,29 +49,38 @@ exports.sensor_mesurement = function(callback) {
         datavalue = data.toString();
         //return datavalue;
         port.flush();
-        callback(null, datavalue);
+
     });
     port.on('error', (err) => {
         console.log('port error :::::: ', err);
         console.log('port error :::::: ', err.stack);
         callback(err, null);
     });
+    port.on('close', () => {
+        callback(null, datavalue);
+    })
 };
 
 
 exports.clear_sensor = function(callback) {
+    port.on('open', () => {
+
+    });
     var datavalue = '';
     port.write('c');
     port.on('data', (data) => {
         datavalue = data.toString();
         port.flush();
-        callback(null, datavalue);
+
     });
     port.on('error', (err) => {
         console.log('port error :::::: ', err);
         console.log('port error :::::: ', err.stack);
         callback(err, null);
     });
+    port.on('close', () => {
+        callback(null, datavalue);
+    })
 }
 exports.both_get = function(callback) {
     var datavalue = '';
