@@ -2,7 +2,7 @@
 var flag = false;
 module.exports = function(pool, socket) {
     var moment = require('moment'); // moment 시간 모듈
-    var fs = this.require('fs');
+    var fs = require('fs');
     var serialPort = require('serialport');
     var parsers = serialPort.parsers;
     var parser = new parsers.Readline({
