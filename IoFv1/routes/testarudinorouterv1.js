@@ -39,22 +39,31 @@ module.exports = function(pool, socket) {
     port.on('error', (err) => {
         console.log('serialport error :::: ', err);
         if (err) {
-            port.close((err) => {
-                if (err) {
-                    console.log('close error ::: ', err);
-                } else {
-                    console.log('close success');
-                }
-            })
             setInterval(function() {
-
-                port.open(function(err) {
+                port.get(function(err, status) {
                     if (err) {
-                        console.log('open error ::: ', err);
-                    } else {
-                        port.write('i');
+                        console.log('get status error :::: ', err);
+                    } else if (status) {
+                        console.log('get port status :::: ', status);
+                        port.close((err) => {
+                            if (err) {
+                                console.log('close error ::: ', err);
+                            } else {
+                                console.log('close success');
+                            }
+                        })
+                    } else if (!status) {
+                        port.open(function(err) {
+                            if (err) {
+                                console.log('open error ::: ', err);
+                            } else {
+                                port.write('i');
+                            }
+                        });
+
                     }
                 });
+
             }, 1000);
         }
 
