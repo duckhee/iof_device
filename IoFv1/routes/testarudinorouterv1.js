@@ -20,16 +20,12 @@ module.exports = function(pool, socket) {
     port.on('open', () => {
         console.log('port open success');
         port.write('i');
+        port.on('data', (data) => {
+            console.llg('i data :::: ', data.toString());
+        })
     });
     var dataValue = '';
-    if (flag === false) {
-        dataValue = '';
-        port.on('data', (data) => {
-            console.log('i data ? ::::: ', data.toString());
-            port.write('d');
-            flag = true;
-        });
-    }
+
     var dataValue = '';
     port.on('data', (data) => {
         console.log('d data ? ::::: ', data.toString());
