@@ -68,6 +68,109 @@ byte addressRegister[8] = {
   0B00000000
 };
 
+byte charToDec(char i);
+char decToChar(byte i);
+void printInfo(char i);
+void printBufferToScreen();
+void takeMeasurement(char i);
+boolean checkActive(char i);
+boolean isTaken(byte i);
+boolean setTaken(byte i);
+boolean setVacant(byte i);
+
+boolean first_flag = false;
+
+void setup(){
+  Serial.begin(9600);
+
+  pinMode(DATAPIN, INPUT);
+  pinMode(POWERPIN, OUTPUT);
+  digitalWrite(POWERPIN, HIGH);
+  Serial.println("start");
+  // Enable diag
+  // mySDI12.setDiagStream(Serial);
+  mySDI12.begin();
+  Serial.println("start");
+  delay(500); // allow things to settle
+  Serial.println("start");
+  Serial.println("Scanning all addresses, please wait...");
+  /*
+      Quickly Scan the Address Space
+   */
+
+  for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) setTaken(i);   // scan address space 0-9
+
+  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) setTaken(i);   // scan address space a-z
+
+  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) setTaken(i);   // scan address space A-Z
+
+  /*
+      See if there are any active sensors.
+   */
+  boolean found = false;
+
+  for(byte i = 0; i < 62; i++){
+    if(isTaken(i)){
+      found = true;
+      break;
+    }
+  }
+
+  if(!found) {
+    Serial.println("No sensors found, please check connections and restart the Arduino.");
+    while(true);
+  } // stop here
+
+  Serial.println();
+  Serial.println("Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.");
+  Serial.println("-------------------------------------------------------------------------------");
+}
+
+void loop(){
+  if(Serial.available())
+  {
+    char key;
+    key = Serial.read();
+    switch(key)
+    {
+      case 'i':
+      for(char i = '0'; i <= '9'; i++)
+      {
+        if(isTaken(i))
+        {
+          printInfo(i);
+          Serial.println(i);
+        }
+      }
+      break;
+      case 'd':
+      for(char i = '0'; i <= '9'; i++)
+      {
+        if(isTaken(i)){
+          takeMeasurement(i);
+          Serial.println(i);
+        }
+      }
+      break;
+    case 'b':
+  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
+    //Serial.print(millis()/1000);
+    //Serial.print(",");
+      printInfo(i);
+    takeMeasurement(i);
+  }
+    break;
+    }
+
+  }
+ 
+  Serial.println();
+  delay(1000); // wait ten seconds between measurement attempts.
+
+}
+
+
+
 
 // converts allowable address characters '0'-'9', 'a'-'z', 'A'-'Z',
 // to a decimal number between 0 and 61 (inclusive) to cover the 62 possible addresses
@@ -229,124 +332,4 @@ boolean setVacant(byte i){
   byte k = i % 8;   // bit #
   addressRegister[j] &= ~(1 << k);
   return initStatus; // return false if already vacant
-}
-
-boolean first_flag = false;
-
-void setup(){
-  Serial.begin(9600);
-
-  pinMode(DATAPIN, INPUT);
-  pinMode(POWERPIN, OUTPUT);
-  digitalWrite(POWERPIN, HIGH);
-  Serial.println("start");
-  // Enable diag
-  // mySDI12.setDiagStream(Serial);
-  mySDI12.begin();
-  Serial.println("start");
-  delay(500); // allow things to settle
-  Serial.println("start");
-  Serial.println("Scanning all addresses, please wait...");
-  /*
-      Quickly Scan the Address Space
-   */
-
-  for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) setTaken(i);   // scan address space 0-9
-
-  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) setTaken(i);   // scan address space a-z
-
-  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) setTaken(i);   // scan address space A-Z
-
-  /*
-      See if there are any active sensors.
-   */
-  boolean found = false;
-
-  for(byte i = 0; i < 62; i++){
-    if(isTaken(i)){
-      found = true;
-      break;
-    }
-  }
-
-  if(!found) {
-    Serial.println("No sensors found, please check connections and restart the Arduino.");
-    while(true);
-  } // stop here
-
-  Serial.println();
-  Serial.println("Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.");
-  Serial.println("-------------------------------------------------------------------------------");
-}
-
-void loop(){
-  if(Serial.available())
-  {
-    char key;
-    key = Serial.read();
-    switch(key)
-    {
-      case 'i':
-      for(char i = '0'; i <= '9'; i++)
-      {
-        if(isTaken(i))
-        {
-          printInfo(i);
-        }
-      }
-      break;
-      case 'd':
-      for(char i = '0'; i <= '9'; i++)
-      {
-        if(isTaken(i)){
-          takeMeasurement(i);
-        }
-      }
-      break;
-    case 'b':
-  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
-    //Serial.print(millis()/1000);
-    //Serial.print(",");
-      printInfo(i);
-    takeMeasurement(i);
-  }
-    break;
-    }
-
-  }
-  // scan address space 0-9
-  /*
-  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
-    //Serial.print(millis()/1000);
-    //Serial.print(",");
-      printInfo(i);
-    takeMeasurement(i);
-  }
-  */
-  
-  //Serial.println();
-  
-  // scan address space a-z
-  /*
-  for(char i = 'a'; i <= 'z'; i++) if(isTaken(i)){
-    Serial.print(millis()/1000);
-    Serial.print(",");
-    printInfo(i);
-    takeMeasurement(i);
-  
-  }
-  */
-  //Serial.println();
-  // scan address space A-Z
-  /*for(char i = 'A'; i <= 'Z'; i++) if(isTaken(i)){
-    Serial.print(millis()/1000);
-    Serial.print(",");
-    printInfo(i);
-    takeMeasurement(i);
-    
-  };
-  */
-  Serial.println();
-  delay(10000); // wait ten seconds between measurement attempts.
-
 }
