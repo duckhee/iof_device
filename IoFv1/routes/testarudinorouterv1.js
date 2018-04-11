@@ -35,6 +35,6 @@ module.exports = function(pool, socket) {
                 console.log('sensor info :::: ', data.toString());
             }
         }
+        port.write('d');
     });
-    port.write('d');
 }
