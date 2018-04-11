@@ -31,10 +31,11 @@ module.exports = function(pool, socket) {
     port.on('data', (data) => {
         console.log('d data ? ::::: ', data.toString());
         port.write('d');
-        if (!util.isEmpty(data.toString())) {
-            var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
-            var datafilter = data.toString().replace(re, '');
-            console.log(datafilter);
+
+        var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
+        var datafilter = data.toString().replace(re, '');
+        console.log(datafilter);
+        if (!util.isEmpty(datafilter.toString())) {
             var sensorValue = datafilter.split(',');
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
