@@ -26,8 +26,8 @@ module.exports = function(pool, socket) {
         port.on('data', (data) => {
             console.log('i data ? ::::: ', data.toString());
             port.write('d');
+            flag = true;
         });
-        flag = true;
     } else {
         var dataValue = '';
         port.on('data', (data) => {
