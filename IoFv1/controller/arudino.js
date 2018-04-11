@@ -42,7 +42,7 @@ exports.sensor_mesurement = function(callback) {
         // console.log(data.toString());
         datavalue = data.toString();
         //return datavalue;
-
+        port.flush();
         callback(null, datavalue);
     });
     port.on('error', (err) => {
