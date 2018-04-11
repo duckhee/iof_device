@@ -28,19 +28,18 @@ module.exports = function(pool, socket) {
             port.write('d');
             flag = true;
         });
-    } else {
-        var dataValue = '';
-        port.on('data', (data) => {
-            console.log('d data ? ::::: ', data.toString());
-            port.write('d');
-            var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
-            var datafilter = result.replace(re, '');
-            console.log(datafilter);
-            var sensorValue = datafilter.split(',');
-            console.log('sensor value temp :::: ', sensorValue[2]);
-            console.log('sensor value soil ::::: ', sensorValue[1]);
-        })
     }
+    var dataValue = '';
+    port.on('data', (data) => {
+        console.log('d data ? ::::: ', data.toString());
+        port.write('d');
+        var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
+        var datafilter = result.replace(re, '');
+        console.log(datafilter);
+        var sensorValue = datafilter.split(',');
+        console.log('sensor value temp :::: ', sensorValue[2]);
+        console.log('sensor value soil ::::: ', sensorValue[1]);
+    })
 
 
 }
