@@ -17,7 +17,7 @@ port.on('open', () => {
 port.on('error', (err) => {
     console.log('port error :::::: ', err);
     console.log('port error :::::: ', err.stack);
-})
+});
 
 exports.sensor_info = function() {
     var datavalue = '';
@@ -25,7 +25,8 @@ exports.sensor_info = function() {
     port.on('data', (data) => {
         //  console.log(data.toString());
         datavalue = data.toString();
-        return datavalue;
+        //return datavalue;
+        callback(null, datavalue);
     });
 }
 
@@ -35,7 +36,8 @@ exports.sensor_mesurement = function() {
     port.on('data', (data) => {
         // console.log(data.toString());
         datavalue = data.toString();
-        return datavalue;
+        //return datavalue;
+        callback(null, datavalue);
     });
 };
 
@@ -43,5 +45,6 @@ exports.both_get = function() {
     var datavalue = '';
     datavalue += sensor_info();
     datavalue += sensor_mesurement();
-    return datavalue;
+    //return datavalue;
+    callback(null, datavalue);
 }
