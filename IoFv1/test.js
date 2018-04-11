@@ -14,7 +14,7 @@ arudinoController.sensor_info(function(err, result) {
                 console.log('clear data error ::::::: ', err);
                 process.exit();
             } else if (result2) {
-                console.log('clear data :::::::: ', result2);
+                console.log('clear data first :::::::: ', result2);
 
                 arudinoController.sensor_mesurement(function(err, result3) {
                     if (err) {
@@ -27,7 +27,7 @@ arudinoController.sensor_info(function(err, result) {
                                 console.log('clear data error ::::::: ', err);
                                 process.exit();
                             } else if (result5) {
-                                console.log('clear data :::::::: ', result5);
+                                console.log('clear data last :::::::: ', result5);
                                 process.exit();
                             } else {
                                 console.log('null clear data last');
