@@ -88,6 +88,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                     setTimeout(() => {
                         console.log('timeout ' + sub_min + ' minute');
                         setInterval(function() {
+                            console.log('interval ');
                             port.write('d');
                         }, 1000 * 60 * timesensor); // 설정 시간 후에 반복 촬영
                     }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작         
