@@ -61,7 +61,7 @@ module.exports = function(pool, socket, serialNum) {
         } else {
             if (!util.isEmpty(data.toString()) && (data.toString().length >= 5)) {
                 console.log('sensor info :::: ', data.toString());
-                pool.getConnection(function(err, result) {
+                pool.getConnection(function(err, conn) {
                     if (err) {
                         if (conn) {
                             conn.release();
