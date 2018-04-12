@@ -67,7 +67,7 @@ delivery.on('delivery.connect', function(delivery) {
                             });
                         }
                         if (result.length > 0) {
-                            conn.query('update iof_networks set createdAt = NOW() where in_serial = ?', [row[0].si_serial], function(err, result) {
+                            conn.query('update iof_networks set createdAt = NOW() where si_serial = ?', [row[0].si_serial], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
