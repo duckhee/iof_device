@@ -58,7 +58,7 @@ module.exports = function(pool, socket, delivery) {
                         console.log('db connection error :::::: ', err);
                         console.log('db connection error :::::: ', err.stack);
                     }
-                    conn.query('select * from iof_setting order by createdAt desc limit 0, 1', function(err, result, fields) {
+                    conn.query('select * from iof_settings order by createdAt desc limit 0, 1', function(err, result, fields) {
                         if (err) {
                             if (conn) {
                                 conn.release();
@@ -67,7 +67,7 @@ module.exports = function(pool, socket, delivery) {
                             console.log('select setting query error ::::::::: ', err.stack);
                         }
                         console.log(result);
-                        if (result.length !== 0 && result[0].si_serial) {
+                        if (result.length !== 0 && result[0].st_serial) {
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg');
                             //insert info
                             conn.query('insert into iof_images () values ()', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(err, result) {
