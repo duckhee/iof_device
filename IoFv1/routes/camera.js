@@ -65,9 +65,14 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                     console.log("camera connetion");
                     // 마지막으로 연결된 센서 정보 가져오기
                     connection.query(' select * from iof_settings  order by createdAt desc limit 0,1 ', function(err, result, fields) {
-                        if (err) console.log(err);
+                        if (err) {
+                            if (connection) {
+                                connection.release();
+                            }
+                            console.log('select setting error :::::::::: ', err);
+                        }
 
-                        console.log('lat setting ::::::: ', result);
+
 
                         if (result.length != 0 && result[0].st_serial) {
 
@@ -75,6 +80,12 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
 
                             //정보 insert
                             connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result) {
+                                if (error) {
+                                    if (connection) {
+                                        connection.release();
+                                    }
+                                    console.log('insert iamge pi error ::::::::: ', error);
+                                }
                                 if (!error) {
                                     console.log('insert image success ::::: ', result);
                                     // 촬영 이미지 전송
