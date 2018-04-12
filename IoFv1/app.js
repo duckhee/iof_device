@@ -92,11 +92,11 @@ var routes = require('./routes/index')(pool);
 var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
 
 //var camera = require('./routes/camera')(pool, socket, delivery).init();
-
+/*
 process.on('unhandledRejection', error => {
     throw error
 }); //경고 시 종료 처리 ? 
-
+*/
 var app = express();
 
 // view engine setup
