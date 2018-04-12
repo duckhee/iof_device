@@ -56,7 +56,6 @@ module.exports = function(pool, socket, serialNum, sensingtime) {
         if (!util.isEmpty(sensorValue[1])) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
-
             //only soil data send 
             var sensorSoil = {
                 msg: 0,
@@ -117,3 +116,39 @@ module.exports = function(pool, socket, serialNum, sensingtime) {
 
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+// 파일 쓰기
+try {
+    var dir_name = moment().format('YYYYMM');
+    var file_name = dir_name + ".txt";
+
+    //폴더 생성
+    if (!fs.existsSync(process.cwd() + '/data')) {
+        fs.mkdirSync(process.cwd() + '/data', '0777');
+    }
+
+    if (!fs.existsSync(process.cwd() + '/data/' + dir_name)) {
+        fs.mkdirSync(process.cwd() + '/data/' + dir_name, '0777');
+    }
+
+    // 루트 위치에 파일을 쓰려고 합니다.(권한 거부)
+    fs.appendFileSync(process.cwd() + '/data/' + dir_name + '/' + file_name, sensor_obj.createdAt + "," + address + "," + serial_num + "," + dataJoin + '\n', 'utf8');
+} catch (err) {
+    console.log(err);
+}
+*/
