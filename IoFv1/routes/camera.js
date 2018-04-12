@@ -84,13 +84,13 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                 if (!error) {
                                     console.log('insert image success ::::: ', result2);
                                     // 촬영 이미지 전송
-                                    delivery.send({
-                                        name: timeInMs,
-                                        path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
-                                        params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
-                                    });
                                     connection.release();
                                 }
+                            });
+                            delivery.send({
+                                name: timeInMs,
+                                path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
+                                params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                             });
 
                         } else {
