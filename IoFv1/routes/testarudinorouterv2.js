@@ -30,8 +30,8 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
 
             setTimeout(() => {
                 console.log('timeout ' + sub_min + ' minute');
-                setInterval(this.sensing, 1000 * 60 * timesensor); // 설정 시간 후에 반복 촬영
-            }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작          
+                setInterval(this.sensing, 1000 * 60 * 1); // 설정 시간 후에 반복 촬영
+            }, 1000 * 60 * 1); // 제한된 시간 후에 촬영 시작          
         },
         sensing: function() {
             var parsers = serialPort.parsers;
@@ -84,6 +84,13 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                 if (!util.isEmpty(sensorValue[1])) {
                     console.log('sensor value temp :::: ', sensorValue[2]);
                     console.log('sensor value soil ::::: ', sensorValue[1]);
+
+                    setTimeout(() => {
+                        console.log('timeout ' + sub_min + ' minute');
+                        setInterval(function() {
+                            port.write('d');
+                        }, 1000 * 60 * timesensor); // 설정 시간 후에 반복 촬영
+                    }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작         
                     //only soil data send 
                     var sensorSoil = {
                         msg: 0,
@@ -108,6 +115,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                                 } else {
                                     console.log('insert data pi result ::::: ', result);
                                     socket.emit('sensor_data_request', sensorSoil);
+                                    //   port.write('d');
                                 }
                             });
                         }
@@ -135,14 +143,13 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                             }
                         });
                         flag = true;
+
                         port.write('d');
                     }
                 }
             });
             port.on('error', (err) => {
                 console.log('serialport error :::: ', err);
-
-
             });
         }
     }

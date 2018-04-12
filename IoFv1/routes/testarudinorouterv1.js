@@ -102,13 +102,14 @@ module.exports = function(pool, socket, serialNum, sensingtime) {
                                 console.log('insert sensor info pi db error ::::::::: ', err);
                             } else {
                                 console.log('insert sensor pi result ::::::: ', result);
+                                port.write('d');
                             }
                         });
                     }
                 });
             }
         }
-        port.write('d');
+        //        port.write('d');
     });
     port.on('error', (err) => {
         console.log('serialport error :::: ', err);
