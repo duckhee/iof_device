@@ -77,7 +77,7 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                             //정보 insert
-                            connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result) {
+                            connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result2) {
                                 if (error) {
                                     if (connection) {
                                         connection.release();
@@ -85,12 +85,12 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                                     console.log('insert image pi error ::::::::: ', error);
                                 }
                                 if (!error) {
-                                    console.log('insert image success ::::: ', result);
+                                    console.log('insert image success ::::: ', result2);
                                     // 촬영 이미지 전송
                                     delivery.send({
                                         name: timeInMs,
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
-                                        params: { serial: result[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
+                                        params: { serial: result2[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
                                     connection.release();
                                 }
