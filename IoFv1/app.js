@@ -95,12 +95,37 @@ socket.on('connect', function() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
+var defaultcameratime = 30;
+var defualtsensingtime = 5;
+pool.getConnection(function(err, conn) {
+    if (err) {
+        if (conn) {
+            conn.release();
+        }
+        console.log('get setting value error time :::::: ', err);
+    } else {
+        conn.query('select * from iof_settings', function(err, result) {
+            if (err) {
+                if (conn) {
+                    conn.release();
+                }
+                console.log('get setting value error :::::: ', err);
+            } else {
+                if (!util.isEmpty(result)) {
+                    console.log('get setting value :::: ', result);
+                } else {
+                    console.log('not setting yet');
+                }
+            }
+        })
+    }
+})
 
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum);
+//var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum, defualtsensingtime);
 
-//var camera = require('./routes/camera')(pool, socket, delivery, serialNum).init();
+//var camera = require('./routes/camera')(pool, socket, delivery, serialNum, defaultcameratime).init();
 /*
 process.on('unhandledRejection', error => {
     throw error

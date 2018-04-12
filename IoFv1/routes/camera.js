@@ -5,11 +5,12 @@ var moment = require('moment'); // moment 시간 모듈
 var exec_photo = require('child_process').exec;
 var fs = require('fs');
 
-module.exports = function(pool, socket, delivery, serialNum) { //함수로 만들어 객체 app을 전달받음    
+module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
     return {
         init: function() {
+            console.log('get setting camera time :::: ', cameratime)
             var current_min = moment().format('m'); // 현재 시간 분 설정
-            var shooting_time = 5; //사진 촬영 인터벌
+            var shooting_time = cameratime; //사진 촬영 인터벌
             var sub_min = 0; //정각에서 남은 시간
 
             //인터벌 함수 실행

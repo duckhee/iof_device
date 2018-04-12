@@ -2,7 +2,7 @@
 
 var util = require('../util/util');
 var testingArudino = require('../controller/arduinov1');
-module.exports = function(pool, socket, serialNum) {
+module.exports = function(pool, socket, serialNum, sensingtime) {
     var moment = require('moment'); // moment 시간 모듈
     var fs = require('fs');
     var serialPort = require('serialport');
