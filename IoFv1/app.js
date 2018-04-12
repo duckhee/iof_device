@@ -126,9 +126,9 @@ pool.getConnection(function(err, conn) {
 
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum, defualtsensingtime);
+//var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum, defualtsensingtime);
 
-//var arduino = require('./routes/testarudinorouterv2.js')(pool, socket, serialNum, defualtsensingtime).init();
+var arduino = require('./routes/testarudinorouterv2.js')(pool, socket, serialNum, defualtsensingtime).init();
 
 //var camera = require('./routes/camera')(pool, socket, delivery, serialNum, defaultcameratime).init();
 /*
