@@ -13,7 +13,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
         init: function() {
 
 
-            //사진한번 찍고
+            //처음 센싱 시작
             this.sensing();
 
         },

@@ -122,7 +122,7 @@ pool.getConnection(function(err, conn) {
             }
         })
     }
-})
+});
 
 var routes = require('./routes/index')(pool);
 
