@@ -13,7 +13,7 @@ module.exports = function(pool, socket) {
 
     var port = new serialPort('/dev/ttyACM0', {
         baudRate: 9600,
-        //lock: false
+        lock: false
     });
 
     port.pipe(parser);
@@ -29,7 +29,7 @@ module.exports = function(pool, socket) {
 
     } catch (e) {
         console.log('port open error try catch ::::: ', e);
-    } //port 오픈 시 에러 처리 
+    } //port 오픈 시 에러 처리 ?
 
     port.on('data', (data) => {
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
