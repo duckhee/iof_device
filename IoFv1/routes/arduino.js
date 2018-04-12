@@ -21,6 +21,7 @@ module.exports = function(pool, socket) {
     try {
         //포트 열기
         port.on('open', function() {
+            port.flush();
             console.log('port open');
             port.write('i');
 
