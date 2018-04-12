@@ -1,5 +1,3 @@
-import { error } from 'util';
-
 'use strict';
 
 var debug = require('debug');
