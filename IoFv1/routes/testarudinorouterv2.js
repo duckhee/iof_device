@@ -30,8 +30,8 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
 
             setTimeout(() => {
                 console.log('timeout ' + sub_min + ' minute');
-                setInterval(this.sensing, 1000 * 60 * 1); // 설정 시간 후에 센서 작동
-            }, 1000 * 60 * 1); // 제한된 시간 후에 센서 작동        
+                setInterval(this.sensing, 1000 * 60 * sub_min); // 설정 시간 후에 센서 작동
+            }, 1000 * 60 * sub_min); // 제한된 시간 후에 센서 작동        
         },
         sensing: function() {
             var parsers = serialPort.parsers;
