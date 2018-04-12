@@ -20,7 +20,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
             if (current_min == 0) { // 만약 0이면 바로 촬영 시작
                 sub_min = 0;
             } else { // 0이 아닐시 남은 시간 설정 후 촬영 시작
-                sub_min = timesensor - current_min;
+                sub_min = timesensor - current_min / 5;
             }
 
             console.log('sub_min : ' + sub_min);
