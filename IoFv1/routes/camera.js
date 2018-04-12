@@ -90,7 +90,7 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                                     delivery.send({
                                         name: timeInMs,
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
-                                        params: { serial: result2[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
+                                        params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
                                     connection.release();
                                 }
