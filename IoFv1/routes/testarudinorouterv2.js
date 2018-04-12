@@ -135,6 +135,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                             }
                         });
                         flag = true;
+                        port.write('d');
                     }
                 }
             });
