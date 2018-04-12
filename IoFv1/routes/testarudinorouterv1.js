@@ -39,7 +39,7 @@ module.exports = function(pool, socket, serialNum) {
         var sensorValue = datafilter.split(',');
         if (first_chk == 0) {
             //보내기
-            var datainfo = { msg: 0 };
+            var datainfo = { "msg": 0 };
             socket.emit('device_setting_request', datainfo);
             console.log('first checking ::::: ', first_chk);
 
