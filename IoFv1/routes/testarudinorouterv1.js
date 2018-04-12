@@ -12,7 +12,8 @@ module.exports = function(pool, socket) {
     });
 
     var port = new serialPort('/dev/ttyACM0', {
-        baudRate: 9600
+        baudRate: 9600,
+        lock: false
     });
 
     port.pipe(parser);
