@@ -50,7 +50,7 @@ delivery.on('delivery.connect', function(delivery) {
                         console.log('select iof network error :::::::::::::: ', err);
                     }
                     if (result.length == 0) {
-                        conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].in_serial, 'active'], function(err, result) {
+                        conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
                             if (err) {
                                 if (conn) {
                                     conn.release();
@@ -63,7 +63,7 @@ delivery.on('delivery.connect', function(delivery) {
                         });
                     }
                     if (result.length > 0) {
-                        conn.query('update iof_networks set createdAt = NOW() where in_serial = ?', [row[0].in_serial], function(err, result) {
+                        conn.query('update iof_networks set createdAt = NOW() where in_serial = ?', [row[0].si_serial], function(err, result) {
                             if (err) {
                                 if (conn) {
                                     conn.release();
@@ -87,11 +87,13 @@ socket.on('connect', function() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
+const serialNum = '6iOAk0yqx3eRspZXuSsV';
+
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarudinorouterv1.js')(pool, socket);
+var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum);
 
-//var camera = require('./routes/camera')(pool, socket, delivery).init();
+//var camera = require('./routes/camera')(pool, socket, delivery, serialNum).init();
 /*
 process.on('unhandledRejection', error => {
     throw error

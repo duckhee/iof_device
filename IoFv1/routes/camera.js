@@ -5,7 +5,7 @@ var moment = require('moment'); // moment 시간 모듈
 var exec_photo = require('child_process').exec;
 var fs = require('fs');
 
-module.exports = function(pool, socket, delivery) { //함수로 만들어 객체 app을 전달받음    
+module.exports = function(pool, socket, delivery, serialNum) { //함수로 만들어 객체 app을 전달받음    
     return {
         init: function() {
 
@@ -70,12 +70,12 @@ module.exports = function(pool, socket, delivery) { //함수로 만들어 객체
 
                         console.log(result);
 
-                        if (result.length != 0 && result[0].st_serial) {
+                        if (result.length != 0 && result[0].si_serial) {
 
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                             //정보 insert
-                            connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result) {
+                            connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result) {
                                 if (!error) {
                                     console.log(result);
                                 }
@@ -85,7 +85,7 @@ module.exports = function(pool, socket, delivery) { //함수로 만들어 객체
                             delivery.send({
                                 name: timeInMs,
                                 path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
-                                params: { serial: result[0].st_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
+                                params: { serial: result[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                             });
                         }
 

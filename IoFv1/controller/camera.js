@@ -70,7 +70,7 @@ module.exports = function(pool, socket, delivery) {
                         if (result.length !== 0 && result[0].i_serial) {
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg');
                             //insert info
-                            conn.query('insert into iof_images () values ()', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(err, result) {
+                            conn.query('insert into iof_images () values ()', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
@@ -87,7 +87,7 @@ module.exports = function(pool, socket, delivery) {
                                 name: timeInMs,
                                 path: process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg',
                                 params: {
-                                    serial: '',
+                                    serial: result[0].si_serial,
                                     filename: timeInMs + '.jpg',
                                     path: dir_name,
                                     filesize: stats.size
