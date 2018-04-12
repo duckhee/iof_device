@@ -37,6 +37,12 @@ module.exports = function(pool, socket, serialNum) {
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
         var datafilter = data.toString().replace(re, '');
         var sensorValue = datafilter.split(',');
+        if (first_chk == 0) {
+
+            socket.on('device_setting_recevie_' + serialNum, function(data) {
+                console.log('get socket testing :::::: ', data);
+            })
+        }
         if (!util.isEmpty(sensorValue[1])) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
