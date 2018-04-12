@@ -18,12 +18,19 @@ module.exports = function(pool, socket) {
 
     port.pipe(parser);
 
+    try {
+        //포트 열기
+        port.on('open', function() {
+            port.flush();
+            console.log('port open');
+            port.write('i');
 
-    port.on('open', () => {
-        console.log('port open success');
-        port.write('i');
+        });
 
-    });
+    } catch (e) {
+        console.log('port open error try catch ::::: ', e);
+    } //port 오픈 시 에러 처리 
+
     port.on('data', (data) => {
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
         var datafilter = data.toString().replace(re, '');

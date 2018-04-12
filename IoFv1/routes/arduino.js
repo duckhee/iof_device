@@ -29,7 +29,7 @@ module.exports = function(pool, socket) {
 
     } catch (e) {
         console.log('port open error try catch ::::: ', e);
-    }
+    } //port 오픈 시 에러 처리 
 
     // open errors will be emitted as an error event
     port.on('error', function(err) {
