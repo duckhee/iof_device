@@ -72,8 +72,6 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                             console.log('select setting error :::::::::: ', err);
                         }
 
-
-
                         if (result.length != 0 && result[0].st_serial) {
 
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
@@ -94,6 +92,7 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
                                         params: { serial: result[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
+                                    connection.release();
                                 }
                             });
 
@@ -108,10 +107,10 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                                 } else {
                                     console.log('default setting :::::::: ', result);
                                 }
-                            })
+                            });
+                            connection.release();
                         }
 
-                        connection.release();
 
                     });
                 });
