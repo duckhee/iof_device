@@ -63,12 +63,11 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                 console.log("photo captured with filename: " + timeInMs);
                 pool.getConnection(function(err, connection) {
                     console.log("camera connetion");
-
                     // 마지막으로 연결된 센서 정보 가져오기
                     connection.query(' select * from iof_settings  order by createdAt desc limit 0,1 ', function(err, result, fields) {
                         if (err) console.log(err);
 
-                        console.log(result);
+                        console.log('lat setting ::::::: ', result);
 
                         if (result.length != 0 && result[0].st_serial) {
 
