@@ -1,6 +1,7 @@
 module.exports = (function() {
     return {
         local: {
+            connectionLimit: '5',
             host: 'localhost',
             port: '3306',
             user: 'candh',
