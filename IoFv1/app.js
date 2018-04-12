@@ -113,7 +113,7 @@ pool.getConnection(function(err, conn) {
             } else {
                 if (!util.isEmpty(result)) {
                     console.log('get setting value :::: ', result);
-                    defaultcameratime = result.st_shootingtime;
+                    defaultcameratime = result[0].st_shootingtime;
                     console.log('get camera time :::: ', defaultcameratime);
 
                 } else {
