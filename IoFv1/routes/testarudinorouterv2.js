@@ -71,13 +71,13 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
 
                     console.log('get setting sensing time :::: ', defualtsensingtime);
                     var current_min = moment().format('m'); // 현재 시간 분 설정
-                    var timesensor = defualtsensingtime; //사진 촬영 인터벌
-                    var sub_min = 0; //정각에서 남은 시간
+                    var timesensor = defualtsensingtime; //사진 센싱 인터벌
+                    var sub_min = 0; //남는시간
 
                     //인터벌 함수 실행
-                    if (current_min == 0) { // 만약 0이면 바로 촬영 시작
+                    if (current_min == 0) { // 만약 0이면 바로 센싱 시작
                         sub_min = 0;
-                    } else { // 0이 아닐시 남은 시간 설정 후 촬영 시작
+                    } else { // 0이 아닐시 남은 시간 설정 후 센싱 시작
                         sub_min = timesensor - current_min / 5;
                     }
 
@@ -87,9 +87,9 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                         setInterval(function() {
                             console.log('interval ');
                             port.write('d');
-                        }, 1000 * 60 * timesensor); // 설정 시간 후에 반복 촬영
-                    }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작         
-                    //only soil data send 
+                        }, 1000 * 60 * timesensor); // 설정 시간 후에 반복 센싱
+                    }, 1000 * 60 * sub_min); // 제한된 시간 후에 센싱 시작
+
                     //only soil data send 
                     var sensorSoil = {
                         msg: 0,
