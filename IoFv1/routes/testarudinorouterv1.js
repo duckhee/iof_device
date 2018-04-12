@@ -65,7 +65,6 @@ module.exports = function(pool, socket, serialNum, sensingtime) {
                     "value": sensorValue[1]
                 }
             }
-
             pool.getConnection(function(err, conn) {
                 if (err) {
                     if (conn) {
@@ -89,7 +88,6 @@ module.exports = function(pool, socket, serialNum, sensingtime) {
 
         } else {
             if (!util.isEmpty(data.toString()) && (data.toString().length >= 5)) {
-                console.log('sensor info :::: ', data.toString());
                 pool.getConnection(function(err, conn) {
                     if (err) {
                         if (conn) {
@@ -119,77 +117,3 @@ module.exports = function(pool, socket, serialNum, sensingtime) {
 
     });
 }
-
-/*
-
-try {
-    pool.getConnection(function(err, conn) {
-        if (err) {
-            if (conn) {
-                conn.release();
-            }
-            console.log('insert data connection error ::::: ', err);
-        } else {
-            conn.query('insert iof_data into (sd_serial, temp_value, soil_value) values (?, ?, ?)', [serialNum, sensorValue[2], sensorValue[1]], function(err, result) {
-                if (err) {
-                    console.log('insert query error :::::: ', err);
-                    conn.rollback();
-                    conn.release();
-                } else {
-                    if (first_chk == 0) {
-                        console.log('receive data !');
-                        socket.on('sensor_dat_receive' + serialNum, function(data) {
-                            console.log('receive data ' + serialNum + ' : ' + data);
-                            if (data.msg == "1") {
-                                pool.getConnection(function(err, conn) {
-                                    conn.query('select * from iof_networks where sn_serial = ? and sn_type = ?', [serialNum, 'active'], function(err, result) {
-                                        if (err) {
-                                            if (conn) {
-                                                conn.release();
-                                            }
-                                            console.log('select network query error :::::::::: ', err);
-                                        } else {
-                                            if (result.length == 0) {
-                                                conn.query('insert into iof_networks (sn_serial, sn_type ) values (?, ?)', [serialNum, 'active'], function(err, result) {
-                                                    if (err) {
-                                                        if (conn) {
-                                                            conn.release();
-                                                        }
-                                                        console.log('insert network query error ::::::: ', err);
-                                                    } else {
-                                                        console.log('insert network success ', result);
-                                                    }
-                                                });
-                                            }
-                                            if (result.length > 0) {
-                                                conn.query('update iof_networks set updatedAt = NOW() where sn_serial = ? and sn_type = ?', [serialNum, 'active'], function(err, result) {
-                                                    if (err) {
-                                                        if (conn) {
-                                                            conn.release();
-                                                        }
-                                                        console.log('udpate network query error :::::::: ', err);
-                                                    } else {
-                                                        console.log('update network success ::: ', result);
-                                                    }
-                                                });
-                                            }
-                                            conn.release();
-                                        }
-                                    });
-                                });
-                            }
-                        });
-                    }
-                    socket.emit('sensor_data_request', sensor_obj);
-                    first_chk = 1;
-
-                }
-                conn.release();
-            });
-        }
-    });
-} catch (error) {
-    console.log(error);
-}
-
-*/
