@@ -70,7 +70,7 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
 
                         console.log(result);
 
-                        if (result.length != 0 && result[0].si_serial) {
+                        if (result.length != 0 && result[0].st_serial) {
 
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
