@@ -39,13 +39,15 @@ module.exports = function(pool, socket, serialNum) {
         var sensorValue = datafilter.split(',');
         if (first_chk == 0) {
             //보내기
-            socket.emit('device_setting_request', 'testing socket');
+            var datainfo = { msg: 0 };
+            socket.emit('device_setting_request', datainfo);
             console.log('first checking ::::: ', first_chk);
 
             socket.on('device_setting_recevie_' + serialNum, function(data) {
                 console.log('get socket testing :::::: ', data);
             })
         }
+        first_chk = 1;
         if (!util.isEmpty(sensorValue[1])) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
