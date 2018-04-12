@@ -80,6 +80,7 @@ module.exports = function(pool, socket, delivery) {
                                 }
                                 if (!err) {
                                     console.log(result);
+                                    conn.release();
                                 }
                             });
                             //send capture 
