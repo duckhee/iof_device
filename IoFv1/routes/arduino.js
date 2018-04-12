@@ -18,13 +18,17 @@ module.exports = function(pool, socket) {
 
     // 수분 측정
     port.pipe(parser);
+    try {
+        //포트 열기
+        port.on('open', function() {
+            console.log('port open');
+            port.write('i');
 
-    //포트 열기
-    port.on('open', function() {
-        console.log('port open');
-        port.write('i');
+        });
 
-    });
+    } catch (e) {
+        console.log('port open error try catch ::::: ', e);
+    }
 
     // open errors will be emitted as an error event
     port.on('error', function(err) {
