@@ -43,7 +43,7 @@ module.exports = function(pool, socket, serialNum) {
             socket.emit('device_setting_request', datainfo);
             console.log('first checking ::::: ', first_chk);
 
-            socket.on('device_setting_recevie_' + serialNum, function(data) {
+            socket.on('device_setting_receive_' + serialNum, function(data) {
                 console.log('get socket testing :::::: ', data);
             })
         }
