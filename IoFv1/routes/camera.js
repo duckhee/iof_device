@@ -89,6 +89,16 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                             });
                         } else {
                             console.log('not setting yet');
+                            connection.query('insert into iof_settings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
+                                if (err) {
+                                    if (conn) {
+                                        conn.release();
+                                    }
+                                    console.log('insert default setting error :::: ', err);
+                                } else {
+                                    console.log('default setting :::::::: ', result);
+                                }
+                            })
                         }
 
                         connection.release();
