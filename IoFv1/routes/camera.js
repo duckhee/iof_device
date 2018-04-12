@@ -78,15 +78,15 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                             connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result) {
                                 if (!error) {
                                     console.log('insert image success ::::: ', result);
+                                    // 촬영 이미지 전송
+                                    delivery.send({
+                                        name: timeInMs,
+                                        path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
+                                        params: { serial: result[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
+                                    });
                                 }
                             });
 
-                            // 촬영 이미지 전송
-                            delivery.send({
-                                name: timeInMs,
-                                path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
-                                params: { serial: result[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
-                            });
                         } else {
                             console.log('not setting yet');
                             connection.query('insert into iof_settings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {

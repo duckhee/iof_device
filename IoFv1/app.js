@@ -5,6 +5,7 @@ var path = require('path');
 var dl = require('delivery');
 var mysql = require('mysql');
 var db_config = require('./db_info/db_info').local;
+var util = require('./util/util');
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -44,38 +45,43 @@ delivery.on('delivery.connect', function(delivery) {
                     console.log('get image conn error :::::::: ', err);
                 }
                 console.log('last image info :::::::::::: ', row);
-                conn.query('select * from iof_networks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
-                    if (err) {
-                        if (conn) {
-                            conn.release();
+                if (!util.isEmpty(row)) {
+                    conn.query('select * from iof_networks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
+                        if (err) {
+                            if (conn) {
+                                conn.release();
+                            }
+                            console.log('select iof network error :::::::::::::: ', err);
                         }
-                        console.log('select iof network error :::::::::::::: ', err);
-                    }
-                    if (result.length == 0) {
-                        conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
-                            if (err) {
-                                if (conn) {
-                                    conn.release();
+                        if (result.length == 0) {
+                            conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
+                                if (err) {
+                                    if (conn) {
+                                        conn.release();
+                                    }
+                                    console.log('iof networks insert error :::::::::::::: ', err);
                                 }
-                                console.log('iof networks insert error :::::::::::::: ', err);
-                            }
-                            if (!err) {
+                                if (!err) {
 
-                            }
-                        });
-                    }
-                    if (result.length > 0) {
-                        conn.query('update iof_networks set createdAt = NOW() where in_serial = ?', [row[0].si_serial], function(err, result) {
-                            if (err) {
-                                if (conn) {
-                                    conn.release();
                                 }
-                                console.log('update network error :::::::::::::::::: ', err);
-                            }
-                        });
-                    }
-                });
-                conn.release();
+                            });
+                        }
+                        if (result.length > 0) {
+                            conn.query('update iof_networks set createdAt = NOW() where in_serial = ?', [row[0].si_serial], function(err, result) {
+                                if (err) {
+                                    if (conn) {
+                                        conn.release();
+                                    }
+                                    console.log('update network error :::::::::::::::::: ', err);
+                                }
+                            });
+                        }
+                    });
+                    conn.release();
+                } else {
+                    console.log('not image yet ::::::::::: ', row);
+                    conn.release();
+                }
             });
         });
     });
