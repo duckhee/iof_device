@@ -1,5 +1,5 @@
 'use strict';
-var flag = false;
+
 var util = require('../util/util');
 var testingArudino = require('../controller/arduinov1');
 module.exports = function(pool, socket, serialNum) {
@@ -7,6 +7,7 @@ module.exports = function(pool, socket, serialNum) {
     var fs = require('fs');
     var serialPort = require('serialport');
     var parsers = serialPort.parsers;
+    var first_chk = 0;
     var parser = new parsers.Readline({
         delimiter: '\r\n'
     });
@@ -23,6 +24,7 @@ module.exports = function(pool, socket, serialNum) {
         port.on('open', function() {
             port.flush();
             console.log('port open');
+            console.log('checking flag :::::::: ', first_chk);
             port.write('i');
 
         });
@@ -75,7 +77,7 @@ module.exports = function(pool, socket, serialNum) {
                                 }
                                 console.log('insert sensor info pi db error ::::::::: ', err);
                             } else {
-                                console.log('insert sensor pu result ::::::: ', result);
+                                console.log('insert sensor pi result ::::::: ', result);
                             }
                         });
                     }
