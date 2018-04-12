@@ -38,7 +38,10 @@ module.exports = function(pool, socket, serialNum) {
         var datafilter = data.toString().replace(re, '');
         var sensorValue = datafilter.split(',');
         if (first_chk == 0) {
+            //보내기
+            socket.emit('device_setting_request', 'testing socket');
             console.log('first checking ::::: ', first_chk);
+
             socket.on('device_setting_recevie_' + serialNum, function(data) {
                 console.log('get socket testing :::::: ', data);
             })
