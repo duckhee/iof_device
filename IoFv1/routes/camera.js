@@ -77,7 +77,7 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                             //정보 insert
                             connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result) {
                                 if (!error) {
-                                    console.log(result);
+                                    console.log('insert image success ::::: ', result);
                                 }
                             });
 
