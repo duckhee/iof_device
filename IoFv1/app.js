@@ -98,9 +98,9 @@ socket.on('connect', function() {
 
 var routes = require('./routes/index')(pool);
 
-//var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum);
+var arduino = require('./routes/testarudinorouterv1.js')(pool, socket, serialNum);
 
-var camera = require('./routes/camera')(pool, socket, delivery, serialNum).init();
+//var camera = require('./routes/camera')(pool, socket, delivery, serialNum).init();
 /*
 process.on('unhandledRejection', error => {
     throw error
