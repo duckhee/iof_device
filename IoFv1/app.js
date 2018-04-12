@@ -115,7 +115,7 @@ pool.getConnection(function(err, conn) {
                     console.log('get setting value :::: ', result);
                     defaultcameratime = result.st_shootingtime;
                     console.log('get camera time :::: ', defaultcameratime);
-                    defa
+
                 } else {
                     console.log('not setting yet');
                 }
