@@ -37,9 +37,13 @@ module.exports = function(pool, socket, serialNum) {
         var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
         var datafilter = data.toString().replace(re, '');
         var sensorValue = datafilter.split(',');
+        /*
+        //before setting server controller add
         if (first_chk == 0) {
             //보내기
-            var datainfo = { "msg": 0 };
+            var datainfo = {
+                "msg": 0
+            };
             socket.emit('device_setting_request', datainfo);
             console.log('first checking ::::: ', first_chk);
 
@@ -48,9 +52,20 @@ module.exports = function(pool, socket, serialNum) {
             })
         }
         first_chk = 1;
+        */
         if (!util.isEmpty(sensorValue[1])) {
             console.log('sensor value temp :::: ', sensorValue[2]);
             console.log('sensor value soil ::::: ', sensorValue[1]);
+
+            //only soil data send 
+            var sensorSoil = {
+                msg: 0,
+                info: {
+                    "serial": serialNum,
+                    "value": sensorValue[1]
+                }
+            }
+
             pool.getConnection(function(err, conn) {
                 if (err) {
                     if (conn) {
@@ -66,6 +81,7 @@ module.exports = function(pool, socket, serialNum) {
                             console.log('insert data pi db error :::::::::::: ', err);
                         } else {
                             console.log('insert data pi result ::::: ', result);
+                            socket.emit('sensor_data_request', sensorSoil);
                         }
                     });
                 }
