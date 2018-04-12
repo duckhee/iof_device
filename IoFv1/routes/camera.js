@@ -87,6 +87,8 @@ module.exports = function(pool, socket, delivery, serialNum) { //함수로 만�
                                 path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
                                 params: { serial: result[0].si_serial, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                             });
+                        } else {
+                            console.log('not setting yet');
                         }
 
                         connection.release();

@@ -22,6 +22,8 @@ var pool = mysql.createPool({
     password: 'candh3869',
     database: 'iof',
 });
+const serialNum = '6iOAk0yqx3eRspZXuSsV'; //testing serial num
+
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
@@ -87,7 +89,6 @@ socket.on('connect', function() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const serialNum = '6iOAk0yqx3eRspZXuSsV';
 
 var routes = require('./routes/index')(pool);
 
