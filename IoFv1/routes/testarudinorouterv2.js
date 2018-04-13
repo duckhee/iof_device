@@ -114,6 +114,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                                     console.log('insert data pi result ::::: ', result);
                                     socket.emit('sensor_data_request', sensorSoil);
                                     //   port.write('d');
+                                    conn.release();
                                 }
                             });
                         }
@@ -136,6 +137,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                                         console.log('insert sensor info pi db error ::::::::: ', err);
                                     } else {
                                         console.log('insert sensor pi result ::::::: ', result);
+                                        conn.release();
                                     }
                                 });
                             }
