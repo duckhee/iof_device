@@ -16,14 +16,13 @@ exports.control_motor = function(control_value) {
     }
 }
 
-exports.auto_motor = function(data){
-    switch(data){
-        case data :
+exports.auto_motor = function(data) {
+    switch (data) {
+        case data:
 
-        break;
-        case data :
+            break;
+        case data:
 
-        break;
+            break;
     }
 }
-
