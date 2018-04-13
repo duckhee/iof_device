@@ -17,10 +17,10 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
             if (current_min == 0) { // 만약 0이면 바로 촬영 시작
                 sub_min = 0;
             } else { // 0이 아닐시 남은 시간 설정 후 촬영 시작
-                sub_min = shooting_time - current_min;
+                sub_min = shooting_time - (shooting_time + current_min % shooting_time);
             }
 
-            console.log('sub_min : ' + sub_min);
+            console.log('camera sub_min : ' + sub_min);
 
             //사진한번 찍고
             this.camera_shooting();

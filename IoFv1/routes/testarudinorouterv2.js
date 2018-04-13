@@ -80,7 +80,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                     } else { // 0이 아닐시 남은 시간 설정 후 센싱 시작
                         sub_min = timesensor - (timesensor + current_min % timesensor);
                     }
-                    console.log('sub_min : ' + sub_min);
+                    console.log('sensor sub_min : ' + sub_min);
                     setTimeout(() => {
                         console.log('timeout ' + sub_min + ' minute');
                         setInterval(function() {
