@@ -152,6 +152,9 @@ void loop(){
       break;
       case 'd':
         takeMeasurement('0');
+        for(int i = 0; i < 60 ; i ++){
+          delay(1000);
+        }
       break;
     case 'b':
       printInfo('0');

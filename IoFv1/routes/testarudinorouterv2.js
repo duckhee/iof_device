@@ -66,6 +66,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                 first_chk = 1;
                 */
                 if (!util.isEmpty(sensorValue[1])) {
+
                     console.log('sensor value temp :::: ', sensorValue[2]);
                     console.log('sensor value soil ::::: ', sensorValue[1]);
 
@@ -93,7 +94,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                                 } else {
                                     console.log('insert data pi result ::::: ', result);
                                     socket.emit('sensor_data_request', sensorSoil);
-                                    port.write('d');
+
                                     /*
                                         console.log('get setting sensing time :::: ', defualtsensingtime);
                                         var current_min = moment().format('m'); // 현재 시간 분 설정
@@ -118,6 +119,8 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                                         }, 1000 * 60 * sub_min); // 제한된 시간 후에 센싱 시작
                     */
                                     conn.release();
+                                    port.flush();
+                                    port.write('d');
                                 }
                             });
                         }
