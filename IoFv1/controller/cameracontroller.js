@@ -30,7 +30,7 @@ module.exports = function(pool, socket, delivery) {
         camera_shooting: function() {
             var timeInMs = moment().format('YYYYMMDDHHmmss');
             var dir_name = moment().format('YYYYMM');
-            var photo_path = process.cwd() + '/images' + dir_name + '/' + timeInMs + '.jpg';
+            var photo_path = process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg';
             var cmd_photo = 'raspistill -vf -hf -ex auto -ev 0 -awb auto -w 1649 -h 922 -o' + photo_path;
 
             //make folder
@@ -42,8 +42,11 @@ module.exports = function(pool, socket, delivery) {
             }
             exec_photo(cmd_photo, function(err, stdout, stderr) {
                 if (err) {
-                    console.log('child process exited with shooting photo error code', err);
-                    console.log('child process exited with shooting photo error code', err.stack);
+                    console.log('child process exited with shooting photo error ::::::::::: ', err);
+                    console.log();
+                    console.log('child process exited with shooting photo error stack :::::::::::::::: ', err.stack);
+                    console.log();
+                    console.log('child process exited with shooting photo error code ::::::::::::::: ', err.code);
                     return;
                 }
                 console.log('photo captured with filename ::::::::::::::' + timeInMs);
@@ -55,7 +58,7 @@ module.exports = function(pool, socket, delivery) {
                         console.log('db connection error :::::: ', err);
                         console.log('db connection error :::::: ', err.stack);
                     }
-                    conn.query('select * from iof_setting order by createdAt desc limit 0, 1', function(err, result, fields) {
+                    conn.query('select * from iof_settings order by createdAt desc limit 0, 1', function(err, result, fields) {
                         if (err) {
                             if (conn) {
                                 conn.release();
@@ -64,10 +67,10 @@ module.exports = function(pool, socket, delivery) {
                             console.log('select setting query error ::::::::: ', err.stack);
                         }
                         console.log(result);
-                        if (result.length !== 0 && result[0].i_serial) {
+                        if (result.length !== 0 && result[0].st_serial) {
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg');
                             //insert info
-                            conn.query('insert into iof_images () values ()', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(err, result) {
+                            conn.query('insert into iof_images () values ()', [result[0].si_serial, dir_name, timeInMs + ".jpg", stats.size], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
@@ -77,6 +80,7 @@ module.exports = function(pool, socket, delivery) {
                                 }
                                 if (!err) {
                                     console.log(result);
+                                    conn.release();
                                 }
                             });
                             //send capture 
@@ -84,7 +88,7 @@ module.exports = function(pool, socket, delivery) {
                                 name: timeInMs,
                                 path: process.cwd() + '/images/' + dir_name + '/' + timeInMs + '.jpg',
                                 params: {
-                                    serial: '',
+                                    serial: result[0].si_serial,
                                     filename: timeInMs + '.jpg',
                                     path: dir_name,
                                     filesize: stats.size

@@ -1,47 +1,118 @@
 var serialPort = require('serialport');
 var parsers = serialPort.parsers;
-var parser = new parsers.serialPort({
-    delimiters: '\r\n'
+var parser = new parsers.Readline({
+    delimiter: '\r\n'
 });
 
-var port = new serialPort.parser('/dev/ttyACM0', {
+var port = new serialPort('/dev/ttyACM0', {
     baudRate: 9600
 });
 
 port.pipe(parser);
 
+
 port.on('open', () => {
     console.log('port open success');
 });
 
-port.on('error', (err) => {
-    console.log('port error :::::: ', err);
-    console.log('port error :::::: ', err.stack);
-})
 
-exports.sensor_info = function() {
+exports.sensor_info = function(callback) {
+
     var datavalue = '';
+    port.flush();
     port.write('i');
     port.on('data', (data) => {
-        console.log(data.toString());
+        //  console.log(data.toString());
         datavalue = data.toString();
+        port.flush();
+        //return datavalue;
         callback(null, datavalue);
     });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
+
+
 }
 
-exports.sensor_mesurement = function() {
+exports.sensor_mesurement = function(callback) {
     var datavalue = '';
+    port.flush();
     port.write('d');
     port.on('data', (data) => {
-        console.log(data.toString());
+        // console.log(data.toString());
         datavalue = data.toString();
+        //return datavalue;
+        port.flush();
         callback(null, datavalue);
+
     });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
+
 };
 
-exports.both_get = function() {
+
+exports.clear_sensor = function(callback) {
+
     var datavalue = '';
-    datavalue += sensor_info();
-    datavalue += sensor_mesurement();
-    callback(null, datavalue);
+    port.write('c');
+    port.on('data', (data) => {
+        datavalue = data.toString();
+        port.flush();
+        callback(null, datavalue);
+    });
+    port.on('error', (err) => {
+        console.log('port error :::::: ', err);
+        console.log('port error :::::: ', err.stack);
+        callback(err, null);
+    });
+
+}
+exports.both_get = function(callback) {
+    var datavalue = '';
+    this.sensor_info(function(err, result) {
+        if (err) {
+            console.log('sensor info error ::::::: ', err);
+            callback(err, null);
+        } else if (result) {
+            console.log('sensor info :::::::::: ', result);
+            datavalue += result;
+            this.clear_sensor(function(err, result1) {
+                if (err) {
+                    console.log('clear arduino error ::::::: ', err);
+                    callback(err, null);
+                } else if (result1) {
+                    console.log('clear arudino ::::: ', result1);
+                    this.sensor_mesurement(function(err, result2) {
+                        if (err) {
+                            console.log('sensor mesurement error ::::: ', err);
+                            callback(err, null);
+                        } else if (result2) {
+                            console.log('get mesurement :::::: ', result2);
+                            datavalue += result2;
+                            callback(null, datavalue);
+                        } else {
+                            console.log('null');
+                            callback(null, null);
+                        }
+                    });
+                } else {
+                    console.log('null');
+                    callback(null, null);
+                }
+            });
+
+        } else {
+            console.log('null');
+            callback(null, null);
+        }
+    })
+
+    //return datavalue;
 }

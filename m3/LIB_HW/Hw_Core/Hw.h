@@ -8,6 +8,16 @@
 #endif
 
 
+#ifdef HW_LOCAL
+#define HW_DEF
+#else
+#define HW_DEF     extern
+#endif
+
+
+#include "Hw_PLL.h"
+
+
 
 
 #endif

@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-const config = require('../db_info').local;
+const config = require('../db_info/db_info').local;
 
 module.exports = function() {
     return {
@@ -8,7 +8,7 @@ module.exports = function() {
         },
 
         test: function(con) {
-            con.connect(function(err) {
+            con.getConnection(function(err) {
                 if (err) {
                     console.error('mysql connection error ::::::::::::::::: ', err);
                 } else {
