@@ -66,6 +66,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                 first_chk = 1;
                 */
                 if (!util.isEmpty(sensorValue[1])) {
+
                     console.log('sensor value temp :::: ', sensorValue[2]);
                     console.log('sensor value soil ::::: ', sensorValue[1]);
 
@@ -93,6 +94,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                                 } else {
                                     console.log('insert data pi result ::::: ', result);
                                     socket.emit('sensor_data_request', sensorSoil);
+                                    port.flush();
                                     port.write('d');
                                     /*
                                         console.log('get setting sensing time :::: ', defualtsensingtime);
