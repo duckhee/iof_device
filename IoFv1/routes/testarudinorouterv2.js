@@ -123,6 +123,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
 
                 } else {
                     if (!util.isEmpty(data.toString()) && (data.toString().length >= 5) && flag === false) {
+                        console.log('get sensor info ');
                         pool.getConnection(function(err, conn) {
                             if (err) {
                                 if (conn) {
