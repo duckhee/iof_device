@@ -18,10 +18,10 @@ exports.control_motor = function(control_value) {
 
 exports.auto_motor = function(data) {
     switch (data) {
-        case data:
+        case 0:
 
             break;
-        case data:
+        case 1:
 
             break;
     }
