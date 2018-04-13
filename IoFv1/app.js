@@ -124,6 +124,7 @@ pool.getConnection(function(err, conn) {
     }
 });
 
+
 var routes = require('./routes/index')(pool);
 
 var arduino = require('./routes/testarudinorouterv2.js')(pool, socket, serialNum, defualtsensingtime).init();
