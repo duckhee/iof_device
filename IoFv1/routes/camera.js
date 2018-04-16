@@ -61,7 +61,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                 pool.getConnection(function(err, connection) {
                     console.log("camera connetion");
                     // 마지막으로 연결된 센서 정보 가져오기
-                    connection.query(' select * from iof_settings  order by createdAt desc limit 0,1 ', function(err, result, fields) {
+                    connection.query(' select * from iofsetting  order by createdAt desc limit 0,1 ', function(err, result, fields) {
                         if (err) {
                             if (connection) {
                                 connection.release();
@@ -74,7 +74,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                             //정보 insert
-                            connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result2) {
+                            connection.query(' insert into iofimages  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result2) {
                                 if (error) {
                                     if (connection) {
                                         connection.release();
@@ -95,7 +95,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
 
                         } else {
                             console.log('not setting yet');
-                            connection.query('insert into iof_settings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
+                            connection.query('insert into iofsetting (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
