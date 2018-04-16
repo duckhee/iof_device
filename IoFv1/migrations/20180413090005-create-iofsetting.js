@@ -12,21 +12,29 @@ module.exports = {
         type: Sequelize.STRING
       },
       st_shootingtime: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false,
+        defaultValue:'30'
       },
       st_water: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false,
+        defaultValue:'3'
       },
       st_sensingtime: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false,
+        defaultValue:'1'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     });
   },

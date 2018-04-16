@@ -9,24 +9,34 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       sd_serial: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false,
+        defaultValue:0
       },
       temp: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false,
+        defaultValue:0    
       },
       soil: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false,
+        defaultValue:0
       },
       textvalue: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull:false,
+        defaultValue:'0'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     });
   },

@@ -1,10 +1,22 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var iofimage = sequelize.define('iofimage', {
-    si_serial: DataTypes.STRING,
-    si_path: DataTypes.STRING,
-    si_filename: DataTypes.STRING,
-    si_filesize: DataTypes.STRING
+    si_serial: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
+    si_path: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
+    si_filename: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
+    si_filesize: {
+      type:DataTypes.STRING,
+      allowNull:false
+    }
   }, {
     classMethods: {
       associate: function(models) {

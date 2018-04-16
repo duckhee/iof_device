@@ -9,18 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       si_serial: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       si_type: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('active', 'inactive'),
+        defaultValue: 'inactive'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     });
   },

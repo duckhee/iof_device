@@ -2,9 +2,17 @@
 module.exports = function(sequelize, DataTypes) {
   var iofvalue = sequelize.define('iofvalue', {
     sd_serial: DataTypes.STRING,
-    temp: DataTypes.INTEGER,
+    temp: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      defaultValue:0
+    },
     soil: DataTypes.INTEGER,
-    textvalue: DataTypes.TEXT
+    textvalue: {
+      type:DataTypes.TEXT,
+      allowNull:false,
+      defaultValue:0
+    },
   }, {
     classMethods: {
       associate: function(models) {
