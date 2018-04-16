@@ -107,8 +107,6 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                             });
                             connection.release();
                         }
-
-
                     });
                 });
 
