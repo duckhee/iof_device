@@ -37,7 +37,7 @@ delivery.on('delivery.connect', function(delivery) {
         pool.getConnection(function(err, conn) {
             //use the connection
             //get last save image info 
-            conn.query('select * from iof_images order by createdAt desc limit 0, 1', function(err, row, fileds) {
+            conn.query('select * from iofimages order by createdAt desc limit 0, 1', function(err, row, fileds) {
                 if (err) {
                     if (conn) {
                         conn.release();
@@ -46,7 +46,7 @@ delivery.on('delivery.connect', function(delivery) {
                 }
                 console.log('last image info :::::::::::: ', row);
                 if (!util.isEmpty(row)) {
-                    conn.query('select * from iof_networks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
+                    conn.query('select * from iofnetwork where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
                         if (err) {
                             if (conn) {
                                 conn.release();
@@ -54,7 +54,7 @@ delivery.on('delivery.connect', function(delivery) {
                             console.log('select iof network error :::::::::::::: ', err);
                         }
                         if (result.length == 0) {
-                            conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
+                            conn.query('insert into iofnetwork (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
@@ -67,7 +67,7 @@ delivery.on('delivery.connect', function(delivery) {
                             });
                         }
                         if (result.length > 0) {
-                            conn.query('update iof_networks set updatedAt = NOW() where si_serial = ?', [row[0].si_serial], function(err, result) {
+                            conn.query('update iofnetwork set updatedAt = NOW() where si_serial = ?', [row[0].si_serial], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
@@ -104,7 +104,7 @@ pool.getConnection(function(err, conn) {
         }
         console.log('get setting value error time :::::: ', err);
     } else {
-        conn.query('select * from iof_settings', function(err, result) {
+        conn.query('select * from iofsetting', function(err, result) {
             if (err) {
                 if (conn) {
                     conn.release();
@@ -127,7 +127,7 @@ pool.getConnection(function(err, conn) {
 
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarudinorouterv2.js')(pool, socket, serialNum, defualtsensingtime).init();
+var arduino = require('./routes/testarudinorouterv3.js')(pool, socket, serialNum, defualtsensingtime).init();
 
 var camera = require('./routes/camera')(pool, socket, delivery, serialNum, defaultcameratime).init();
 /*
