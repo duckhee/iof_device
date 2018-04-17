@@ -131,9 +131,9 @@ pool.getConnection(function(err, conn) {
 
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarduinorouterv3.js')(pool, socket, serialNum, defualtsensingtime).init();
+var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, defualtsensingtime).init();
 
-var camera = require('./routes/camera')(pool, socket, delivery, serialNum, defaultcameratime).init();
+var camera = require('./routes/camera')(socket, delivery, serialNum, defaultcameratime).init();
 /*
 process.on('unhandledRejection', error => {
     throw error

@@ -13,7 +13,7 @@ var SettingController = require('../dbcontroller/SettingController');
 
 var flag = false;
 
-module.exports = function(pool, socket, serialNum, defualtsensingtime) {
+module.exports = function(socket, serialNum, defualtsensingtime) {
     return {
         init: function() {
             console.log('get setting sensing time :::: ', defualtsensingtime)
@@ -40,6 +40,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
 
         },
         sensing: function() {
+            console.log('sensing start');
             var parsers = serialPort.parsers;
             var first_chk = 0;
             var parser = new parsers.Readline({
@@ -103,7 +104,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                         if (err) {
                             console.log('insert data error : ', err);
                         } else {
-                            console.log('insert data pi result ::::: ', result);
+                            //   console.log('insert data pi result ::::: ', result);
                             socket.emit('sensor_data_request', sensorSoil);
                             port.flush();
                             port.write('d');
@@ -119,7 +120,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                             if (err) {
                                 console.log('sensor infomation error : ', err);
                             } else {
-                                console.log('insert sensor pi result ::::::: ', result);
+                                //  console.log('insert sensor pi result ::::::: ', result);
                                 flag = true;
                                 port.write('d');
                             }
