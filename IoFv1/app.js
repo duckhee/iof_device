@@ -131,9 +131,9 @@ var defualtsensingtime = 5;
 
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, defualtsensingtime).init();
+var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, 5).init();
 
-var camera = require('./routes/camera')(socket, delivery, serialNum, defaultcameratime).init();
+var camera = require('./routes/camera')(socket, delivery, serialNum, 30).init();
 /*
 process.on('unhandledRejection', error => {
     throw error
