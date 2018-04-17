@@ -96,14 +96,13 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                 if (err) {
                                     console.log('insert image pi error ::::::::: ', error);
                                 } else {
-                                    console.log('insert image success ::::: ', result2);
                                     // 촬영 이미지 전송
                                     delivery.send({
                                         name: timeInMs,
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
                                         params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
-                                    console.log('delivert send success ');
+                                    console.log('delivery send success ');
                                 }
                             });
 
