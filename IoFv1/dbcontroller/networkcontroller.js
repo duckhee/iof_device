@@ -7,7 +7,7 @@ exports.InsertNetwork = function(network_info, callback) {
         si_serial: network_info.serial,
         si_type: 'active'
     }).then((result) => {
-        console.log('insert network result : ', result);
+        //   console.log('insert network result : ', result);
         callback(null, result);
     }).catch((err) => {
         console.log('insert network error : ', err);
@@ -25,7 +25,7 @@ exports.FindNetwork = function(network_info, callback) {
             si_serial: network_info.serial
         }
     }).then((result) => {
-        console.log('find network all result : ', result);
+        //      console.log('find network all result : ', result);
         callback(null, result);
     }).catch((err) => {
         console.log('find all network error : ', err);
@@ -44,7 +44,7 @@ exports.UpdateNetwork = function(network_info, callback) {
             si_type: 'active'
         }
     }).then((result) => {
-        console.log('update network result : ', result);
+        //    console.log('update network result : ', result);
         callback(null, result);
     }).catch((err) => {
         console.log('update network error : ', err);
