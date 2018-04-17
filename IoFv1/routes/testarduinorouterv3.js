@@ -95,10 +95,11 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                             "value": sensorValue[1]
                         }
                     }
+
                     var sensordataInfo = {
                         serial: serialNum,
-                        tempvalue: sensorValue[2],
-                        soilvalue: sensorValue[1]
+                        tempvalue: Number(sensorValue[2]),
+                        soilvalue: Number(sensorValue[1])
                     }
                     console.log('sensor value temp :::: ', sensorValue[2]);
                     console.log('sensor value soil ::::: ', sensorValue[1]);
