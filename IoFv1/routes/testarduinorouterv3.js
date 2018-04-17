@@ -67,6 +67,10 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 var datafilter = data.toString().replace(re, '');
                 var sensorValue = datafilter.split(',');
                 console.log('sensor value : ', sensorValue);
+                if (sensorValue === '\r\n') {
+                    console.log('null data insert');
+                    port.write('i');
+                }
                 /*
                 //before setting server controller add
                 if (first_chk == 0) {
