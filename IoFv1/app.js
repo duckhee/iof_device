@@ -92,8 +92,8 @@ delivery.on('delivery.connect', function(delivery) {
 });
 
 socket.on('connect', function() {
-    console.log('connection success');
-})
+    console.log('socket connection success');
+});
 
 
 
