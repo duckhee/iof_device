@@ -89,7 +89,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                 serial: result[0].st_serial,
                                 path: dir_name,
                                 filename: timeInMs + ".jpg",
-                                filesize: size
+                                filesize: stats.size
                             };
 
                             ImageController.InsertImage(imageInfo, function(erre, result) {
