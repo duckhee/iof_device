@@ -48,10 +48,10 @@ delivery.on('delivery.connect', function(delivery) {
                 if (!util.isEmpty(row)) {
                     conn.query('select * from iofnetworks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
                         if (err) {
+                            console.log('select iof network error :::::::::::::: ', err);
                             if (conn) {
                                 conn.release();
                             }
-                            console.log('select iof network error :::::::::::::: ', err);
                         }
                         if (result.length == 0) {
                             conn.query('insert into iofnetworks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
