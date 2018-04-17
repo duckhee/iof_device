@@ -97,8 +97,8 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                             console.log('not setting yet');
                             connection.query('insert into iofsettings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
                                 if (err) {
-                                    if (conn) {
-                                        conn.release();
+                                    if (connection) {
+                                        connection.release();
                                     }
                                     console.log('insert default setting error :::: ', err);
                                 } else {
