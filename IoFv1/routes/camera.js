@@ -5,6 +5,7 @@ var moment = require('moment'); // moment 시간 모듈
 var exec_photo = require('child_process').exec;
 var fs = require('fs');
 var ImageController = require('../dbcontroller/ImageController');
+var SettingController = require('../dbcontroller/SettingController');
 module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
     return {
         init: function() {
@@ -58,6 +59,16 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                 }
 
                 console.log("photo captured with filename: " + timeInMs);
+                /*
+                //get setting
+                SettingController.FindSetting(function(err, result) {
+                    if (err) {
+                        console.log('select setting error :::::::::: ', err);
+                    }else{
+
+                    }
+                });
+                */
                 pool.getConnection(function(err, connection) {
                     console.log("camera connetion");
                     // 마지막으로 연결된 센서 정보 가져오기
@@ -98,6 +109,20 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
 
                         } else {
                             console.log('not setting yet');
+                            var settingInfo = {
+                                serial: serialNum,
+                                shootingtime: 30,
+                                watertime: 5,
+                            };
+                            /*
+                            SettingController.InsertSetting(settingInfo, function(err, result){
+                                if(err){
+                                    console.log('insert default setting error :::: ', err);
+                                }else{
+                                    console.log('default setting :::::::: ', result);
+                                }
+                            });
+                            */
                             connection.query('insert into iofsettings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
                                 if (err) {
                                     if (connection) {
@@ -106,9 +131,9 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                     console.log('insert default setting error :::: ', err);
                                 } else {
                                     console.log('default setting :::::::: ', result);
+                                    connection.release();
                                 }
                             });
-                            connection.release();
                         }
                     });
                 });
