@@ -45,8 +45,9 @@ delivery.on('delivery.connect', function(delivery) {
                     console.log('get image conn error :::::::: ', err);
                 }
                 console.log('last image info :::::::::::: ', row[0].si_serial);
-                console.log('test empty ::: ', util.isEmpty(row));
+
                 if (!util.isEmpty(row)) {
+                    console.log('not empty ');
                     conn.query('select * from iofnetworks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
                         if (err) {
                             console.log('select iof network error :::::::::::::: ', err);
