@@ -24,6 +24,7 @@ var pool = mysql.createPool({
     database: 'iof',
 });
 const serialNum = '6iOAk0yqx3eRspZXuSsV'; //testing serial num
+var NeworkController = require('./dbcontroller/NetworkController');
 
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
@@ -48,41 +49,42 @@ delivery.on('delivery.connect', function(delivery) {
 
                 if (!util.isEmpty(row)) {
                     console.log('not empty ');
-                    conn.query('select * from iofnetworks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
+                    //network checking 
+                    var checkingInfo = {
+                        serial: row[0].si_serial
+                    };
+                    NeworkController.FindNetwork(checkingInfo, function(err, result) {
                         if (err) {
                             console.log('select iof network error :::::::::::::: ', err);
-                            if (conn) {
-                                conn.release();
+                        } else {
+                            if (result.length == 0) {
+                                var network_info = {
+                                    serial: row[0].si_serial
+                                }
+                                NeworkController.InsertNetwork(network_info, function(err, result) {
+                                    if (err) {
+                                        console.log('iof networks insert error :::::::::::::: ', err);
+                                    } else {
+                                        console.log('success iof neworks insert ');
+                                    }
+                                });
+                            }
+                            if (result.length > 0) {
+                                var networkInfo = {
+                                    serial: row[0].si_serial
+                                }
+                                NeworkController.UpdateNetwork(networkInfo, function(err, result) {
+                                    if (err) {
+                                        console.log('update network error :::::::::::::::::: ', err);
+                                    } else {
+                                        console.log('success iofnetwork update ');
+                                    }
+                                });
                             }
                         }
-                        if (result.length == 0) {
-                            conn.query('insert into iofnetworks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
-                                if (err) {
-                                    if (conn) {
-                                        conn.release();
-                                    }
-                                    console.log('iof networks insert error :::::::::::::: ', err);
-                                }
-                                if (!err) {
-
-                                }
-                            });
-                        }
-                        if (result.length > 0) {
-                            conn.query('update iofnetworks set updatedAt = NOW() where si_serial = ?', [row[0].si_serial], function(err, result) {
-                                if (err) {
-                                    if (conn) {
-                                        conn.release();
-                                    }
-                                    console.log('update network error :::::::::::::::::: ', err);
-                                }
-                            });
-                        }
                     });
-                    conn.release();
                 } else {
                     console.log('not image yet ::::::::::: ', row);
-                    conn.release();
                 }
             });
         });
