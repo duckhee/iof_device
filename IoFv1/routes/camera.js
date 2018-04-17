@@ -71,7 +71,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                 */
                 pool.getConnection(function(err, connection) {
                     console.log("camera connetion");
-                    SettingController.OneSetting(function(err, result) {
+                    SettingController.FindSetting(function(err, result) {
                         if (err) {
                             console.log('select setting error :::::::::: ', err);
                         } else {
