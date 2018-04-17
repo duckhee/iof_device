@@ -44,9 +44,9 @@ delivery.on('delivery.connect', function(delivery) {
                     }
                     console.log('get image conn error :::::::: ', err);
                 }
-                console.log('last image info :::::::::::: ', row.si_serial);
+                console.log('last image info :::::::::::: ', row[0].si_serial);
                 if (!util.isEmpty(row)) {
-                    conn.query('select * from iofnetworks where si_serial = ?', [row.si_serial], function(err, result, fields) {
+                    conn.query('select * from iofnetworks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
                         if (err) {
                             if (conn) {
                                 conn.release();
@@ -54,7 +54,7 @@ delivery.on('delivery.connect', function(delivery) {
                             console.log('select iof network error :::::::::::::: ', err);
                         }
                         if (result.length == 0) {
-                            conn.query('insert into iofnetworks (si_serial, si_type, createdAt) values (?,?,NOW())', [row.si_serial, 'active'], function(err, result) {
+                            conn.query('insert into iofnetworks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
@@ -67,7 +67,7 @@ delivery.on('delivery.connect', function(delivery) {
                             });
                         }
                         if (result.length > 0) {
-                            conn.query('update iofnetworks set updatedAt = NOW() where si_serial = ?', [row.si_serial], function(err, result) {
+                            conn.query('update iofnetworks set updatedAt = NOW() where si_serial = ?', [row[0].si_serial], function(err, result) {
                                 if (err) {
                                     if (conn) {
                                         conn.release();
