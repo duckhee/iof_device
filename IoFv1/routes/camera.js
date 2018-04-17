@@ -92,7 +92,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                 filesize: stats.size
                             };
 
-                            ImageController.InsertImage(imageInfo, function(erre, result) {
+                            ImageController.InsertImage(imageInfo, function(erre, result2) {
                                 if (err) {
                                     console.log('insert image pi error ::::::::: ', error);
                                 } else {
