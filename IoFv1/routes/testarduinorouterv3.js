@@ -75,31 +75,31 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                         }
                     }
                     var Info = {
-                        serial:serialNum,
-                        tempvalue:sensorValue[2],
-                        soilvalue:sensorValue[1]
+                        serial: serialNum,
+                        tempvalue: sensorValue[2],
+                        soilvalue: sensorValue[1]
                     }
-                    SensorValueController.InsertData(Info, function(err, result){
-                        if(err){
+                    SensorValueController.InsertData(Info, function(err, result) {
+                        if (err) {
                             console.log('insert data error : ', err);
-                        }else{
+                        } else {
                             console.log('insert data pi result ::::: ', result);
                             socket.emit('sensor_data_request', sensorSoil);
                             conn.release();
                             port.flush();
                             port.write('d');
                         }
-                    });               
+                    });
                 } else {
                     if (!util.isEmpty(data.toString()) && (data.toString().length >= 5) && flag === false) {
                         console.log('get sensor info ');
                         var SensorInfo = {
-                            info:data.toString()
+                            info: data.toString()
                         };
-                        SensorInfoController.InsertInfo(SensorInfo, function(err, result){
-                            if(err){
+                        SensorInfoController.InsertInfo(SensorInfo, function(err, result) {
+                            if (err) {
                                 console.log('sensor infomation error : ', err);
-                            }else{
+                            } else {
                                 console.log('insert sensor pi result ::::::: ', result);
                                 flag = true;
                                 port.write('d');
