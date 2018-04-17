@@ -25,7 +25,11 @@ var pool = mysql.createPool({
 });
 const serialNum = '6iOAk0yqx3eRspZXuSsV'; //testing serial num
 var NeworkController = require('./dbcontroller/NetworkController');
+var routes = require('./routes/index')(pool);
 
+var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, defualtsensingtime).init();
+
+var camera = require('./routes/camera')(socket, delivery, serialNum, defaultcameratime).init();
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
@@ -129,11 +133,7 @@ pool.getConnection(function(err, conn) {
 });
 
 
-var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, defualtsensingtime).init();
-
-var camera = require('./routes/camera')(socket, delivery, serialNum, defaultcameratime).init();
 /*
 process.on('unhandledRejection', error => {
     throw error
