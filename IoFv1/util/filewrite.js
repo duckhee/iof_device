@@ -1,7 +1,7 @@
 var fs = require('fs');
 var moment = require('moment');
 
-
+//write db data
 exports.ReadWrite = function(write_info, callback) {
     var data_format = moment().formant('YYYYMMDD');
     //make folder and check
@@ -9,5 +9,17 @@ exports.ReadWrite = function(write_info, callback) {
         fs.mkdirSync(process.cwd() + '/data/' + data_format, '0777');
     }
     //write data
-    fs.writeFileSync()
+    try {
+        fs.writeFileSync(data_format + '.txt', write_info, 'utf8');
+        console.log('write file success ');
+        callback(null);
+    } catch (err) {
+        console.log('write file error ::: ', err);
+        callback(err);
+    }
 };
+
+//log error 
+exports.ErrorLog = function(error_info, callback) {
+
+}
