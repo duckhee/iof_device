@@ -116,6 +116,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                         }
                     });
                 } else {
+                    console.log('get data : ', data.toString());
                     if (!util.isEmpty(data.toString()) && (data.toString().length >= 5) && flag === false) {
                         console.log('get sensor info ');
                         var SensorInfo = {
