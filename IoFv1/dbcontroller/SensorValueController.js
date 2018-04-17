@@ -5,8 +5,9 @@ var iofvalue = require('../models/iofvalue');
 exports.InsertData = function(data_info, callback) {
     models.iofvalue.create({
         sd_serial: data_info.serial,
-        temp_value: data_info.tempvalue,
-        soil_value: data_info.soilvalue
+        temp_value: data_info.temp_value,
+        soil_value: data_info.soil_value,
+        textvalue: "" + data_info.temp_value + "," + data_info.soil_value
     }).then((result) => {
         //console.log('insert value temp, soil rocal database : ', result);
         callback(null, result);
