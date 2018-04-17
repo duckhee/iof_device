@@ -130,6 +130,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                             }
                         });
                     } else {
+                        console.log('sensor null port write i');
                         port.write('i');
                     }
                 }
