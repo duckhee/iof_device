@@ -31,6 +31,8 @@ exports.OneSetting = function(callback) {
 };
 
 
+
+
 //find last setting 
 exports.FindSetting = function(callback) {
     models.iofsetting.find({
