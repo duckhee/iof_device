@@ -114,26 +114,16 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                 shootingtime: 30,
                                 watertime: 5,
                             };
-                            /*
-                            SettingController.InsertSetting(settingInfo, function(err, result){
-                                if(err){
-                                    console.log('insert default setting error :::: ', err);
-                                }else{
-                                    console.log('default setting :::::::: ', result);
-                                }
-                            });
-                            */
-                            connection.query('insert into iofsettings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
+
+                            SettingController.InsertSetting(settingInfo, function(err, result) {
                                 if (err) {
-                                    if (connection) {
-                                        connection.release();
-                                    }
                                     console.log('insert default setting error :::: ', err);
                                 } else {
                                     console.log('default setting :::::::: ', result);
-                                    connection.release();
                                 }
                             });
+
+
                         }
                     });
                 });
