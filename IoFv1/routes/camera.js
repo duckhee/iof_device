@@ -75,14 +75,14 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                         if (err) {
                             console.log('select setting error :::::::::: ', err);
                         } else {
-                            console.log(result[0].st_serial);
+                            console.log(result.st_serial);
                             if (result.length != 0 && result.st_serial) {
 
                                 var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                                 //정보 insert
                                 var imageInfo = {
-                                    serial: result[0].st_serial,
+                                    serial: result.st_serial,
                                     path: dir_name,
                                     filename: timeInMs + ".jpg",
                                     filesize: stats.size
