@@ -66,6 +66,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
                 var datafilter = data.toString().replace(re, '');
                 var sensorValue = datafilter.split(',');
+                Console.log(sensorValue);
                 /*
                 //before setting server controller add
                 if (first_chk == 0) {
