@@ -6,6 +6,7 @@ exports.InsertImage = function(data_info, callback) {
     models.iofimage.create({
         si_serial: data_info.serial,
         si_path: data_info.path,
+        si_filename: data_info.filename,
         si_filesize: data_info.filesize
     }).then((result) => {
         //  console.log('insert images result : ', result);

@@ -4,7 +4,7 @@
 var moment = require('moment'); // moment 시간 모듈
 var exec_photo = require('child_process').exec;
 var fs = require('fs');
-
+var ImageController = require('../dbcontroller/ImageController');
 module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
     return {
         init: function() {
@@ -74,14 +74,17 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                             //정보 insert
-                            connection.query(' insert into iofimages  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result2) {
-                                if (error) {
-                                    if (connection) {
-                                        connection.release();
-                                    }
+                            var imageInfo = {
+                                serial: result[0].st_serial,
+                                path: dir_name,
+                                filename: timeInMs + ".jpg",
+                                filesize: size
+                            };
+
+                            ImageController.InsertImage(imageInfo, function(erre, result) {
+                                if (err) {
                                     console.log('insert image pi error ::::::::: ', error);
-                                }
-                                if (!error) {
+                                } else {
                                     console.log('insert image success ::::: ', result2);
                                     // 촬영 이미지 전송
                                     delivery.send({
@@ -89,9 +92,9 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
                                         params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
-                                    connection.release();
                                 }
                             });
+
 
                         } else {
                             console.log('not setting yet');
