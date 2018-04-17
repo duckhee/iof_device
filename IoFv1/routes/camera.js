@@ -103,6 +103,7 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
                                         params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
+                                    console.log('delivert send success ');
                                 }
                             });
 
