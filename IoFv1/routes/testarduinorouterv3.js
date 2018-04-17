@@ -100,12 +100,15 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                             "value": sensorValue[1]
                         }
                     }
-                    var Info = {
+                    var sensordataInfo = {
                         serial: serialNum,
                         tempvalue: sensorValue[2],
                         soilvalue: sensorValue[1]
                     }
-                    SensorValueController.InsertData(Info, function(err, result) {
+                    console.log('sensor value temp :::: ', sensorValue[2]);
+                    console.log('sensor value soil ::::: ', sensorValue[1]);
+
+                    SensorValueController.InsertData(sensordataInfo, function(err, result) {
                         if (err) {
                             console.log('insert data error : ', err);
                         } else {
