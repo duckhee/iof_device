@@ -17,6 +17,20 @@ exports.InsertSetting = function(data_info, callback) {
     });
 };
 
+//find one setting
+exports.OneSetting = function(callback) {
+    models.iofsetting.findOne({
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then((result) => {
+        callback(null, result);
+    }).catch((err) => {
+        callback(err, null);
+    });
+};
+
+
 //find last setting 
 exports.FindSetting = function(callback) {
     models.iofsetting.find({

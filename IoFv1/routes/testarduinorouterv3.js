@@ -16,7 +16,7 @@ var flag = false;
 module.exports = function(pool, socket, serialNum, defualtsensingtime) {
     return {
         init: function() {
-            console.log('get setting camera time :::: ', cameratime)
+            console.log('get setting camera time :::: ', defualtsensingtime)
             var current_min = moment().format('m'); // 현재 시간 분 설정
             var defualtsensingtime = defualtsensingtime; //사진 촬영 인터벌
             var sub_min = 0; //정각에서 남은 시간
@@ -34,7 +34,7 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
             this.sensing();
             setTimeout(() => {
                 console.log('timeout ' + sub_min + ' minute');
-                setInterval(this.sensing, 1000 * 60 * shooting_time); // 설정 시간 후에 반복 촬영
+                setInterval(this.sensing, 1000 * 60 * defualtsensingtime); // 설정 시간 후에 반복 촬영
             }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작       
         },
         sensing: function() {
