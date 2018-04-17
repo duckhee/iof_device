@@ -25,11 +25,7 @@ var pool = mysql.createPool({
 });
 const serialNum = '6iOAk0yqx3eRspZXuSsV'; //testing serial num
 var NeworkController = require('./dbcontroller/NetworkController');
-var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, defualtsensingtime).init();
-
-var camera = require('./routes/camera')(socket, delivery, serialNum, defaultcameratime).init();
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
@@ -105,35 +101,39 @@ socket.on('connect', function() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var defaultcameratime = 30;
 var defualtsensingtime = 5;
-pool.getConnection(function(err, conn) {
-    if (err) {
-        if (conn) {
-            conn.release();
-        }
-        console.log('get setting value error time :::::: ', err);
-    } else {
-        conn.query('select * from iofsettings', function(err, result) {
-            if (err) {
-                if (conn) {
-                    conn.release();
-                }
-                console.log('get setting value error :::::: ', err);
-            } else {
-                if (!util.isEmpty(result)) {
-                    console.log('get setting value :::: ', result);
-                    defaultcameratime = result[0].st_shootingtime;
-                    console.log('get camera time :::: ', defaultcameratime);
+// pool.getConnection(function(err, conn) {
+//     if (err) {
+//         if (conn) {
+//             conn.release();
+//         }
+//         console.log('get setting value error time :::::: ', err);
+//     } else {
+//         conn.query('select * from iofsettings', function(err, result) {
+//             if (err) {
+//                 if (conn) {
+//                     conn.release();
+//                 }
+//                 console.log('get setting value error :::::: ', err);
+//             } else {
+//                 if (!util.isEmpty(result)) {
+//                     console.log('get setting value :::: ', result);
+//                     defaultcameratime = result[0].st_shootingtime;
+//                     console.log('get camera time :::: ', defaultcameratime);
 
-                } else {
-                    console.log('not setting yet');
-                }
-            }
-        })
-    }
-});
+//                 } else {
+//                     console.log('not setting yet');
+//                 }
+//             }
+//         })
+//     }
+// });
 
 
+var routes = require('./routes/index')(pool);
 
+var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, defualtsensingtime).init();
+
+var camera = require('./routes/camera')(socket, delivery, serialNum, defaultcameratime).init();
 /*
 process.on('unhandledRejection', error => {
     throw error
