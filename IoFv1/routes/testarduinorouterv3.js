@@ -85,7 +85,6 @@ module.exports = function(pool, socket, serialNum, defualtsensingtime) {
                         } else {
                             console.log('insert data pi result ::::: ', result);
                             socket.emit('sensor_data_request', sensorSoil);
-                            conn.release();
                             port.flush();
                             port.write('d');
                         }
