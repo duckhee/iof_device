@@ -66,11 +66,6 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 var re = /[^\,^\-^A-Z^\d(.\d+)^\s]/gi;
                 var datafilter = data.toString().replace(re, '');
                 var sensorValue = datafilter.split(',');
-                console.log('sensor value : ', sensorValue);
-                if (sensorValue === '\r\n' && (data.toString().length < 5)) {
-                    console.log('null data insert');
-                    port.write('i');
-                }
                 /*
                 //before setting server controller add
                 if (first_chk == 0) {
@@ -133,6 +128,8 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                                 port.write('d');
                             }
                         });
+                    } else {
+                        port.write('i');
                     }
                 }
             });
