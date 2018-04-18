@@ -5,7 +5,7 @@ const switch_pump = new gpio(17, {
     mode: gpio.OUTPUT,
     //  alert: true
 });
-switch_pump.setDirection('out');
+//switch_pump.setDirection('out');
 module.exports = function(StatusFlag, TurnFlag, delayTime) {
     var autoFlag = true;
     this.autoFlag = StatusFlag;
