@@ -8,14 +8,13 @@ const switch_pump = new gpio(17, {
 //switch_pump.setDirection('out');
 module.exports = function(StatusFlag, TurnFlag, delayTime) {
     var autoFlag = true;
-    this.autoFlag = StatusFlag;
     var TurningFlag = false;
-    this.TurningFlag = TurnFlag;
     var waitTime = 3;
-    this.waitTime = delayTime;
-
     return {
         init: function() {
+            this.autoFlag = StatusFlag;
+            this.TurningFlag = TurnFlag;
+            this.waitTime = delayTime;
             console.log('Hardware Revision: ' + pigpio.hardwareRevision().toString(16));
             console.log('play moter status :: ', StatusFlag);
             console.log('play moter autoFlag status :: ', autoFlag);
