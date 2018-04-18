@@ -2,6 +2,6 @@ var pump = require('./controller/pumpv1');
 var StatusFlag = false,
     TurnFlag = true,
     delayTime = 5;
-pump.init();
+pump(StatusFlag, TurnFlag, delayTime).init();
 console.log('end ');
 process.exit();
