@@ -1,3 +1,4 @@
+'use strict';
 var pigpio = require('pigpio');
 var util = require('../util/util');
 var gpio = pigpio.Gpio;
@@ -13,7 +14,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
     return {
         init: function() {
             autoFlag = StatusFlag;
-            TurningFlag = TurnFlag;
+            this.TurningFlag = TurnFlag;
             waitTime = delayTime;
             console.log('Hardware Revision: ' + pigpio.hardwareRevision().toString(16));
             console.log('play moter status :: ', StatusFlag);
@@ -23,7 +24,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             console.log('delay time :: ', delayTime);
             console.log('wait time :::: ', waitTime);
             //console.log('get type (input or output) : ', switch_pump.direction());
-            this.Toggle();
+            //this.Toggle();
         },
         auto: function(delayTime) {
             console.log('start auto');
@@ -31,7 +32,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             if (!util.isEmpty(delayTime)) {
                 //delay time not null
             } else {
-                delayTime = 3;
+                waitTime;
             }
         },
         Toggle: function() {
