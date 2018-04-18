@@ -49,8 +49,8 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
 
         },
         Toggle: function(waitting) {
-            console.log('gpio pin status : ', pump_switch.readSync());
             setTimeout(() => {
+                console.log('gpio pin status : ', pump_switch.readSync());
                 pump_switch.writeSync(pump_switch.readSync() ^ 1);
             }, 1000 * waitting); //1000*60*3 default
         }
