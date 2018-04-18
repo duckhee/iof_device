@@ -26,7 +26,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
                 this.auto(waitTime);
             } else {
                 console.log('manual set');
-                this.manual(TruningFlag);
+                this.manual(this.TruningFlag);
             }
 
         },
