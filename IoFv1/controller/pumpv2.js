@@ -6,7 +6,7 @@ var GPIO = onoff.Gpio;
 var pump_switch = new GPIO(17, 'out');
 
 
-module.exports = function(StatusFlag, TurnFlag, delayTime) {
+module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
     var autoFlag = true;
     var TurningFlag = false;
     var waitTime = 3;
@@ -15,6 +15,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             autoFlag = StatusFlag;
             TurningFlag = TurnFlag;
             waitTime = delayTime;
+            console.log('data type : ', typeof(dataValue));
             console.log('auto flag : ', autoFlag);
             console.log('insert auto flag : ', StatusFlag);
             console.log('manual turn flag : ', TurningFlag);
@@ -53,7 +54,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
                 console.log('gpio pin status : ', pump_switch.readSync());
                 pump_switch.writeSync(pump_switch.readSync() ^ 1);
                 console.log('gpio pin status : ', pump_switch.readSync());
-            }, 1000 * waitting); //1000*60*3 default
+            }, 1000 * 60 * waitting); //1000*60*3 default
         }
     }
 }
