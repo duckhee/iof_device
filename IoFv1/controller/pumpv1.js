@@ -11,6 +11,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
     var autoFlag = true;
     var TurningFlag = false;
     var waitTime = 3;
+    var delayToggleTime = 2;
     return {
         init: function() {
             autoFlag = StatusFlag;
@@ -37,16 +38,25 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             console.log('delayTime ::: ', delayTime);
             if (!util.isEmpty(delayTime)) {
                 //delay time not null
-
+                console.log('first pump off current value : ', switch_pump.digitalRead());
+                switch_pump.digitalWrite(0);
+                console.log('pump stop check : ', switch_pump.digitalRead());
+                switch_pump.digitalWrite(1);
+                console.log('pump start check : ', switch_pump.digitalRead());
             } else {
-                waitTime;
+                console.log('first pump off current value : ', switch_pump.digitalRead());
+                switch_pump.digitalWrite(0);
+                console.log('pump stop check : ', switch_pump.digitalRead());
+                switch_pump.digitalWrite(1);
+                console.log('pump start check : ', switch_pump.digitalRead());
+                this.Toggle(2);
             }
         },
-        Toggle: function() {
+        Toggle: function(delayToggleTime) {
             console.log('toggle water switch : ', switch_pump.digitalRead());
             setTimeout(function() {
                 switch_pump.digitalWrite(switch_pump.digitalRead() ^ 1);
-            }, 1000 * 60);
+            }, 1000 * 60 * delayToggleTime);
             console.log('toggle comfirm water switch : ', switch_pump.digitalRead());
         },
         manual: function(TurnStatus) {
@@ -59,6 +69,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
                 console.log('switch pump value : ', switch_pump.direction());
             } else {
                 console.log('Not value !');
+                this.TimeOut();
             }
         },
         TimeOut: function() {
