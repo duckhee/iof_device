@@ -27,6 +27,9 @@ module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
                 this.auto(waitTime);
             } else {
                 console.log('manual set');
+                if (!util.isEmpty(dataValue)) {
+                    console.log('not null');
+                }
                 this.manual(this.TruningFlag);
             }
 
@@ -46,7 +49,12 @@ module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
 
             }
         },
-        auto: function(waitTime) {
+        auto: function(waitTime, dataValue) {
+            if (!util.isEmpty(dataValue)) {
+                console.log('data value null set start last default time ');
+            } else {
+                console.log('start dataValue limit');
+            }
 
         },
         Toggle: function(waitting) {
