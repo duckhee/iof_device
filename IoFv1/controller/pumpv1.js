@@ -44,7 +44,9 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
         },
         Toggle: function() {
             console.log('toggle water switch : ', switch_pump.digitalRead());
-            switch_pump.digitalWrite(switch_pump.digitalRead() ^ 1);
+            setTimeout(function() {
+                switch_pump.digitalWrite(switch_pump.digitalRead() ^ 1);
+            }, 1000 * 60);
             console.log('toggle comfirm water switch : ', switch_pump.digitalRead());
         },
         manual: function(TurnStatus) {
