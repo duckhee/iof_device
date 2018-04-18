@@ -11,7 +11,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
     var TurningFlag = false;
     var waitTime = 3;
     return {
-        init: function(StatusFlag, TurnFlag, delayTime) {
+        init: function() {
             this.autoFlag = StatusFlag;
             this.TurningFlag = TurnFlag;
             this.waitTime = delayTime;
