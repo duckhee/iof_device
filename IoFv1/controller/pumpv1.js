@@ -12,14 +12,10 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
     var TurningFlag = false;
     var waitTime = 3;
     return {
-        set: function() {
-            this.autoFlag = StatusFlag;
-            this.TurningFlag = TurnFlag;
-            this.waitTime = delayTime;
-
-        },
         init: function() {
-            this.set();
+            autoFlag = StatusFlag;
+            TurningFlag = TurnFlag;
+            waitTime = delayTime;
             console.log('Hardware Revision: ' + pigpio.hardwareRevision().toString(16));
             console.log('play moter status :: ', StatusFlag);
             console.log('play moter autoFlag status :: ', autoFlag);
@@ -29,6 +25,12 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             console.log('wait time :::: ', waitTime);
             //console.log('get type (input or output) : ', switch_pump.direction());
             //this.Toggle();
+            if (autoFlag) {
+                console.log('auto flag on :', autoFlag);
+                this.auto(waitTime);
+            } else {
+                this.Delay(waitTime);
+            }
         },
         auto: function(delayTime) {
             console.log('start auto');
@@ -59,6 +61,14 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
         TimeOut: function() {
             console.log('time off');
             switch_pump.digitalWrite(0);
+        },
+        Delay: function(waitTime) {
+            process.nextTick(function() {
+                var count = 0;
+                count++;
+                console.log(count);
+            }, waitTime);
+
         }
     }
 
