@@ -4,4 +4,3 @@ var StatusFlag = false,
     delayTime = 5;
 pump(StatusFlag, TurnFlag, delayTime).init();
 console.log('end ');
-process.exit();
