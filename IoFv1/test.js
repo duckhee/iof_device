@@ -1,4 +1,4 @@
-var pump = require('./controller/pumpv1');
+var pump = require('./controller/pumpv2');
 var StatusFlag = false,
     TurnFlag = true,
     delayTime = 5;

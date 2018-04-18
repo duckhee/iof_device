@@ -27,9 +27,9 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             //this.Toggle();
             if (autoFlag) {
                 console.log('auto flag on :', autoFlag);
-                this.auto(waitTime);
+
             } else {
-                this.Delay(waitTime);
+
             }
         },
         auto: function(delayTime) {
@@ -37,6 +37,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             console.log('delayTime ::: ', delayTime);
             if (!util.isEmpty(delayTime)) {
                 //delay time not null
+
             } else {
                 waitTime;
             }
@@ -62,14 +63,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
             console.log('time off');
             switch_pump.digitalWrite(0);
         },
-        Delay: function(waitTime) {
-            process.nextTick(function() {
-                var count = 0;
-                count++;
-                console.log(count);
-            }, waitTime);
 
-        }
     }
 
 }
