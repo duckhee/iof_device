@@ -3,7 +3,7 @@
 var onoff = require('onoff');
 var util = require('../util/util');
 var GPIO = onoff.Gpio;
-var pump_switch = new GPIO(17, 'out');
+var pump_switch = new GPIO(4, 'out');
 
 
 module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue, turnValue) {
