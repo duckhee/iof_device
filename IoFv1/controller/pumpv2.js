@@ -33,11 +33,15 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
         manual: function(TruningFlag) {
             console.log('tesitng manual function');
             if (TurningFlag === true) {
+                console.log('gpio pin status : ', pump_switch.readSync());
                 pump_switch.writeSync(1);
+                console.log('gpio pin status : ', pump_switch.readSync());
                 this.Toggle(3);
-                flag = true;
+                console.log('gpio pin status : ', pump_switch.readSync());
             } else {
+                console.log('gpio pin status : ', pump_switch.readSync());
                 pump_switch.writeSync(0);
+                console.log('gpio pin status : ', pump_switch.readSync());
 
             }
         },
