@@ -6,7 +6,7 @@ var GPIO = onoff.Gpio;
 var pump_switch = new GPIO(17, 'out');
 
 
-module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
+module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue, turnValue) {
     var autoFlag = true;
     var TurningFlag = false;
     var waitTime = 3;
@@ -27,9 +27,6 @@ module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
                 this.auto(waitTime);
             } else {
                 console.log('manual set');
-                if (!util.isEmpty(dataValue)) {
-                    console.log('not null');
-                }
                 this.manual(this.TruningFlag);
             }
 
@@ -37,9 +34,9 @@ module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
         manual: function(TruningFlag) {
             console.log('tesitng manual function');
             if (TurningFlag === true) {
-                console.log('gpio pin status : ', pump_switch.readSync());
+                console.log('gpio pin status before write : ', pump_switch.readSync());
                 pump_switch.writeSync(1);
-                console.log('gpio pin status : ', pump_switch.readSync());
+                console.log('gpio pin status after write : ', pump_switch.readSync());
                 this.Toggle(3);
                 console.log('gpio pin status : ', pump_switch.readSync());
             } else {
@@ -49,19 +46,20 @@ module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue) {
 
             }
         },
-        auto: function(waitTime, dataValue) {
+        auto: function(waitTime, dataValue, turnValue) {
             if (!util.isEmpty(dataValue)) {
-                console.log('data value null set start last default time ');
+                console.log('data value null set start last default time and stop ');
             } else {
                 console.log('start dataValue limit');
             }
 
         },
         Toggle: function(waitting) {
+            console.log('waitting time toggle : ', waitTime);
             setTimeout(() => {
-                console.log('gpio pin status : ', pump_switch.readSync());
+                console.log('gpio pin status before toggle : ', pump_switch.readSync());
                 pump_switch.writeSync(pump_switch.readSync() ^ 1);
-                console.log('gpio pin status : ', pump_switch.readSync());
+                console.log('gpio pin status after toggle : ', pump_switch.readSync());
             }, 1000 * 60 * waitting); //1000*60*3 default
         }
     }
