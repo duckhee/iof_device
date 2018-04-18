@@ -3,14 +3,19 @@ var moment = require('moment');
 
 //write db data
 exports.ReadWrite = function(write_info, callback) {
-    var data_format = moment().formant('YYYYMMDD');
-    //make folder and check
-    if (!fs.existsSync(process.cwd() + '/data/' + data_format)) {
-        fs.mkdirSync(process.cwd() + '/data/' + data_format, '0777');
-    }
-    //write data
+    var dir_name = moment().formant('YYYYMMDD');
+    var file_name = dir_name + '.txt';
     try {
-        fs.writeFileSync(data_format + '.txt', write_info, 'utf8');
+        //make data folder
+        if (!fs.existsSync(process.cwd() + '/data')) {
+            fs.mkdirSync(process.cwd() + '/data', '0777');
+        }
+        //make folder and check
+        if (!fs.existsSync(process.cwd() + '/data/' + dir_name)) {
+            fs.mkdirSync(process.cwd() + '/data/' + dir_name, '0777');
+        }
+        //write data(permission reject)
+        fs.appendFileSync(process.cwd() + '/data/' + dir_name + '/' + file_name, write_info.createdAt + ',' + write_info.address + ',' + write_info.data + '\r\n', 'utf8');
         console.log('write file success ');
         callback(null);
     } catch (err) {
