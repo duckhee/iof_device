@@ -13,7 +13,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime) {
     return {
         init: function() {
             this.autoFlag = StatusFlag;
-            this.TurningFlag = TurnFlag;
+            TurningFlag = TurnFlag;
             this.waitTime = delayTime;
             console.log('Hardware Revision: ' + pigpio.hardwareRevision().toString(16));
             console.log('play moter status :: ', StatusFlag);
