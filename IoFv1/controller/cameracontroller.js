@@ -49,6 +49,7 @@ module.exports = function(pool, socket, delivery) {
                     console.log('child process exited with shooting photo error code ::::::::::::::: ', err.code);
                     return;
                 }
+
                 console.log('photo captured with filename ::::::::::::::' + timeInMs);
                 pool.getConnection(function(err, conn) {
                     if (err) {
