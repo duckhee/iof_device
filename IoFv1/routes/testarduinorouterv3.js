@@ -72,7 +72,8 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 if (first_chk == 0) {
                     //보내기
                     var datainfo = {
-                        "msg": 0
+                        "msg": 0,
+                        "serial":serialNum
                     };
                     socket.emit('device_setting_request', datainfo);
                     console.log('first checking ::::: ', first_chk);
@@ -110,7 +111,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                             console.log('insert data error : ', err);
                         } else {
                             //   console.log('insert data pi result ::::: ', result);
-                            socket.emit('sensor_data_request', sensorSoil);
+                            socket.emit('sensor_iofdata_request', sensorSoil);
                             port.flush();
                             port.write('d');
                         }
