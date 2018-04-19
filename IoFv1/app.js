@@ -25,7 +25,7 @@ var pool = mysql.createPool({
 });
 const serialNum = 'WqrWyNN8Qr3hCiXasMyZ'; //testing serial num
 var NeworkController = require('./dbcontroller/NetworkController');
-
+var SettingController = require('./dbcontroller/SettingController');
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
@@ -101,6 +101,22 @@ socket.on('connect', function() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var defaultcameratime = 30;
 var defualtsensingtime = 5;
+var SettingData = {
+    "serial": serialNum,
+    "shootingtime": defaultcameratime,
+    "watertime": defualtsensingtime
+}
+
+SettingController.FindSetting(function(err, result) {
+    if (err) {
+        console.log('findsetting first error : ', err);
+        SettingController.InsertSetting(SettingData, function(err, result) {
+            if (err) {
+                console.log('insert setting default error : ', err);
+            }
+        });
+    }
+});
 // pool.getConnection(function(err, conn) {
 //     if (err) {
 //         if (conn) {
