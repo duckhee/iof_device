@@ -73,6 +73,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 SettingController.FindSetting(function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
+
                     } else {
                         console.log(result.st_serial);
                         if (result.length != 0 && result.st_serial) {
