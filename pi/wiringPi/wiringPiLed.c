@@ -5,10 +5,6 @@
 
 int LedControl(int gpioPin)
 {
-    if(gpioPin == NULL){
-        printf("not intpu gpioPin !");
-        gpioPin = LED;
-    }
 
     int i;
     pinMode(gpioPin, OUTPUT);
