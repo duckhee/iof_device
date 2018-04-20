@@ -11,7 +11,7 @@ int LedControl(int gpioPin)
     }
 
     int i;
-    pinMode(gpioPin);
+    pinMode(gpioPin, OUTPUT);
     for(i = 0; i < 5; i++)
     {
         digitalWrite(gpioPin, HIGH);
