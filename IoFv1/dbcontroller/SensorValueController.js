@@ -53,3 +53,17 @@ exports.LimitTenData = function(data_info, callback) {
         callback(err, null);
     });
 };
+
+//find compare last value data init pump play
+exports.OneGetData = function(callback) {
+    models.iofvalue.findOne({
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then((result) => {
+        callback(null, result);
+    }).catch((err) => {
+        console.log('find one data error : ', err);
+        callback(err, null);
+    })
+}
