@@ -36,7 +36,6 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
                     connection.release();
                     console.log('images :::::::: ', row);
                     try {
-
                         res.render('view', { title: 'Dashboard', devices: data_list, img_path: row[0].si_path + "/" + row[0].si_filename });
                     } catch (err) {
                         console.log('error :::::: dashboard/' + req.params.serial);
@@ -45,7 +44,6 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
                     }
                     // Don't use the connection here, it has been returned to the pool.
                 });
-
             });
         });
     });
@@ -63,10 +61,9 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
             });
         });
     });
-
     router.post('/setting', function(req, res) {
-        res.render('index', { title: 'Devices' });
+        res.redirect('/');
+        //res.render('index', { title: 'Devices' });
     });
-
     return router; //라우터를 리턴
 };
