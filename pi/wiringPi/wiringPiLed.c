@@ -5,13 +5,9 @@
 
 int LedControl(int gpioPin)
 {
-    if(gpioPin == NULL){
-        printf("not intpu gpioPin !");
-        gpioPin = LED;
-    }
 
     int i;
-    pinMode(gpioPin);
+    pinMode(gpioPin, OUTPUT);
     for(i = 0; i < 5; i++)
     {
         digitalWrite(gpioPin, HIGH);
