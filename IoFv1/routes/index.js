@@ -32,7 +32,6 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
                 var stmt = ' SELECT * from iofimages where si_serial = ? order by createdAt desc limit 0,1 ';
                 connection.query(stmt, [req.params.serial], function(err, row) {
                     if (err) console.error("err : " + err);
-
                     connection.release();
                     console.log('images :::::::: ', row);
                     try {
@@ -47,7 +46,6 @@ module.exports = function(pool) { //함수로 만들어 객체 app을 전달받�
             });
         });
     });
-
     router.get('/table/:serial/:page', function(req, res) {
         pool.getConnection(function(err, connection) {
             // Use the connection
