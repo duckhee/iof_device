@@ -34,7 +34,7 @@ exports.OneSetting = function(callback) {
 
 
 //find last setting 
-exports.FindSetting = function(callback) {
+exports.FindSetting = function(serialNum, callback) {
     models.iofsetting.find({
         order: [
             ['createdAt', 'DESC']
@@ -45,7 +45,7 @@ exports.FindSetting = function(callback) {
     }).catch((err) => {
         console.log('find device setting error : ', err);
         var defaultSetting = {
-            "serial": "WqrWyNN8Qr3hCiXasMyZ",
+            "serial": serialNum,
             "shootingtime": 30,
             "watertime": 5
         }
@@ -56,7 +56,7 @@ exports.FindSetting = function(callback) {
             } else {
                 callback(err, result);
             }
-        })
+        });
 
     });
 };

@@ -37,8 +37,8 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 console.log('timeout ' + sub_min + ' minute');
                 setInterval(this.sensing, 1000 * 60 * defualtsensingtime); // 설정 시간 후에 반복 촬영
             }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작       
-
         },
+
         sensing: function() {
             console.log('sensing start');
             var parsers = serialPort.parsers;
@@ -142,6 +142,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
             port.on('error', (err) => {
                 console.log('serialport error :::: ', err);
             });
-        }
+        },
+        
     }
 }
