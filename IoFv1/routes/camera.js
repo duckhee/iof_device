@@ -4,13 +4,17 @@
 var moment = require('moment'); // moment 시간 모듈
 var exec_photo = require('child_process').exec;
 var fs = require('fs');
+var ImageController = require('../dbcontroller/ImageController');
+var SettingController = require('../dbcontroller/SettingController');
+module.exports = function(socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
+    var CameraTime = 30;
 
-module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
     return {
         init: function() {
-            console.log('get setting camera time :::: ', cameratime)
+            CameraTime = cameratime;
+            console.log('get setting camera time :::: ', CameraTime)
             var current_min = moment().format('m'); // 현재 시간 분 설정
-            var shooting_time = cameratime; //사진 촬영 인터벌
+            var shooting_time = CameraTime; //사진 촬영 인터벌
             var sub_min = 0; //정각에서 남은 시간
 
             //인터벌 함수 실행
@@ -58,57 +62,127 @@ module.exports = function(pool, socket, delivery, serialNum, cameratime) { //함
                 }
 
                 console.log("photo captured with filename: " + timeInMs);
-                pool.getConnection(function(err, connection) {
-                    console.log("camera connetion");
-                    // 마지막으로 연결된 센서 정보 가져오기
-                    connection.query(' select * from iof_settings  order by createdAt desc limit 0,1 ', function(err, result, fields) {
-                        if (err) {
-                            if (connection) {
-                                connection.release();
-                            }
-                            console.log('select setting error :::::::::: ', err);
-                        }
+                /*
+                //get setting
+                SettingController.FindSetting(serialNum,function(err, result) {
+                    if (err) {
+                        console.log('select setting error :::::::::: ', err);
+                    }else{
 
-                        if (result.length != 0 && result[0].st_serial) {
+                    }
+                });
+                */
+                console.log("camera connetion");
+                SettingController.FindSetting(serialNum, function(err, result) {
+                    if (err) {
+                        console.log('select setting error :::::::::: ', err);
 
+                    } else {
+                        console.log(result.st_serial);
+                        if (result.length != 0 && result.st_serial) {
+                            CameraTime = result.st_shootingtime;
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                             //정보 insert
-                            connection.query(' insert into iof_images  (si_serial, si_path, si_filename, si_filesize, createdAt, updatedAt) values (?, ?, ?, ?, NOW(), NOW())', [result[0].st_serial, dir_name, timeInMs + ".jpg", stats.size], function(error, result2) {
-                                if (error) {
-                                    if (connection) {
-                                        connection.release();
-                                    }
+                            var imageInfo = {
+                                serial: result.st_serial,
+                                path: dir_name,
+                                filename: timeInMs + ".jpg",
+                                filesize: stats.size
+                            };
+
+                            ImageController.InsertImage(imageInfo, function(erre, result2) {
+                                if (err) {
                                     console.log('insert image pi error ::::::::: ', error);
-                                }
-                                if (!error) {
-                                    console.log('insert image success ::::: ', result2);
+                                } else {
                                     // 촬영 이미지 전송
                                     delivery.send({
                                         name: timeInMs,
                                         path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
                                         params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
                                     });
-                                    connection.release();
+                                    console.log('delivery send success ');
                                 }
                             });
 
+
                         } else {
                             console.log('not setting yet');
-                            connection.query('insert into iof_settings (st_serial, st_shootingtime, st_watertime) values(?,?,?)', [serialNum, 30, 5], function(err, result) {
+                            var settingInfo = {
+                                serial: serialNum,
+                                shootingtime: 30,
+                                watertime: 5,
+                            };
+
+                            SettingController.InsertSetting(settingInfo, function(err, result) {
                                 if (err) {
-                                    if (conn) {
-                                        conn.release();
-                                    }
                                     console.log('insert default setting error :::: ', err);
                                 } else {
-                                    console.log('default setting :::::::: ', result);
+                                    //      console.log('default setting :::::::: ', result);
                                 }
                             });
+
+                        }
+                    }
+                });
+                // 마지막으로 연결된 센서 정보 가져오기
+                /*
+                connection.query(' select * from iofsettings  order by createdAt desc limit 0,1 ', function(err, result, fields) {
+                    if (err) {
+                        if (connection) {
                             connection.release();
                         }
-                    });
+                        console.log('select setting error :::::::::: ', err);
+                    }
+
+                    if (result.length != 0 && result[0].st_serial) {
+
+                        var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
+
+                        //정보 insert
+                        var imageInfo = {
+                            serial: result[0].st_serial,
+                            path: dir_name,
+                            filename: timeInMs + ".jpg",
+                            filesize: stats.size
+                        };
+
+                        ImageController.InsertImage(imageInfo, function(erre, result2) {
+                            if (err) {
+                                console.log('insert image pi error ::::::::: ', error);
+                            } else {
+                                // 촬영 이미지 전송
+                                delivery.send({
+                                    name: timeInMs,
+                                    path: process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg",
+                                    params: { serial: serialNum, filename: timeInMs + ".jpg", path: dir_name, filesize: stats.size }
+                                });
+                                console.log('delivery send success ');
+                            }
+                        });
+
+
+                    } else {
+                        console.log('not setting yet');
+                        var settingInfo = {
+                            serial: serialNum,
+                            shootingtime: 30,
+                            watertime: 5,
+                        };
+
+                        SettingController.InsertSetting(settingInfo, function(err, result) {
+                            if (err) {
+                                console.log('insert default setting error :::: ', err);
+                            } else {
+                                //      console.log('default setting :::::::: ', result);
+                            }
+                        });
+
+
+                    }
                 });
+                */
+
 
             });
         }

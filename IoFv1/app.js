@@ -23,8 +23,9 @@ var pool = mysql.createPool({
     password: 'candh3869',
     database: 'iof',
 });
-const serialNum = '6iOAk0yqx3eRspZXuSsV'; //testing serial num
-
+const serialNum = 'WqrWyNN8Qr3hCiXasMyZ'; //testing serial num
+var NeworkController = require('./dbcontroller/NetworkController');
+var SettingController = require('./dbcontroller/SettingController');
 //get socket io
 const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
@@ -37,50 +38,53 @@ delivery.on('delivery.connect', function(delivery) {
         pool.getConnection(function(err, conn) {
             //use the connection
             //get last save image info 
-            conn.query('select * from iof_images order by createdAt desc limit 0, 1', function(err, row, fileds) {
+            conn.query('select * from iofimages order by createdAt desc limit 0, 1', function(err, row, fileds) {
                 if (err) {
                     if (conn) {
                         conn.release();
                     }
                     console.log('get image conn error :::::::: ', err);
                 }
-                console.log('last image info :::::::::::: ', row);
-                if (!util.isEmpty(row)) {
-                    conn.query('select * from iof_networks where si_serial = ?', [row[0].si_serial], function(err, result, fields) {
-                        if (err) {
-                            if (conn) {
-                                conn.release();
-                            }
-                            console.log('select iof network error :::::::::::::: ', err);
-                        }
-                        if (result.length == 0) {
-                            conn.query('insert into iof_networks (si_serial, si_type, createdAt) values (?,?,NOW())', [row[0].si_serial, 'active'], function(err, result) {
-                                if (err) {
-                                    if (conn) {
-                                        conn.release();
-                                    }
-                                    console.log('iof networks insert error :::::::::::::: ', err);
-                                }
-                                if (!err) {
+                console.log('last image info :::::::::::: ', row[0].si_serial);
 
+                if (!util.isEmpty(row)) {
+                    console.log('not empty ');
+                    //network checking 
+                    var checkingInfo = {
+                        serial: row[0].si_serial
+                    };
+                    NeworkController.FindNetwork(checkingInfo, function(err, result) {
+                        if (err) {
+                            console.log('select iof network error :::::::::::::: ', err);
+                        } else {
+                            if (result.length == 0) {
+                                var network_info = {
+                                    serial: row[0].si_serial
                                 }
-                            });
-                        }
-                        if (result.length > 0) {
-                            conn.query('update iof_networks set updatedAt = NOW() where si_serial = ?', [row[0].si_serial], function(err, result) {
-                                if (err) {
-                                    if (conn) {
-                                        conn.release();
+                                NeworkController.InsertNetwork(network_info, function(err, result) {
+                                    if (err) {
+                                        console.log('iof networks insert error :::::::::::::: ', err);
+                                    } else {
+                                        console.log('success iof neworks insert ');
                                     }
-                                    console.log('update network error :::::::::::::::::: ', err);
+                                });
+                            }
+                            if (result.length > 0) {
+                                var networkInfo = {
+                                    serial: row[0].si_serial
                                 }
-                            });
+                                NeworkController.UpdateNetwork(networkInfo, function(err, result) {
+                                    if (err) {
+                                        console.log('update network error :::::::::::::::::: ', err);
+                                    } else {
+                                        console.log('success iofnetwork update ');
+                                    }
+                                });
+                            }
                         }
                     });
-                    conn.release();
                 } else {
                     console.log('not image yet ::::::::::: ', row);
-                    conn.release();
                 }
             });
         });
@@ -88,8 +92,8 @@ delivery.on('delivery.connect', function(delivery) {
 });
 
 socket.on('connect', function() {
-    console.log('connection success');
-})
+    console.log('socket connection success');
+});
 
 
 
@@ -97,39 +101,55 @@ socket.on('connect', function() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var defaultcameratime = 30;
 var defualtsensingtime = 5;
-pool.getConnection(function(err, conn) {
-    if (err) {
-        if (conn) {
-            conn.release();
-        }
-        console.log('get setting value error time :::::: ', err);
-    } else {
-        conn.query('select * from iof_settings', function(err, result) {
-            if (err) {
-                if (conn) {
-                    conn.release();
-                }
-                console.log('get setting value error :::::: ', err);
-            } else {
-                if (!util.isEmpty(result)) {
-                    console.log('get setting value :::: ', result);
-                    defaultcameratime = result[0].st_shootingtime;
-                    console.log('get camera time :::: ', defaultcameratime);
+var SettingData = {
+    "serial": serialNum,
+    "shootingtime": defaultcameratime,
+    "watertime": defualtsensingtime
+}
 
-                } else {
-                    console.log('not setting yet');
-                }
+SettingController.FindSetting(function(err, result) {
+    if (err) {
+        console.log('findsetting first error : ', err);
+        SettingController.InsertSetting(SettingData, function(err, result) {
+            if (err) {
+                console.log('insert setting default error : ', err);
             }
-        })
+        });
     }
 });
+// pool.getConnection(function(err, conn) {
+//     if (err) {
+//         if (conn) {
+//             conn.release();
+//         }
+//         console.log('get setting value error time :::::: ', err);
+//     } else {
+//         conn.query('select * from iofsettings', function(err, result) {
+//             if (err) {
+//                 if (conn) {
+//                     conn.release();
+//                 }
+//                 console.log('get setting value error :::::: ', err);
+//             } else {
+//                 if (!util.isEmpty(result)) {
+//                     console.log('get setting value :::: ', result);
+//                     defaultcameratime = result[0].st_shootingtime;
+//                     console.log('get camera time :::: ', defaultcameratime);
+
+//                 } else {
+//                     console.log('not setting yet');
+//                 }
+//             }
+//         })
+//     }
+// });
 
 
 var routes = require('./routes/index')(pool);
 
-var arduino = require('./routes/testarudinorouterv2.js')(pool, socket, serialNum, defualtsensingtime).init();
+var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, 5).init();
 
-var camera = require('./routes/camera')(pool, socket, delivery, serialNum, defaultcameratime).init();
+var camera = require('./routes/camera')(socket, delivery, serialNum, 30).init();
 /*
 process.on('unhandledRejection', error => {
     throw error
@@ -183,7 +203,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 9090);
 
 var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
