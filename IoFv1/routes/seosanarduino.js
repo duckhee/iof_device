@@ -13,7 +13,7 @@ module.exports = function(pool, socket) {
 
     //라즈베리파이와 연결된 디바이스 주소
     var port = new SerialPort('/dev/ttyACM0', {
-        baudrate: 9600
+        baudrate: 9600,
     });
 
     // 수분 측정
