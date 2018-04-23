@@ -1,6 +1,5 @@
 'use strict';
 
-
 var moment = require('moment'); // moment 시간 모듈
 var exec_photo = require('child_process').exec;
 var fs = require('fs');
@@ -119,6 +118,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                                     console.log('insert default setting error :::: ', err);
                                 } else {
                                     //      console.log('default setting :::::::: ', result);
+
                                 }
                             });
 
