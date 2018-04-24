@@ -54,7 +54,7 @@ exports.FindSetting = function(serialNum, callback) {
                 console.log('find setting and insert error :: ', err);
                 callback(err, null);
             } else {
-                callback(err, result);
+                callback(err, result2);
             }
         });
 
