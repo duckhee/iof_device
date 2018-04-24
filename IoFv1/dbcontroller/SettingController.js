@@ -49,7 +49,7 @@ exports.FindSetting = function(serialNum, callback) {
             "shootingtime": 30,
             "watertime": 5
         }
-        this.InsertSetting(defaultSetting, function(err, result2) {
+        InsertSetting(defaultSetting, function(err, result2) {
             if (err) {
                 console.log('find setting and insert error :: ', err);
                 callback(err, null);
