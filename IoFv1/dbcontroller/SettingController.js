@@ -52,11 +52,11 @@ exports.FindSetting = function(serialNum, callback) {
         this.InsertSetting(defaultSetting, function(err, result2) {
             if (err) {
                 console.log('find setting and insert error :: ', err);
-                callback(err, null);
+
             } else {
-                callback(null, result2);
+                console.log('insert default setting ::: ', result2);
             }
         });
-
+        callback(err, null);
     });
 };
