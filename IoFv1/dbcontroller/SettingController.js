@@ -45,7 +45,6 @@ exports.FindSetting = function(serialNum, callback) {
     }).catch((err) => {
         console.log('find device setting error : ', err);
         callback(err, null);
-
     });
 };
 
