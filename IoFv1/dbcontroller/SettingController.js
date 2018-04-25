@@ -41,26 +41,6 @@ exports.FindSetting = function(serialNum, callback) {
         //     console.log('find device setting : ', result);
         callback(null, result);
     }).catch((err) => {
-        console.log('find device setting error : ', err);
         callback(err, null);
-    });
+    })
 };
-
-/*
-var defaultSetting = {
-            "serial": serialNum,
-            "shootingtime": 30,
-            "watertime": 5
-        }
-        this.InsertSetting(defaultSetting, function(err, result2) {
-            if (err) {
-                console.log('find setting and insert error :: ', err);
-                callback(err, null);
-            } else {
-                console.log('insert default setting ::: ', result2);
-                callback(null, result2);
-            }
-        });
-
-
-*/
