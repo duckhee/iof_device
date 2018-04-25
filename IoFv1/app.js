@@ -110,7 +110,7 @@ var SettingData = {
     "watertime": defualtsensingtime
 }
 
-SettingController.FindSetting(function(err, result) {
+SettingController.OneSetting(function(err, result) {
     if (err) {
         console.log('findsetting first error : ', err);
         SettingController.InsertSetting(SettingData, function(err, result) {
