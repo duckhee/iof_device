@@ -1,3 +1,5 @@
+import { WSAEDQUOT } from 'constants';
+
 var models = require('../models/index');
 var iofsetting = require('../models/iofsetting');
 
@@ -38,12 +40,14 @@ exports.FindSetting = function(serialNum, callback) {
             ['createdAt', 'DESC']
         ]
     }).then((result) => {
-        //     console.log('find device setting : ', result);
         callback(null, result);
-    }).catch((err) => {
-        callback(err, null);
+    }).catch((error) => {
+        callback(error, null);
     });
 };
+
+
+
 
 /*
 var defaultSetting = {
