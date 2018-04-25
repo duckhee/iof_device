@@ -41,8 +41,8 @@ exports.FindSetting = function(serialNum, callback) {
         //     console.log('find device setting : ', result);
         callback(null, result);
     }).catch((err) => {
-        console.log('find device setting error : ', err);
         callback(err, null);
+<<<<<<< HEAD
     });
 };
 
@@ -64,3 +64,7 @@ var defaultSetting = {
 
 
 */
+=======
+    })
+};
+>>>>>>> f81b459e1d7aadf902262618b8d1f0bee9f3e426
