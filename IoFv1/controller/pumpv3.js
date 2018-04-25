@@ -1,10 +1,12 @@
-module.exports = function() {
-    var Gpio = require('pigpio').Gpio;
+var Gpio = require('pigpio').Gpio;
 
-    var Pump = new Gpio(17, {
-        mode: Gpio.OUTPUT,
-        alert: true
-    });
+var Pump = new Gpio(17, {
+    mode: Gpio.OUTPUT,
+    alert: true
+});
+
+module.exports = function(socket) {
+
     return {
         init: function() {
             this.pumpOff();
