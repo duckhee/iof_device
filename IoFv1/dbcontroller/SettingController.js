@@ -1,4 +1,3 @@
-import { WSAEDQUOT } from 'constants';
 
 var models = require('../models/index');
 var iofsetting = require('../models/iofsetting');
