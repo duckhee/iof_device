@@ -37,8 +37,8 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 console.log('timeout ' + sub_min + ' minute');
                 setInterval(this.sensing, 1000 * 60 * defualtsensingtime); // 설정 시간 후에 반복 촬영
             }, 1000 * 60 * sub_min); // 제한된 시간 후에 촬영 시작       
-
         },
+
         sensing: function() {
             console.log('sensing start');
             var parsers = serialPort.parsers;
@@ -72,7 +72,8 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                 if (first_chk == 0) {
                     //보내기
                     var datainfo = {
-                        "msg": 0
+                        "msg": 0,
+                        "serial":serialNum
                     };
                     socket.emit('device_setting_request', datainfo);
                     console.log('first checking ::::: ', first_chk);
@@ -110,7 +111,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                             console.log('insert data error : ', err);
                         } else {
                             //   console.log('insert data pi result ::::: ', result);
-                            socket.emit('sensor_data_request', sensorSoil);
+                            socket.emit('sensor_iofdata_request', sensorSoil);
                             port.flush();
                             port.write('d');
                         }
@@ -132,6 +133,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
                             }
                         });
                     } else {
+                        console.log('null data ', data.toString());
                         console.log('sensor null port write d');
                         port.write('d');
                     }
@@ -140,6 +142,7 @@ module.exports = function(socket, serialNum, defualtsensingtime) {
             port.on('error', (err) => {
                 console.log('serialport error :::: ', err);
             });
-        }
+        },
+        
     }
 }

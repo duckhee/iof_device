@@ -7,11 +7,14 @@ var fs = require('fs');
 var ImageController = require('../dbcontroller/ImageController');
 var SettingController = require('../dbcontroller/SettingController');
 module.exports = function(socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
+    var CameraTime = 30;
+
     return {
         init: function() {
-            console.log('get setting camera time :::: ', cameratime)
+            CameraTime = cameratime;
+            console.log('get setting camera time :::: ', CameraTime)
             var current_min = moment().format('m'); // 현재 시간 분 설정
-            var shooting_time = cameratime; //사진 촬영 인터벌
+            var shooting_time = CameraTime; //사진 촬영 인터벌
             var sub_min = 0; //정각에서 남은 시간
 
             //인터벌 함수 실행
@@ -61,7 +64,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 console.log("photo captured with filename: " + timeInMs);
                 /*
                 //get setting
-                SettingController.FindSetting(function(err, result) {
+                SettingController.FindSetting(serialNum,function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
                     }else{
@@ -70,13 +73,14 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 });
                 */
                 console.log("camera connetion");
-                SettingController.FindSetting(function(err, result) {
+                SettingController.FindSetting(serialNum, function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
+
                     } else {
                         console.log(result.st_serial);
                         if (result.length != 0 && result.st_serial) {
-
+                            CameraTime = result.st_shootingtime;
                             var stats = fs.statSync(process.cwd() + '/images/' + dir_name + "/" + timeInMs + ".jpg");
 
                             //정보 insert
