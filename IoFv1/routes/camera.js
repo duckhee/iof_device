@@ -72,7 +72,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 });
                 */
                 console.log("camera connetion");
-                SettingController.OneSetting(serialNum, function(err, result) {
+                SettingController.OneSetting(function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
 
