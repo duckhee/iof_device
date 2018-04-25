@@ -21,7 +21,7 @@ exports.InsertSetting = function(data_info, callback) {
 exports.OneSetting = function(callback) {
     models.iofsetting.findOne({
         order: [
-            ['createdAt', 'DESC']
+            ['createdAt', 'DESC'] //DESC는 내림 차순
         ]
     }).then((result) => {
         callback(null, result);
@@ -31,11 +31,9 @@ exports.OneSetting = function(callback) {
 };
 
 
-
-
 //find last setting 
 exports.FindSetting = function(serialNum, callback) {
-    models.iofsetting.find({
+    models.iofsetting.findOne({
         order: [
             ['createdAt', 'DESC']
         ]
