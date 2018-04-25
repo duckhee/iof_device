@@ -25,7 +25,7 @@ exports.OneSetting = function(callback) {
         ]
     }).then((result) => {
         callback(null, result);
-    }).catch((err) => {
+    }).catch(function(err) {
         callback(err, null);
     });
 };
