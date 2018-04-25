@@ -1,5 +1,5 @@
 {
-    "name": "server",
+    "name": "iof_device",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -7,7 +7,7 @@
     },
     "description": "seosan",
     "author": {
-        "name": "owner403"
+        "name": "duckhee"
     },
     "dependencies": {
         "async": "2.6.0",
