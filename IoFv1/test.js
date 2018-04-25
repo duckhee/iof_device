@@ -1,8 +1,8 @@
-var pump = require('./controller/pumpv2');
+var pump = require('./controller/pumpv3');
 var StatusFlag = false,
     TurnFlag = true,
     delayTime = 5,
     dataValue = 10,
     turnValue = 50;
-pump(StatusFlag, TurnFlag, delayTime, dataValue, turnValue).init();
+pump.Toggle();
 console.log('end ');
