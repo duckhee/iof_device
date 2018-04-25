@@ -25,5 +25,5 @@ var StatusFlag = false,
     delayTime = 5,
     dataValue = 10,
     turnValue = 50;
-pump.Toggle();
+pump().Toggle();
 console.log('end ');
