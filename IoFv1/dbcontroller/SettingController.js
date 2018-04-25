@@ -42,7 +42,6 @@ exports.FindSetting = function(serialNum, callback) {
         callback(null, result);
     }).catch((err) => {
         callback(err, null);
-<<<<<<< HEAD
     });
 };
 
@@ -64,7 +63,3 @@ var defaultSetting = {
 
 
 */
-=======
-    })
-};
->>>>>>> f81b459e1d7aadf902262618b8d1f0bee9f3e426
