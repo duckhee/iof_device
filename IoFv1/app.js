@@ -98,6 +98,9 @@ socket.on('connect', function() {
 
 
 
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 var defaultcameratime = 30;
 var defualtsensingtime = 5;
@@ -117,32 +120,7 @@ SettingController.FindSetting(function(err, result) {
         });
     }
 });
-// pool.getConnection(function(err, conn) {
-//     if (err) {
-//         if (conn) {
-//             conn.release();
-//         }
-//         console.log('get setting value error time :::::: ', err);
-//     } else {
-//         conn.query('select * from iofsettings', function(err, result) {
-//             if (err) {
-//                 if (conn) {
-//                     conn.release();
-//                 }
-//                 console.log('get setting value error :::::: ', err);
-//             } else {
-//                 if (!util.isEmpty(result)) {
-//                     console.log('get setting value :::: ', result);
-//                     defaultcameratime = result[0].st_shootingtime;
-//                     console.log('get camera time :::: ', defaultcameratime);
-
-//                 } else {
-//                     console.log('not setting yet');
-//                 }
-//             }
-//         })
-//     }
-// });
+//first setting checking here
 
 
 var routes = require('./routes/index')(pool);

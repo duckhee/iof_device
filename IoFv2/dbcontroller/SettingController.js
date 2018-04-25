@@ -21,7 +21,7 @@ exports.InsertSetting = function(data_info, callback) {
 exports.OneSetting = function(callback) {
     models.iofsetting.findOne({
         order: [
-            ['createdAt', 'DESC'] //DESC는 내림 차순
+            ['createdAt', 'DESC']
         ]
     }).then((result) => {
         callback(null, result);
@@ -31,9 +31,11 @@ exports.OneSetting = function(callback) {
 };
 
 
+
+
 //find last setting 
 exports.FindSetting = function(serialNum, callback) {
-    models.iofsetting.findOne({
+    models.iofsetting.find({
         order: [
             ['createdAt', 'DESC']
         ]
@@ -42,12 +44,7 @@ exports.FindSetting = function(serialNum, callback) {
         callback(null, result);
     }).catch((err) => {
         console.log('find device setting error : ', err);
-        callback(err, null);
-    });
-};
-
-/*
-var defaultSetting = {
+        var defaultSetting = {
             "serial": serialNum,
             "shootingtime": 30,
             "watertime": 5
@@ -57,10 +54,9 @@ var defaultSetting = {
                 console.log('find setting and insert error :: ', err);
                 callback(err, null);
             } else {
-                console.log('insert default setting ::: ', result2);
-                callback(null, result2);
+                callback(err, result);
             }
         });
 
-
-*/
+    });
+};
