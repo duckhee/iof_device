@@ -25,26 +25,28 @@ exports.OneSetting = function(callback) {
         ]
     }).then((result) => {
         callback(null, result);
-    }).catch((err) => {
+    }).catch(function(err) {
         callback(err, null);
     });
 };
 
 
 //find last setting 
+/*
 exports.FindSetting = function(serialNum, callback) {
     models.iofsetting.findOne({
         order: [
             ['createdAt', 'DESC']
         ]
     }).then((result) => {
-        //     console.log('find device setting : ', result);
         callback(null, result);
-    }).catch((err) => {
-        console.log('find device setting error : ', err);
-        callback(err, null);
+    }).catch((error) => {
+        callback(error, null);
     });
 };
+
+*/
+
 
 /*
 var defaultSetting = {

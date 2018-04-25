@@ -21,7 +21,8 @@
         "mysql2": "^1.5.3",
         "onoff": "^1.1.7",
         "raspicam": "^0.2.14",
-        "serialport": "5.0.0",
+        "sequelize": "^4.37.6",
+        "serialport": "^5.0.0",
         "socket.io-client": "^2.0.3",
         "socket_io": "^1.0.0"
     }
