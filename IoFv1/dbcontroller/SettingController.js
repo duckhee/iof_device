@@ -1,4 +1,3 @@
-
 var models = require('../models/index');
 var iofsetting = require('../models/iofsetting');
 
@@ -33,6 +32,7 @@ exports.OneSetting = function(callback) {
 
 
 //find last setting 
+/*
 exports.FindSetting = function(serialNum, callback) {
     models.iofsetting.findOne({
         order: [
@@ -45,7 +45,7 @@ exports.FindSetting = function(serialNum, callback) {
     });
 };
 
-
+*/
 
 
 /*
