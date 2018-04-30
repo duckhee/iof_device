@@ -64,7 +64,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 console.log("photo captured with filename: " + timeInMs);
                 /*
                 //get setting
-                SettingController.FindSetting(serialNum,function(err, result) {
+                SettingController.OneSetting(serialNum,function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
                     }else{
@@ -73,7 +73,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 });
                 */
                 console.log("camera connetion");
-                SettingController.FindSetting(serialNum, function(err, result) {
+                SettingController.OneSetting(function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
 
