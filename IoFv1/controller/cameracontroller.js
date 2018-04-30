@@ -125,8 +125,6 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                         }
                     }
                 });
-
-
             });
         }
     }
