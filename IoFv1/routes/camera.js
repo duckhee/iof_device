@@ -5,6 +5,7 @@ var exec_photo = require('child_process').exec;
 var fs = require('fs');
 var ImageController = require('../dbcontroller/ImageController');
 var SettingController = require('../dbcontroller/SettingController');
+
 module.exports = function(socket, delivery, serialNum, cameratime) { //함수로 만들어 객체 app을 전달받음    
     var CameraTime = 30;
 
