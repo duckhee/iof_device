@@ -61,6 +61,7 @@ module.exports = function(StatusFlag, TurnFlag, delayTime, dataValue, turnValue)
                 pump_switch.writeSync(pump_switch.readSync() ^ 1);
                 console.log('gpio pin status after toggle : ', pump_switch.readSync());
             }, 1000 * 60 * waitting); //1000*60*3 default
-        }
+        },
+        
     }
 }
