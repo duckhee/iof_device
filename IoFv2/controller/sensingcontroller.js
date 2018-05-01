@@ -19,3 +19,7 @@ var port = serialPort.port('/dev/ttyACM0', {
 });
 
 port.pipe(parser);
+
+exports.PortOpen = function() {
+
+}
