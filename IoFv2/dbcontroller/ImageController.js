@@ -18,11 +18,14 @@ exports.InsertImage = function(data_info, callback) {
 };
 
 //find image last
-exports.FindImage = function(data_info, callback) {
+exports.FindImage = function(serial, callback) {
     models.iofimage.findOne({
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+        where: {
+            si_serial: serial
+        }
     }).then((result) => {
         //   console.log('find one image : ', result);
         callback(null, result);
@@ -31,3 +34,36 @@ exports.FindImage = function(data_info, callback) {
         callback(err, null);
     });
 };
+
+//find one
+exports.FindLastImage = function(callback) {
+    models.iofimage.findOne({
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        limit: 1
+    }).then((result) => {
+        callback(null, result);
+    }).catch((err) => {
+        console.log('select * from iofimages order by createdAt desc limit 0, 1 error :::::', err);
+        callback(err, null);
+    });
+}
+
+//list 3 
+exports.FindListImage = function(serial, callback) {
+    models.iofimage.find({
+        where: {
+            si_serial: serial
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ],
+        limit: 3
+    }).then((result) => {
+        callback(null, result);
+    }).catch((err) => {
+        console.log('find list image error :::: ', err);
+        callback(err, null);
+    });
+}

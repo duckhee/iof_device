@@ -1,7 +1,7 @@
 var models = require('../models/index');
 var iofsensor = require('../models/iofsensor');
 
-//sensor infomation 
+//sensor information 
 exports.InsertInfo = function(sensor_info, callback) {
     models.iofsensor.create({
         sensor_info: sensor_info.info
@@ -13,3 +13,16 @@ exports.InsertInfo = function(sensor_info, callback) {
         callback(err, null);
     });
 };
+
+//sensor get information
+exports.FindInfo = function(callback) {
+    models.iofsensor.findOne({
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then((result) => {
+        callback(null, result);
+    }).catch((err) => {
+        callback(err, null);
+    })
+}
