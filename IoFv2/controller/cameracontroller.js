@@ -11,3 +11,8 @@ var exec_photo = require('child_process').exec;
 var fs = require('fs');
 var ImageController = require('../dbcontroller/ImageController');
 var ImageSettingController = require('../dbcontroller/SettingController');
+
+exports.init = function(cameratime, serialNum, delivery, socket) {
+    cameraTime = cameratime;
+    console.log('get setting camera time ::: ', cameraTime);
+}
