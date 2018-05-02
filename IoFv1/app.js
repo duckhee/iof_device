@@ -116,19 +116,18 @@ SettingController.OneSetting(function(err, result) {
         SettingController.InsertSetting(SettingData, function(err, result) {
             if (err) {
                 console.log('insert setting default error : ', err);
-            }else{
-                
-                var routes = require('./routes/index')(pool);
-
-                var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, 5).init();
-
-                var camera = require('./routes/camera')(socket, delivery, serialNum, 30).init();
-
-                var control = require('./routes/control')(io, socket, delivery, serialNum, 30, pool, 30);
-            }
+            } else {}
         });
     }
 });
+
+var routes = require('./routes/index')(pool);
+
+var arduino = require('./routes/testarduinorouterv3.js')(socket, serialNum, 5).init();
+
+var camera = require('./routes/camera')(socket, delivery, serialNum, 30).init();
+
+var control = require('./routes/control')(io, socket, delivery, serialNum, 30, pool, 30);
 //first setting checking here
 
 
