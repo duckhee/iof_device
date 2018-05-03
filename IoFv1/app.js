@@ -130,6 +130,8 @@ var camera = require('./routes/camera')(socket, delivery, serialNum, 30).init();
 //var control = require('./routes/control')(io, socket, delivery, serialNum, 30, pool, 30);
 //first setting checking here
 
+//controller action
+var WebControl = require('./socket')(socket, delivery, serialNum, 30);
 
 /*
 process.on('unhandledRejection', error => {
