@@ -10,6 +10,7 @@ module.exports = function(socket, delivery, serialNum, cameraTime) {
             camera(socket, delivery, serialNum, cameraTime).camera_shooting();
             var SuccessData = { "flag": '1' };
             socket.emit('finshshooting_' + serialNum, SuccessData);
+            console.log('finsh shooting');
         } else {
             console.log('not command shooting :::', data.cmd);
         }
