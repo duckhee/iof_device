@@ -76,7 +76,20 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 SettingController.OneSetting(function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
+                        var settingInfo = {
+                            serial: serialNum,
+                            shootingtime: 30,
+                            watertime: 5,
+                        };
 
+                        SettingController.InsertSetting(settingInfo, function(err, result) {
+                            if (err) {
+                                console.log('insert default setting error :::: ', err);
+                            } else {
+                                //      console.log('default setting :::::::: ', result);
+
+                            }
+                        });
                     } else {
                         console.log(result.st_serial);
                         if (result.length != 0 && result.st_serial) {
