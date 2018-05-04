@@ -76,6 +76,7 @@ module.exports = function(socket, delivery, serialNum, cameratime) { //함수로
                 SettingController.OneSetting(function(err, result) {
                     if (err) {
                         console.log('select setting error :::::::::: ', err);
+                        console.log('serial number :: ', serialNum);
                         var settingInfo = {
                             serial: serialNum,
                             shootingtime: 30,

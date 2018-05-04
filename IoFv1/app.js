@@ -31,6 +31,7 @@ const socket = require('socket.io-client')('http://13.209.19.28:5001');
 //delivery package 
 var delivery = dl.listen(socket);
 console.log('delivery conneciton start');
+console.log('testing serial ::: ', serialNum);
 delivery.connect();
 //delivery get connection log
 delivery.on('delivery.connect', function(delivery) {
