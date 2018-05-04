@@ -30,7 +30,19 @@ exports.OneSetting = function(callback) {
     });
 };
 
-
+//find setting all
+exports.FindAllSetting = function(callback){
+    models.iofsetting.find({
+        order:[
+            ['createdAt', 'DESC']
+        ]
+    }).then((result)=>{
+        callback(null, result);
+    }).catch((err)=>{
+        console.log('find all setting error :::::: ', err);
+        callback(err, null);
+    });
+}
 
 
 //find last setting 
