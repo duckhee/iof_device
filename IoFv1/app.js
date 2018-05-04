@@ -23,7 +23,7 @@ var pool = mysql.createPool({
     password: 'candh3869',
     database: 'iof',
 });
-const serialNum = JSON.parser(require('./serial.json')).serial;
+const serialNum = require('./serial.json').serial;
 var NeworkController = require('./dbcontroller/NetworkController');
 var SettingController = require('./dbcontroller/SettingController');
 //get socket io
