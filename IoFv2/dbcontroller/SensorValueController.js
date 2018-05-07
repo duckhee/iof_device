@@ -44,7 +44,8 @@ exports.LimitTenData = function(data_info, callback) {
         ],
         where: {
             st_serial: data_info.serial
-        }
+        },
+        limit:10
     }).then((result) => {
         //  console.log('find ten limit data : ', result);
         callback(null, result);

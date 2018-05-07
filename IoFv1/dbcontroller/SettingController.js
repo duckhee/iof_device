@@ -37,7 +37,10 @@ exports.FindSetting = function(serialNum, callback) {
     models.iofsetting.findOne({
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+        where:{
+            st_serial:serialNum
+        }
     }).then((result) => {
         callback(null, result);
     }).catch((error) => {
